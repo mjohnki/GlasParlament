@@ -1,0 +1,8 @@
+package de.glasparlament.glasparlament.organization.data
+
+class Organization constructor(
+        var id: String,
+        var name: String,
+        var body: String,
+        var meeting: String) {
+}
