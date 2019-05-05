@@ -10,3 +10,6 @@
 /captures
 .externalNativeBuild
 .idea
+
+
+app/gradle.properties

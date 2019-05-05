@@ -1,28 +1,24 @@
 package de.glasparlament.glasparlament
 
-import android.app.Activity
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
+import com.microsoft.appcenter.AppCenter
+import com.microsoft.appcenter.analytics.Analytics
+import com.microsoft.appcenter.crashes.Crashes
 import dagger.android.support.DaggerAppCompatActivity
-import dagger.android.support.HasSupportFragmentInjector
-import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+
+        AppCenter.start(application, BuildConfig.APP_CENTER_APP_SECRET, Analytics::class.java, Crashes::class.java)
 
         //Add back navigation in the title bar
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
