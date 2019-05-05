@@ -20,7 +20,7 @@ android {
     buildTypes {
         def getProperty = {
             if (System.getenv("APP_CENTER_APP_SECRET"))
-                return System.getenv("APP_CENTER_APP_SECRET")
+                return "\"${System.env.API_KEY}\""
             else if(project.hasProperty("APP_CENTER_APP_SECRET"))
                 return project.property("APP_CENTER_APP_SECRET")
             else
