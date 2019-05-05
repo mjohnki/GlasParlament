@@ -18,7 +18,9 @@ class MainActivity : DaggerAppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        AppCenter.start(application, BuildConfig.APP_CENTER_APP_SECRET, Analytics::class.java, Crashes::class.java)
+        if(!BuildConfig.APP_CENTER_APP_SECRET.isEmpty()) {
+            AppCenter.start(application, BuildConfig.APP_CENTER_APP_SECRET, Analytics::class.java, Crashes::class.java)
+        }
 
         //Add back navigation in the title bar
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
