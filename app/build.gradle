@@ -18,18 +18,21 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        def getSecretKeyOrAbort = {
-            def key = System.getenv("APP_CENTER_APP_SECRET")
-            if (key) return key
-            else return ""
+        def getProperty = {
+            if (System.getenv("APP_CENTER_APP_SECRET"))
+                return key
+            else if(project.hasProperty("APP_CENTER_APP_SECRET"))
+                return project.property("APP_CENTER_APP_SECRET")
+            else
+                return ""
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField('String', 'APP_CENTER_APP_SECRET', getSecretKeyOrAbort())
+            buildConfigField('String', 'APP_CENTER_APP_SECRET', getProperty())
         }
         debug {
-            buildConfigField("String", "APP_CENTER_APP_SECRET", APP_CENTER_APP_SECRET)
+            buildConfigField("String", "APP_CENTER_APP_SECRET", getProperty())
         }
     }
     compileOptions {
