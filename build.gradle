@@ -1,6 +1,5 @@
 apply from: "dependencies.gradle"
 apply from: "params.gradle"
-apply plugin: 'com.github.kt3k.coveralls'
 
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
@@ -29,16 +28,6 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-coveralls {
-    jacocoReportPath = "${buildDir}/reports/coverage/debug/report.xml"
-}
-
-tasks.coveralls {
-    dependsOn 'connectedAndroidTest'
-    onlyIf { System.env.'CI' }
-}
-
 
 // show all compile errors
 allprojects {

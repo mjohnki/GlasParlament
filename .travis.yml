@@ -22,10 +22,5 @@ android:
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
 
-
-install:
-  - ./gradlew assemble
-
 script:
-  - ./gradlew build
   - ./gradlew connectedAndroidTest coveralls
