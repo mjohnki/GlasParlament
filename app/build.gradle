@@ -130,8 +130,8 @@ repositories {
 
 coveralls {
     jacocoReportPath = "${buildDir}/reports/jacoco/createGlobalTestReport/createGlobalTestReport.xml"
+    sourceDirs = subprojects.sourceSets.main.allSource.srcDirs.flatten()
 }
-
 
 //UI Test Coverage filtered (we need to run unit tests of App to be able to use Jacoco to filter)
 task createUiTestReport(type: JacocoReport,
