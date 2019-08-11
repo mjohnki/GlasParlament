@@ -36,6 +36,7 @@ android {
         debug {
             buildConfigField("String", "APP_CENTER_APP_SECRET", getProperty("APP_CENTER_APP_SECRET"))
             buildConfigField('String', 'BASE_URL', getProperty("BASE_URL"))
+            testCoverageEnabled true
         }
     }
     compileOptions {

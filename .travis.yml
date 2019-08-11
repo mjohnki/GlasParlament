@@ -28,5 +28,4 @@ install:
 
 script:
   - ./gradlew build
-  - ./gradlew test
-  - ./gradlew cobertura coveralls
+  - ./gradlew connectedAndroidTest coveralls
