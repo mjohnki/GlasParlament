@@ -24,4 +24,4 @@ android:
     - 'google-gdk-license-.+'
 
 script:
-  - ./gradlew clean test coveralls
+  - ./gradlew clean createGlobalTestReport coveralls
