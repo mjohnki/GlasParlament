@@ -1,16 +1,16 @@
 package de.glasparlament.glasparlament.di
 
-import com.google.gson.Gson
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import de.glasparlament.glasparlament.AuthInterceptor
 import de.glasparlament.glasparlament.BaseApplication
+import de.glasparlament.glasparlament.BuildConfig
 import de.glasparlament.glasparlament.MainActivity
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
@@ -38,9 +38,9 @@ class ApplicationModule(private val application: BaseApplication) {
 
         return Retrofit.Builder()
                 .client(httpClient)
-                .addConverterFactory(GsonConverterFactory.create(Gson()))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl("http://192.168.178.42/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                .baseUrl(BuildConfig.BASE_URL)
                 .build()
     }
 

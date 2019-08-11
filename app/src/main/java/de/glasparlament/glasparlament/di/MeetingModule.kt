@@ -3,13 +3,13 @@ package de.glasparlament.glasparlament.di
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
-import de.glasparlament.glasparlament.meeting.application.MeetingListFragment
-import de.glasparlament.glasparlament.meeting.application.MeetingViewModelFactory
-import de.glasparlament.glasparlament.meeting.data.MeetingApi
-import de.glasparlament.glasparlament.meeting.data.MeetingEndpoint
-import de.glasparlament.glasparlament.meeting.data.MeetingRepositoryImpl
-import de.glasparlament.glasparlament.meeting.domain.MeetingListUseCase
-import de.glasparlament.glasparlament.meeting.domain.MeetingRepository
+import de.glasparlament.meeting.MeetingListFragment
+import de.glasparlament.meeting.MeetingViewModelFactory
+import de.glasparlament.meeting_repository.MeetingApi
+import de.glasparlament.meeting_repository.MeetingEndpoint
+import de.glasparlament.meeting_repository.MeetingRepository
+import de.glasparlament.meeting_repository.MeetingRepositoryImpl
+import de.glasparlament.meeting.MeetingListUseCase
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -57,6 +57,6 @@ class MeetingModule {
     abstract class Binding {
 
         @ContributesAndroidInjector
-        abstract fun contributeMeetingListFragment(): MeetingListFragment
+        abstract fun MeetingActivity(): MeetingListFragment
     }
 }

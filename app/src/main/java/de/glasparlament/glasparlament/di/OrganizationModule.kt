@@ -3,11 +3,17 @@ package de.glasparlament.glasparlament.di
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
-import de.glasparlament.glasparlament.organization.application.OrganizationListFragment
-import de.glasparlament.glasparlament.organization.application.OrganizationListViewModelFactory
-import de.glasparlament.glasparlament.organization.data.*
-import de.glasparlament.glasparlament.organization.domain.OrganizationListUseCase
-import de.glasparlament.glasparlament.organization.domain.OrganizationRepository
+import de.glasparlament.body_repository.BodyApi
+import de.glasparlament.body_repository.BodyEndpoint
+import de.glasparlament.organization.OrganizationListViewModelFactory
+import de.glasparlament.body_repository.BodyRepository
+import de.glasparlament.body_repository.BodyRepositoryImpl
+import de.glasparlament.organization.OrganizationListFragment
+import de.glasparlament.organization_repository.OrganizationRepository
+import de.glasparlament.organization_repository.OrganizationRepositoryImpl
+import de.glasparlament.organization.OrganizationListUseCase
+import de.glasparlament.organization_repository.OrganizationApi
+import de.glasparlament.organization_repository.OrganizationEndpoint
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -31,29 +37,33 @@ class OrganizationModule {
     @Provides
     @Singleton
     fun provideBodyEndpoint(retrofit: Retrofit): BodyEndpoint {
-        return retrofit
-                .create(BodyEndpoint::class.java)
+        return retrofit.create(BodyEndpoint::class.java)
     }
 
     @Provides
     @Singleton
     fun provideOrganizationEndpoint(retrofit: Retrofit): OrganizationEndpoint {
-        return retrofit
-                .create(OrganizationEndpoint::class.java)
+        return retrofit.create(OrganizationEndpoint::class.java)
     }
 
     /** Repository*/
     @Provides
     @Singleton
-    fun provideOrganizationRepository(bodyApi: BodyApi, organizationApi: OrganizationApi): OrganizationRepository {
-        return OrganizationRepositoryImpl(bodyApi, organizationApi)
+    fun provideOrganizationRepository(organizationApi: OrganizationApi): OrganizationRepository {
+        return OrganizationRepositoryImpl(organizationApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBodyRepository(api: BodyApi): BodyRepository {
+        return BodyRepositoryImpl(api)
     }
 
     /** UseCase*/
     @Provides
     @Singleton
-    fun provideOrganizationListUseCase(organizationRepository: OrganizationRepository): OrganizationListUseCase {
-        return OrganizationListUseCase(organizationRepository)
+    fun provideOrganizationListUseCase(bodyRepository: BodyRepository, organizationRepository: OrganizationRepository): OrganizationListUseCase {
+        return OrganizationListUseCase(organizationRepository, bodyRepository)
     }
 
     /** ViewModelFactory*/
@@ -68,6 +78,6 @@ class OrganizationModule {
     abstract class Binding {
 
         @ContributesAndroidInjector
-        abstract fun contributeOrganizationListFragment(): OrganizationListFragment
+        abstract fun OrganizationActivity(): OrganizationListFragment
     }
 }

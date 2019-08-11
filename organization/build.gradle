@@ -1,0 +1,63 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
+
+android {
+    compileSdkVersion targetSdk
+
+    dataBinding {
+        enabled = true
+    }
+
+    defaultConfig {
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
+        versionCode vcode
+        versionName vname
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //General
+    implementation libraries.kotlinStd
+    implementation libraries.kotlinReflect
+
+    //Android
+    implementation libraries.coreExtensions
+    implementation libraries.appcompat
+
+    //dagger
+    implementation libraries.daggerAndroidSupport
+
+    //Lifecycle
+    implementation libraries.lifecycleViewmodel
+    implementation libraries.lifecycleExtensions
+
+    //Navigation
+    implementation libraries.navigationFragment
+    implementation libraries.navigationUi
+
+    //project
+    implementation project(':organization-repository')
+    implementation project(':body-repository')
+    implementation project(':common-android')
+    implementation project(':remote-data')
+
+    //UI
+    implementation libraries.constraintlayout
+    implementation libraries.material
+
+    //Tests
+    testImplementation libraries.junit
+    androidTestImplementation libraries.junitExt
+    androidTestImplementation libraries.espresso
+
+    //Other
+    implementation libraries.oneadapter
+
+
+}

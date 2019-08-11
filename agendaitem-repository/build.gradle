@@ -1,0 +1,35 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion targetSdk
+
+    defaultConfig {
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
+        versionCode vcode
+        versionName vname
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //General
+    implementation libraries.kotlinStd
+
+    //project
+    implementation project(':remote-data')
+
+    //retrofit
+    implementation libraries.retrofit
+    implementation libraries.retrofitGson
+    implementation libraries.retrofitCoroutines
+
+    //Tests
+    testImplementation libraries.junit
+    testImplementation libraries.mockk
+    testImplementation libraries.coroutinesTest
+
+}

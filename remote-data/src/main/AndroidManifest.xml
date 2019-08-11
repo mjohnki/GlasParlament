@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="de.glasparlament.data">
+
+    <application
+        android:allowBackup="false"
+        tools:ignore="GoogleAppIndexingWarning,MissingApplicationIcon">
+    </application>
+</manifest>

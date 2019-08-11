@@ -5,92 +5,91 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion targetSdk
     dataBinding {
         enabled = true
     }
     defaultConfig {
         applicationId "de.glasparlament.glasparlament"
-        minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
+        multiDexEnabled true
+        versionCode vcode
+        versionName vname
+        testInstrumentationRunner testRunner
     }
     buildTypes {
-        def getProperty = {
-            if (System.getenv("APP_CENTER_APP_SECRET"))
+        def getProperty = { key ->
+            if (System.getenv(key))
                 return "\"${System.env.API_KEY}\""
-            else if(project.hasProperty("APP_CENTER_APP_SECRET"))
-                return project.property("APP_CENTER_APP_SECRET")
+            else if(project.hasProperty(key))
+                return project.property(key)
             else
                 return ""
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField('String', 'APP_CENTER_APP_SECRET', getProperty())
+            buildConfigField('String', 'APP_CENTER_APP_SECRET', getProperty("APP_CENTER_APP_SECRET"))
+            buildConfigField('String', 'BASE_URL', getProperty("BASE_URL"))
         }
         debug {
-            buildConfigField("String", "APP_CENTER_APP_SECRET", getProperty())
+            buildConfigField("String", "APP_CENTER_APP_SECRET", getProperty("APP_CENTER_APP_SECRET"))
+            buildConfigField('String', 'BASE_URL', getProperty("BASE_URL"))
         }
     }
     compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
+    buildToolsVersion = '28.0.3'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.core:core-ktx:1.0.1'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    kapt "androidx.databinding:databinding-compiler:3.4.0"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
-    implementation 'com.android.support:customtabs:28.0.0'
+    //General
+    implementation libraries.kotlinStd
+    implementation libraries.kotlinReflect
 
-    // RxJava
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+    //Lifecycle
+    implementation libraries.lifecycleViewmodel
+    implementation libraries.lifecycleExtensions
 
+    //project
+    implementation project(':remote-data')
+    implementation project(':organization')
+    implementation project(':organization-repository')
+    implementation project(':body-repository')
+    implementation project(':agendaitem')
+    implementation project(':agendaitem-repository')
+    implementation project(':meeting')
+    implementation project(':meeting-repository')
+    implementation project(':common-android')
 
-    // okhttp
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.2'
+    //Navigation
+    implementation libraries.navigationFragment
+    implementation libraries.navigationUi
 
-    //Gson
-    implementation "com.google.code.gson:gson:2.8.5"
-
-    // appcenter
-    def appCenterSdkVersion = '2.0.0'
-    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
-    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
+    //Appcenter
+    implementation libraries.appcenterAnalytics
+    implementation libraries.appcenterCrashes
 
     //dagger
-    kapt 'com.google.dagger:dagger-compiler:2.19'
-    kapt 'com.google.dagger:dagger-android-processor:2.19'
-    implementation 'com.google.dagger:dagger-android-support:2.19'
+    kapt libraries.daggerCompiler
+    kapt libraries.daggerAndroidProcessor
+    implementation libraries.daggerAndroidSupport
 
     //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation "com.squareup.retrofit2:converter-gson:2.5.0"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.5.0"
-
-    // navigation
-    implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0"
-    implementation "android.arch.navigation:navigation-ui-ktx:1.0.0"
+    implementation libraries.retrofit
+    implementation libraries.retrofitGson
+    implementation libraries.retrofitCoroutines
+    implementation libraries.httpLogging
 
     //test
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-
-    // UI
-    implementation 'com.google.android.material:material:1.0.0'
+    androidTestImplementation libraries.testRunner
+    testImplementation libraries.junit
+    androidTestImplementation libraries.espresso
 
 }
 repositories {
