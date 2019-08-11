@@ -1,9 +1,11 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+
+apply from: '../jacoco_android_module.gradle'
+
 android {
     compileSdkVersion targetSdk
-
 
     defaultConfig {
         minSdkVersion minSdk
