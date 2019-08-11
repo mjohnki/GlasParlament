@@ -24,4 +24,4 @@ android:
     - 'google-gdk-license-.+'
 
 script:
-  - ./gradlew clean connectedAndroidTest coveralls
+  - ./gradlew clean test coveralls
