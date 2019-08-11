@@ -5,6 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 
 apply plugin: 'jacoco'
+apply plugin: 'com.github.kt3k.coveralls'
 
 jacoco { toolVersion "0.8.4" }
 
@@ -127,6 +128,10 @@ repositories {
     mavenCentral()
 }
 
+coveralls {
+    jacocoReportPath = "${buildDir}/reports/jacoco/createGlobalTestReport/createGlobalTestReport.xml"
+}
+
 
 //UI Test Coverage filtered (we need to run unit tests of App to be able to use Jacoco to filter)
 task createUiTestReport(type: JacocoReport,
@@ -187,6 +192,7 @@ task createGlobalTestReport(type: JacocoReport,
 
     reports {
         html.enabled = true
+        xml.enabled = true
     }
     def fileFilter = [
             //Android stuff
