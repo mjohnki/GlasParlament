@@ -41,6 +41,7 @@ android {
 task createUnitTestReport(type: JacocoReport, dependsOn: ['testAutomationTestUnitTest']) {
     reports {
         html.enabled = true
+        xml.enabled = true
     }
     def fileFilter = [
             //Android stuff

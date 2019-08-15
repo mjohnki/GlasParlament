@@ -24,5 +24,7 @@ android:
     - 'google-gdk-license-.+'
 
 script:
-  - ./gradlew clean createGlobalTestReport
-  - ./gradlew coveralls
+  - ./gradlew build jacocoTestReport
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
