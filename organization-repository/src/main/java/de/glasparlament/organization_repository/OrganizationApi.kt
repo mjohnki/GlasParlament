@@ -8,8 +8,12 @@ class OrganizationApi(private val endpoint: OrganizationEndpoint) : BaseApi(){
 
     suspend fun getOrganizationList(url: String): Transfer<OrganizationList> {
         return safeApiCall(
-                call = { endpoint.getOrganizationList(url).await() },
-                errorMessage = "Error Fetching OrganizationList"
+                call = { endpoint.getOrganizationList(url) },
+                errorMessage = errorMessageOrganizationList
         )
+    }
+
+    companion object{
+        const val errorMessageOrganizationList = "Error Fetching OrganizationList"
     }
 }
