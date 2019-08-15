@@ -1,5 +1,3 @@
 package de.glasparlament.data
 
-class BodyList {
-    var data =  mutableListOf<Body>()
-}
+class BodyList(val data: List<Body> = listOf())
