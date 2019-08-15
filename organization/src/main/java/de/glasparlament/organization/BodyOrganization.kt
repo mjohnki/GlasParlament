@@ -14,4 +14,7 @@ class BodyOrganization constructor(
     val shortname: String
         get() = "$bodyShortname · $organizationName"
 
+
+
+
 }
