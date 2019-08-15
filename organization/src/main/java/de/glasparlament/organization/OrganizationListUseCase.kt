@@ -9,8 +9,7 @@ class OrganizationListUseCase(private val organizationRepository: OrganizationRe
                               private val bodyRepository: BodyRepository) {
 
     suspend fun execute(): Transfer<List<BodyOrganization>> {
-        val bodies = bodyRepository.getBodyList()
-        return when (bodies) {
+        return when (val bodies = bodyRepository.getBodyList()) {
             is Transfer.Error -> bodies
             is Transfer.Success -> {
                 val bodyOrganizations = ArrayList<BodyOrganization>()

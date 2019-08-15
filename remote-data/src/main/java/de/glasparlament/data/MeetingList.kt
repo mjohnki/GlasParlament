@@ -1,6 +1,3 @@
 package de.glasparlament.data
 
-class MeetingList {
-
-    var data = mutableListOf<Meeting>()
-}
+class MeetingList(val data: List<Meeting> = listOf())

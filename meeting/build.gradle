@@ -56,7 +56,8 @@ dependencies {
 
     //Tests
     testImplementation libraries.junit
-    androidTestImplementation libraries.junitExt
+    testImplementation libraries.mockk
+    testImplementation libraries.coroutinesTest
     androidTestImplementation libraries.espresso
 
     //Other
