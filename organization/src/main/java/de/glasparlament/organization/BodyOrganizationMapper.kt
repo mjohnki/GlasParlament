@@ -1,7 +1,6 @@
 package de.glasparlament.organization
 
 import de.glasparlament.data.Body
-import de.glasparlament.organization.BodyOrganization
 import de.glasparlament.data.Organization
 
 object BodyOrganizationMapper {

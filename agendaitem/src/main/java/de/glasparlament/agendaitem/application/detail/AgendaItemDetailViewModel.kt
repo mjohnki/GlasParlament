@@ -40,7 +40,7 @@ class AgendaItemDetailViewModelImpl(private val useCase: AgendaItemUseCase) : Ag
         navigationCommand.postValue(NavigationCommand.To(directions))
     }
 
-    suspend fun getAgendaItem(url: String) = withContext(Dispatchers.Default) {
+    private suspend fun getAgendaItem(url: String) = withContext(Dispatchers.Default) {
         uiModel.postValue(loading())
         when (val result = useCase.execute(url)) {
             is Transfer.Success -> {

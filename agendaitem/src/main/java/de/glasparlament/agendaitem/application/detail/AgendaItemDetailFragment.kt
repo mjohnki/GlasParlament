@@ -10,13 +10,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import dagger.android.support.DaggerFragment
 import de.glasparlament.agendaitem.R
-import de.glasparlament.data.File
 import de.glasparlament.agendaitem.databinding.AgendaItemDetailFragmentBinding
+import de.glasparlament.data.File
 import javax.inject.Inject
 
 class AgendaItemDetailFragment : DaggerFragment() {

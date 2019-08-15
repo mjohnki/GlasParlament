@@ -4,10 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
-import de.glasparlament.data.AgendaItem
 import de.glasparlament.agendaitem.domain.AgendaItemListUseCase
 import de.glasparlament.common_android.NavigationCommand
-import de.glasparlament.data.Meeting
+import de.glasparlament.data.AgendaItem
 import de.glasparlament.data.Transfer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,7 +35,7 @@ class AgendaItemViewModelImpl(private val useCase: AgendaItemListUseCase) : Agen
         }
     }
 
-    suspend fun getAgendaItems(url: String) = withContext(Dispatchers.Default) {
+    private suspend fun getAgendaItems(url: String) = withContext(Dispatchers.Default) {
         uiModel.postValue(loading())
         when (val result = useCase.execute(url)) {
             is Transfer.Success -> {

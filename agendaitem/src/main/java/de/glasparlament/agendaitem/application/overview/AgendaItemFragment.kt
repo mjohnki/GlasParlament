@@ -23,8 +23,6 @@ import de.glasparlament.agendaitem.R
 import de.glasparlament.agendaitem.databinding.AgendaItemFragmentBinding
 import de.glasparlament.common_android.NavigationCommand
 import de.glasparlament.data.AgendaItem
-import de.glasparlament.data.Meeting
-import de.glasparlament.meeting.MeetingListFragmentDirections
 import org.jetbrains.annotations.NotNull
 import javax.inject.Inject
 

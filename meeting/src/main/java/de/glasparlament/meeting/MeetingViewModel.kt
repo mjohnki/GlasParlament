@@ -34,7 +34,7 @@ class MeetingViewModelImpl(private val useCase: MeetingListUseCase) : MeetingVie
         }
     }
 
-    suspend fun getMeetings(url: String) = withContext(Dispatchers.Default) {
+    private suspend fun getMeetings(url: String) = withContext(Dispatchers.Default) {
         uiModel.postValue(loading())
         when (val result = useCase.execute(url)) {
             is Transfer.Success -> {

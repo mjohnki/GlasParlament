@@ -13,7 +13,7 @@ class MainActivity : DaggerAppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        if (!BuildConfig.APP_CENTER_APP_SECRET.isEmpty()) {
+        if (BuildConfig.APP_CENTER_APP_SECRET.isNotEmpty()) {
             AppCenter.start(application, BuildConfig.APP_CENTER_APP_SECRET, Analytics::class.java, Crashes::class.java)
         }
 

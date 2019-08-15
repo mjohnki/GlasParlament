@@ -8,7 +8,7 @@ open class BaseApi{
         return safeApiResult(call,errorMessage)
     }
 
-    suspend fun <T: Any> safeApiResult(call: suspend ()-> Response<T>, errorMessage: String) : Transfer<T>{
+    private suspend fun <T: Any> safeApiResult(call: suspend ()-> Response<T>, errorMessage: String) : Transfer<T>{
         val response = call.invoke()
         if(response.isSuccessful) return Transfer.Success(response.body()!!)
 

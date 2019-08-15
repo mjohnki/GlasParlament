@@ -22,7 +22,7 @@ class AgendaFileAdapter(private val listener: OnItemClickListener) : ListAdapter
     }
 
     private fun createOnClickListener(file: File): View.OnClickListener {
-        return View.OnClickListener { view ->
+        return View.OnClickListener {
             listener.onItemClick(file)
         }
     }
@@ -47,8 +47,7 @@ class AgendaFileAdapter(private val listener: OnItemClickListener) : ListAdapter
         }
 
         override fun areContentsTheSame(oldItem: File, newItem: File): Boolean {
-            return oldItem.equals(newItem)
+            return oldItem == newItem
         }
     }
-
 }
