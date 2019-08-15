@@ -7,8 +7,6 @@ apply plugin: 'jacoco-android'
 
 android {
 
-    testBuildType "automationTest"
-
     compileSdkVersion targetSdk
     dataBinding {
         enabled = true
@@ -37,22 +35,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField('String', 'APP_CENTER_APP_SECRET', getProperty("APP_CENTER_APP_SECRET"))
             buildConfigField('String', 'BASE_URL', getProperty("BASE_URL"))
-            matchingFallbacks = ['release']
         }
         debug {
             buildConfigField("String", "APP_CENTER_APP_SECRET", getProperty("APP_CENTER_APP_SECRET"))
             buildConfigField('String', 'BASE_URL', getProperty("BASE_URL"))
-            testCoverageEnabled true
-            matchingFallbacks = ['release']
-        }
-
-
-        automationTest.initWith(buildTypes.debug)
-        automationTest {
-            applicationIdSuffix ".automationTest"
-            versionNameSuffix "-automationTest"
-            testCoverageEnabled = true
-            matchingFallbacks = ['automationTest', 'debug']
         }
     }
     compileOptions {
@@ -60,17 +46,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     buildToolsVersion = '28.0.3'
-
-    testOptions {
-        unitTests.returnDefaultValues = true
-    }
-
-    lintOptions {
-        // set to true to turn off analysis progress reporting by lint
-        quiet true// if true, stop the gradle build if errors are found
-        abortOnError false// do not ignore warnings
-        warningsAsErrors true
-    }
 }
 
 dependencies {
@@ -122,143 +97,4 @@ dependencies {
 }
 repositories {
     mavenCentral()
-}
-
-//UI Test Coverage filtered (we need to run unit tests of App to be able to use Jacoco to filter)
-task createUiTestReport(type: JacocoReport,
-        dependsOn: [':app:testAutomationTestUnitTest', ':app:createAutomationTestAndroidTestCoverageReport']) {
-
-    reports {
-        html.enabled = true
-    }
-
-    def fileFilter = [
-            //Android stuff
-            '**/R.class',
-            '**/BR.class',
-            '**/R$*.class',
-            '**/BR$*.class',
-            '**/BuildConfig.*',
-            'android/**/*.*',
-            //Data Binding
-            '**/*databinding',
-            '**/*binders',
-            '**/*layouts',
-            '**/Manifest*.*',
-            //Test mocks
-            '**/*Mock.*',
-            '**/*Test*.*'
-    ]
-
-
-    //To support Java coverage on Unit tests
-    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/automationTest", excludes: fileFilter)
-    //To support Kotlin coverage on Unit tests
-    def kotlinDebugTree = fileTree(dir: "${buildDir}/tmp/kotlin-classes/automationTest", excludes: fileFilter)
-
-    def mainSrc = "${project.projectDir}/src/main/java"
-    def debugSrc = "${project.projectDir}/src/debug/java"
-    sourceDirectories = files([mainSrc], [debugSrc])
-
-    def appAndroidTests = fileTree(dir: "${buildDir}/outputs/code-coverage/connected/", includes: ["*.ec"])
-
-    classDirectories = files([debugTree], [kotlinDebugTree])
-
-    executionData = files("${buildDir}/jacoco/testAutomationTestUnitTest.exec", appAndroidTests)
-}
-//Global Test Coverage
-task createGlobalTestReport(type: JacocoReport,
-        dependsOn: [
-                ':app:createUiTestReport',
-                ':agendaitem-repository:createUnitTestReport',
-                ':meeting-repository:createUnitTestReport',
-                ':body-repository:createUnitTestReport',
-                ':organization-repository:createUnitTestReport',
-                ':common-android:createUnitTestReport',
-                ':remote-data:createUnitTestReport',
-                ':organization:createUnitTestReport',
-                ':meeting:createUnitTestReport',
-                ':agendaitem:createUnitTestReport'
-        ]) {
-
-    reports {
-        html.enabled = true
-        xml.enabled = true
-    }
-    def fileFilter = [
-            //Android stuff
-            '**/R.class',
-            '**/BR.class',
-            '**/R$*.class',
-            '**/BR$*.class',
-            '**/BuildConfig.*',
-            'android/**/*.*',
-            //Data Binding
-            '**/*databinding',
-            '**/*binders',
-            '**/*layouts',
-            '**/Manifest*.*',
-            //Test mocks
-            '**/*Mock.*',
-            '**/*Test*.*'
-    ]
-
-    sourceDirectories = files([
-            "${project.projectDir}/src/main/java",
-            "${project.projectDir}/src/debug/java",
-            "../agendaitem-repository/src/main/java",
-            "../agendaitem-repository/src/debug/java",
-            "../meeting-repository/src/main/java",
-            "../meeting-repository/src/debug/java",
-            "../body-repository/src/main/java",
-            "../body-repository/src/debug/java",
-            "../organization-repository/src/main/java",
-            "../organization-repository/src/debug/java",
-            "../common-android/src/main/java",
-            "../common-android/src/debug/java",
-            "../remote-data/src/main/java",
-            "../remote-data/src/debug/java",
-            "../organization/src/main/java",
-            "../organization/src/debug/java",
-            "../meeting/src/main/java",
-            "../meeting/src/debug/java",
-            "../meeting/src/main/java",
-            "../agendaitem/src/debug/java",
-    ])
-    classDirectories = files([
-            fileTree(dir: "${buildDir}/intermediates/classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "${buildDir}/tmp/kotlin-classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../agendaitem-repository/build/intermediates/classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../agendaitem-repository/build/tmp/kotlin-classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../meeting-repository/build/intermediates/classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../meeting-repository/build/tmp/kotlin-classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../body-repository/build/intermediates/classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../body-repository/build/tmp/kotlin-classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../organization-repository/build/intermediates/classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../organization-repository/build/tmp/kotlin-classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../common-android/build/intermediates/classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../common-android/build/tmp/kotlin-classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../remote-data/build/intermediates/classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../remote-data/build/tmp/kotlin-classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../organization/build/intermediates/classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../organization/build/tmp/kotlin-classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../meeting/build/intermediates/classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../meeting/build/tmp/kotlin-classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../agendaitem/build/intermediates/classes/automationTest", excludes: fileFilter),
-            fileTree(dir: "../agendaitem/build/tmp/kotlin-classes/automationTest", excludes: fileFilter),
-    ])
-
-    executionData = files(
-            "${buildDir}/jacoco/testAutomationTestUnitTest.exec",
-            fileTree(dir: "${buildDir}/outputs/code-coverage/connected/", includes: ["*.ec"]),
-            "../agendaitem-repository/build/jacoco/testAutomationTestUnitTest.exec",
-            "../meeting-repository/build/jacoco/testAutomationTestUnitTest.exec",
-            "../body-repository/build/jacoco/testAutomationTestUnitTest.exec",
-            "../organization-repository/build/jacoco/testAutomationTestUnitTest.exec",
-            "../common-android/build/jacoco/testAutomationTestUnitTest.exec",
-            "../remote-data/build/jacoco/testAutomationTestUnitTest.exec",
-            "../organization/build/jacoco/testAutomationTestUnitTest.exec",
-            "../meeting/build/jacoco/testAutomationTestUnitTest.exec",
-            "../agendaitem/build/jacoco/testAutomationTestUnitTest.exec",
-    )
 }

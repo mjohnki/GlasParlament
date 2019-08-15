@@ -3,7 +3,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs'
 
-apply from: '../jacoco_android_module.gradle'
+apply plugin: 'jacoco-android'
+
+jacoco { toolVersion "0.8.4" }
 
 android {
     compileSdkVersion targetSdk
