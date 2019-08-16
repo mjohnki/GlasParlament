@@ -18,14 +18,16 @@ object TestData {
             body = "http://test.test",
             meeting = "http://test.test"
     )
-    val bodyList = BodyList(listOf(body))
-    val organizationList = OrganizationList(listOf(organization))
-    val organizations  =  listOf(BodyOrganization(
+    val bodyOrganization  =  BodyOrganization(
             organizationId = organization.id,
             organizationName = organization.name,
             bodyId = body.id,
             bodyName = body.name,
             meeting = "http://test.test",
             bodyShortname = body.shortname
-    ))
+    )
+    val bodyList = BodyList(listOf(body))
+    val organizationList = OrganizationList(listOf(organization))
+    val bodyOrganizations  =  listOf(bodyOrganization)
+
 }

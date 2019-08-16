@@ -7,13 +7,10 @@ import de.glasparlament.data.Transfer
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.*
-import java.util.concurrent.CountDownLatch
 
 class OrganizationListViewModelTest {
 
@@ -61,7 +58,7 @@ class OrganizationListViewModelTest {
     @Test
     fun testUseCaseWithBodyListSuccess() {
         //given:
-        val data = Transfer.Success(TestData.organizations)
+        val data = Transfer.Success(TestData.bodyOrganizations)
         coEvery { useCase.execute() } returns data
         viewModel = OrganizationListViewModelImpl(useCase)
         // Check Loading State
@@ -79,14 +76,14 @@ class OrganizationListViewModelTest {
         viewModel.uiModel.observeOnce {
             Assert.assertTrue(it.listVisibility)
             Assert.assertFalse(it.progressBarVisibility)
-            Assert.assertEquals(it.organizations, TestData.organizations)
+            Assert.assertEquals(it.organizations, TestData.bodyOrganizations)
         }
     }
 
     @Test
     fun testUseCaseNavigate() {
         //given:
-        val data = Transfer.Success(TestData.organizations)
+        val data = Transfer.Success(TestData.bodyOrganizations)
         coEvery { useCase.execute() } returns data
         val direction =
                 OrganizationListFragmentDirections.actionOrganizationListFragmentToMeetingListFragment("meeting", "name")
