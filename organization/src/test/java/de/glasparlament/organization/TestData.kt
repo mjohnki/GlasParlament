@@ -20,4 +20,12 @@ object TestData {
     )
     val bodyList = BodyList(listOf(body))
     val organizationList = OrganizationList(listOf(organization))
+    val organizations  =  listOf(BodyOrganization(
+            organizationId = organization.id,
+            organizationName = organization.name,
+            bodyId = body.id,
+            bodyName = body.name,
+            meeting = "http://test.test",
+            bodyShortname = body.shortname
+    ))
 }

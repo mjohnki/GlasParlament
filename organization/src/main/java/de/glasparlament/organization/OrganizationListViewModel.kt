@@ -16,6 +16,7 @@ abstract class OrganizationListViewModel : ViewModel() {
     val navigationCommand = MutableLiveData<NavigationCommand>()
 
     abstract fun navigate(directions: NavDirections)
+    abstract fun loadData()
 
     companion object {
         fun loading() = UIModel(progressBarVisibility = true, listVisibility = false)
@@ -27,13 +28,17 @@ abstract class OrganizationListViewModel : ViewModel() {
 class OrganizationListViewModelImpl(private val useCase: OrganizationListUseCase) : OrganizationListViewModel() {
 
     init {
+        uiModel.postValue(loading())
+    }
+
+    override fun loadData(){
         viewModelScope.launch {
             getOrganizations()
         }
     }
 
+
     private suspend fun getOrganizations() = withContext(Dispatchers.Default) {
-        uiModel.postValue(loading())
         when (val result = useCase.execute()) {
             is Transfer.Success -> {
                 uiModel.postValue(loaded(result.data))

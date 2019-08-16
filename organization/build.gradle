@@ -60,6 +60,7 @@ dependencies {
     testImplementation libraries.mockk
     testImplementation libraries.coroutinesTest
     androidTestImplementation libraries.espresso
+    implementation libraries.coreTesting
 
     //Other
     implementation libraries.oneadapter

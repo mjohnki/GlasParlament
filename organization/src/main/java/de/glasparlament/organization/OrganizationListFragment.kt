@@ -35,6 +35,7 @@ class OrganizationListFragment : DaggerFragment() {
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this, factory).get(OrganizationListViewModel::class.java)
+        viewModel.loadData()
 
         (activity as AppCompatActivity).supportActionBar!!.setTitle(R.string.app_name)
         //Add back navigation in the title bar
