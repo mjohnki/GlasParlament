@@ -49,7 +49,6 @@ dependencies {
 
     //Navigation
     implementation libraries.navigationFragment
-    implementation libraries.navigationUi
 
     //UI
     implementation libraries.constraintlayout
@@ -59,7 +58,6 @@ dependencies {
     testImplementation libraries.junit
     testImplementation libraries.mockk
     testImplementation libraries.coroutinesTest
-    androidTestImplementation libraries.espresso
     implementation libraries.coreTesting
 
     //Other

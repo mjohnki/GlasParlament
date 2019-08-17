@@ -10,21 +10,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.idanatz.oneadapter.OneAdapter
 import com.idanatz.oneadapter.external.events.ClickEventHook
 import com.idanatz.oneadapter.external.modules.ItemModule
 import com.idanatz.oneadapter.external.modules.ItemModuleConfig
 import com.idanatz.oneadapter.internal.holders.ViewBinder
-import dagger.android.support.DaggerFragment
-import de.glasparlament.common_android.NavigationCommand
+import de.glasparlament.common_android.NavigationFragment
+import de.glasparlament.common_android.NavigationViewModel
 import de.glasparlament.data.Meeting
 import de.glasparlament.meeting.databinding.MeetingListFragmentBinding
 import org.jetbrains.annotations.NotNull
 import javax.inject.Inject
 
-class MeetingListFragment : DaggerFragment() {
+class MeetingListFragment : NavigationFragment() {
 
     @Inject
     lateinit var factory: MeetingViewModelFactory
@@ -66,12 +65,10 @@ class MeetingListFragment : DaggerFragment() {
         viewModel.uiModel.observe(viewLifecycleOwner, Observer { model ->
             oneAdapter.add(model.meetings)
         })
-        viewModel.navigationCommand.observe(this, Observer { command ->
-            when (command) {
-                is NavigationCommand.To -> findNavController().navigate(command.directions)
-            }
-        })
     }
+
+    override fun getViewModel(): NavigationViewModel =
+            viewModel
 }
 
 private class ItemClickEvent(val viewModel: MeetingViewModel) : ClickEventHook<Meeting>() {

@@ -28,6 +28,9 @@ dependencies {
     implementation libraries.navigationFragment
     implementation libraries.navigationUi
 
+    //dagger
+    implementation libraries.daggerAndroidSupport
+
     //Tests
     testImplementation libraries.junit
 }

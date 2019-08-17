@@ -32,7 +32,6 @@ dependencies {
 
     //Android
     implementation libraries.coreExtensions
-    implementation libraries.appcompat
 
     //dagger
     implementation libraries.daggerAndroidSupport
@@ -42,13 +41,12 @@ dependencies {
     implementation project(':common-android')
     implementation project(':remote-data')
 
-    //Navigation
-    implementation libraries.navigationFragment
-    implementation libraries.navigationUi
-
     //Lifecycle
     implementation libraries.lifecycleViewmodel
     implementation libraries.lifecycleExtensions
+
+    //Navigation
+    implementation libraries.navigationFragment
 
     //UI
     implementation libraries.constraintlayout
@@ -58,7 +56,6 @@ dependencies {
     testImplementation libraries.junit
     testImplementation libraries.mockk
     testImplementation libraries.coroutinesTest
-    androidTestImplementation libraries.espresso
     implementation libraries.coreTesting
 
     //Other

@@ -4,25 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import com.idanatz.oneadapter.OneAdapter
-import com.idanatz.oneadapter.external.events.ClickEventHook
-import com.idanatz.oneadapter.external.modules.ItemModule
-import com.idanatz.oneadapter.external.modules.ItemModuleConfig
-import com.idanatz.oneadapter.internal.holders.ViewBinder
-import dagger.android.support.DaggerFragment
-import de.glasparlament.common_android.NavigationCommand
+import de.glasparlament.common_android.NavigationFragment
+import de.glasparlament.common_android.NavigationViewModel
 import de.glasparlament.organization.databinding.OrganizationListFragmentBinding
-import org.jetbrains.annotations.NotNull
 import javax.inject.Inject
 
-class OrganizationListFragment : DaggerFragment() {
+class OrganizationListFragment : NavigationFragment() {
 
     @Inject
     lateinit var factory: OrganizationListViewModelFactory
@@ -64,10 +56,8 @@ class OrganizationListFragment : DaggerFragment() {
         viewModel.uiModel.observe(this, Observer { model ->
             oneAdapter.add(model.organizations)
         })
-        viewModel.navigationCommand.observe(this, Observer { command ->
-            when (command) {
-                is NavigationCommand.To -> findNavController().navigate(command.directions)
-            }
-        })
     }
+
+    override fun getViewModel(): NavigationViewModel =
+            viewModel
 }

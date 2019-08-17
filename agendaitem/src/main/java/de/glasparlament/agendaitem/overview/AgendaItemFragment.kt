@@ -22,11 +22,13 @@ import dagger.android.support.DaggerFragment
 import de.glasparlament.agendaitem.R
 import de.glasparlament.agendaitem.databinding.AgendaItemFragmentBinding
 import de.glasparlament.common_android.NavigationCommand
+import de.glasparlament.common_android.NavigationFragment
+import de.glasparlament.common_android.NavigationViewModel
 import de.glasparlament.data.AgendaItem
 import org.jetbrains.annotations.NotNull
 import javax.inject.Inject
 
-class AgendaItemFragment : DaggerFragment() {
+class AgendaItemFragment : NavigationFragment() {
 
     @Inject
     lateinit var factory: AgendaItemViewModelFactory
@@ -68,12 +70,10 @@ class AgendaItemFragment : DaggerFragment() {
         viewModel.uiModel.observe(viewLifecycleOwner, Observer { model ->
             oneAdapter.add(model.agendaItems)
         })
-        viewModel.navigationCommand.observe(this, Observer { command ->
-            when (command) {
-                is NavigationCommand.To -> findNavController().navigate(command.directions)
-            }
-        })
     }
+
+    override fun getViewModel(): NavigationViewModel =
+            viewModel
 }
 
 private class ItemClickEvent(val viewModel: AgendaItemViewModel) : ClickEventHook<AgendaItem>() {

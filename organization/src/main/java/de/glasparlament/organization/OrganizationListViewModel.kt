@@ -1,21 +1,17 @@
 package de.glasparlament.organization
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavDirections
-import de.glasparlament.common_android.NavigationCommand
+import de.glasparlament.common_android.NavigationViewModel
 import de.glasparlament.data.Transfer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-abstract class OrganizationListViewModel : ViewModel() {
+abstract class OrganizationListViewModel : NavigationViewModel() {
 
     val uiModel = MutableLiveData<UIModel>()
-    val navigationCommand = MutableLiveData<NavigationCommand>()
 
-    abstract fun navigate(directions: NavDirections)
     abstract fun loadData()
 
     companion object {
@@ -27,18 +23,14 @@ abstract class OrganizationListViewModel : ViewModel() {
 
 class OrganizationListViewModelImpl(private val useCase: OrganizationListUseCase) : OrganizationListViewModel() {
 
-    init {
-        uiModel.postValue(loading())
-    }
-
     override fun loadData(){
         viewModelScope.launch {
             getOrganizations()
         }
     }
 
-
     private suspend fun getOrganizations() = withContext(Dispatchers.Default) {
+        uiModel.postValue(loading())
         when (val result = useCase.execute()) {
             is Transfer.Success -> {
                 uiModel.postValue(loaded(result.data))
@@ -47,10 +39,6 @@ class OrganizationListViewModelImpl(private val useCase: OrganizationListUseCase
                 uiModel.postValue(error())
             }
         }
-    }
-
-    override fun navigate(directions: NavDirections) {
-        navigationCommand.postValue(NavigationCommand.To(directions))
     }
 }
 

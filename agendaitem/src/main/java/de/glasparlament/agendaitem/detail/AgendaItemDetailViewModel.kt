@@ -6,19 +6,17 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import de.glasparlament.data.AgendaItem
 import de.glasparlament.common_android.NavigationCommand
+import de.glasparlament.common_android.NavigationViewModel
 import de.glasparlament.data.Transfer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-abstract class AgendaItemDetailViewModel : ViewModel() {
+abstract class AgendaItemDetailViewModel : NavigationViewModel() {
 
     abstract fun bind(url: String)
 
     val uiModel = MutableLiveData<UIModel>()
-    val navigationCommand = MutableLiveData<NavigationCommand>()
-
-    abstract fun navigate(directions: NavDirections)
 
     companion object {
         fun loading() = UIModel()
@@ -33,10 +31,6 @@ class AgendaItemDetailViewModelImpl(private val useCase: AgendaItemUseCase) : Ag
         viewModelScope.launch {
             getAgendaItem(url)
         }
-    }
-
-    override fun navigate(directions: NavDirections) {
-        navigationCommand.postValue(NavigationCommand.To(directions))
     }
 
     private suspend fun getAgendaItem(url: String) = withContext(Dispatchers.Default) {

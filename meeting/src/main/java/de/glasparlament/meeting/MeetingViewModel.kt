@@ -5,18 +5,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import de.glasparlament.common_android.NavigationCommand
+import de.glasparlament.common_android.NavigationViewModel
 import de.glasparlament.data.Transfer
 import de.glasparlament.data.Meeting
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-abstract class MeetingViewModel : ViewModel() {
+abstract class MeetingViewModel : NavigationViewModel() {
 
     val uiModel = MutableLiveData<UIModel>()
-    val navigationCommand = MutableLiveData<NavigationCommand>()
 
-    abstract fun navigate(directions: NavDirections)
     abstract fun bind(url: String)
 
     companion object {
@@ -44,10 +43,6 @@ class MeetingViewModelImpl(private val useCase: MeetingListUseCase) : MeetingVie
                 uiModel.postValue(error())
             }
         }
-    }
-
-    override fun navigate(directions: NavDirections) {
-        navigationCommand.postValue(NavigationCommand.To(directions))
     }
 }
 
