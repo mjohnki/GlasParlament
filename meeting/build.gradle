@@ -41,6 +41,7 @@ dependencies {
     implementation project(':meeting-repository')
     implementation project(':common-android')
     implementation project(':remote-data')
+    testImplementation project(':test-lib')
 
     //Navigation
     implementation libraries.navigationFragment
@@ -59,6 +60,7 @@ dependencies {
     testImplementation libraries.mockk
     testImplementation libraries.coroutinesTest
     androidTestImplementation libraries.espresso
+    implementation libraries.coreTesting
 
     //Other
     implementation libraries.oneadapter

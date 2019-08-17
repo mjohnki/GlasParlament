@@ -10,5 +10,6 @@ object TestData {
             organization = listOf(),
             body = "http://test.test"
     )
-    val meetingList = MeetingList(listOf(meeting))
+    val meetings = listOf(meeting)
+    val meetingList = MeetingList(meetings)
 }

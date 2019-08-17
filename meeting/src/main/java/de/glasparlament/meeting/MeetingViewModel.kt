@@ -12,12 +12,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 abstract class MeetingViewModel : ViewModel() {
-    abstract fun bind(url: String)
 
     val uiModel = MutableLiveData<UIModel>()
     val navigationCommand = MutableLiveData<NavigationCommand>()
 
     abstract fun navigate(directions: NavDirections)
+    abstract fun bind(url: String)
 
     companion object {
         fun loading() = UIModel(progressBarVisibility = true, listVisibility = false)
