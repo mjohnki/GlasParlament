@@ -34,7 +34,7 @@ class AgendaItemUseCaseTest {
     fun testUseCaseSuccess() {
         //given:
         val url = "http://test.test"
-        val data = Transfer.Success(TestData.agendaItem)
+        val data = Transfer.Success(TestData.agendaItem_17)
         coEvery { repository.getAgendaItem(url) } returns  data
 
         //when:
@@ -42,6 +42,6 @@ class AgendaItemUseCaseTest {
 
         //then:
         Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(TestData.agendaItem, (result as Transfer.Success).data)
+        Assert.assertEquals(TestData.agendaItem_17, (result as Transfer.Success).data)
     }
 }
