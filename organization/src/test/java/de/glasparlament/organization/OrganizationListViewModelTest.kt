@@ -1,9 +1,9 @@
 package de.glasparlament.organization
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.*
 import de.glasparlament.common_android.NavigationCommand
 import de.glasparlament.data.Transfer
+import de.glasparlament.test_lib.observeOnce
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -99,21 +99,3 @@ class OrganizationListViewModelTest {
     }
 }
 
-class OneTimeObserver<T>(private val handler: (T) -> Unit) : Observer<T>, LifecycleOwner {
-    private val lifecycle = LifecycleRegistry(this)
-    init {
-        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    }
-
-    override fun getLifecycle(): Lifecycle = lifecycle
-
-    override fun onChanged(t: T) {
-        handler(t)
-        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    }
-}
-
-fun <T> LiveData<T>.observeOnce(onChangeHandler: (T) -> Unit) {
-    val observer = OneTimeObserver(handler = onChangeHandler)
-    observe(observer, observer)
-}

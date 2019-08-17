@@ -50,6 +50,7 @@ dependencies {
     implementation project(':body-repository')
     implementation project(':common-android')
     implementation project(':remote-data')
+    testImplementation project(':test-lib')
 
     //UI
     implementation libraries.constraintlayout
