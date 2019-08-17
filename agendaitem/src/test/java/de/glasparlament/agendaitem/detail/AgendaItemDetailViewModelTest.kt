@@ -1,4 +1,4 @@
-package de.glasparlament.agendaitem.overview
+package de.glasparlament.agendaitem.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import de.glasparlament.agendaitem.TestData
@@ -11,13 +11,13 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.*
 
-class AgendaItemViewModelTest {
+class AgendaItemDetailViewModelTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
     private val testDispatcher = TestCoroutineDispatcher()
 
-    private val useCase = mockk<AgendaItemListUseCase>()
+    private val useCase = mockk<AgendaItemUseCase>()
 
     @Before
     fun before() {
@@ -37,33 +37,29 @@ class AgendaItemViewModelTest {
         val errorMessage = "Error Loading Data"
         val data = Transfer.Error(errorMessage)
         coEvery { useCase.execute(url) } returns data
-        val viewModel = AgendaItemViewModelImpl(useCase)
+        val viewModel = AgendaItemDetailViewModelImpl(useCase)
 
         //when:
         viewModel.bind(url)
-        Thread.sleep(200)
 
         //then:
-        Assert.assertFalse(viewModel.uiModel.value!!.listVisibility)
-        Assert.assertTrue(viewModel.uiModel.value!!.progressBarVisibility)
+        Assert.assertNull(viewModel.uiModel.value!!.agendaItem)
     }
 
     @Test
     fun testUseCaseSuccess() {
         //given:
         val url = "http://test.test"
-        val data = Transfer.Success(listOf(TestData.agendaItem_16))
+        val data = Transfer.Success(TestData.agendaItem_16)
         coEvery { useCase.execute(url) } returns data
-        val viewModel = AgendaItemViewModelImpl(useCase)
+        val viewModel = AgendaItemDetailViewModelImpl(useCase)
 
         //when:
         viewModel.bind(url)
-        Thread.sleep(200)
+        Thread.sleep(1000)
 
         //then:
         //Loaded State
-        Assert.assertTrue(viewModel.uiModel.value!!.listVisibility)
-        Assert.assertFalse(viewModel.uiModel.value!!.progressBarVisibility)
-        Assert.assertEquals(viewModel.uiModel.value!!.agendaItems, listOf(TestData.agendaItem_16))
+        Assert.assertNull(viewModel.uiModel.value)
     }
 }

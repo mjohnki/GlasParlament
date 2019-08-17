@@ -39,7 +39,6 @@ dependencies {
     implementation project(':remote-data')
     implementation project(':agendaitem-repository')
     implementation project(':meeting-repository')
-    testImplementation project(':test-lib')
 
     //Lifecycle
     implementation libraries.lifecycleViewmodel
