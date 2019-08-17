@@ -3,12 +3,12 @@ package de.glasparlament.glasparlament.di
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
-import de.glasparlament.agendaitem.application.detail.AgendaItemDetailViewModelFactory
-import de.glasparlament.agendaitem.application.overview.AgendaItemFragment
-import de.glasparlament.agendaitem.application.overview.AgendaItemViewModelFactory
+import de.glasparlament.agendaitem.detail.AgendaItemDetailViewModelFactory
+import de.glasparlament.agendaitem.overview.AgendaItemFragment
+import de.glasparlament.agendaitem.overview.AgendaItemViewModelFactory
 import de.glasparlament.agendaitem_repository.AgendaItemEndpoint
-import de.glasparlament.agendaitem.domain.AgendaItemListUseCase
-import de.glasparlament.agendaitem.domain.AgendaItemUseCase
+import de.glasparlament.agendaitem.overview.AgendaItemListUseCase
+import de.glasparlament.agendaitem.detail.AgendaItemUseCase
 import de.glasparlament.agendaitem_repository.AgendaItemApi
 import de.glasparlament.agendaitem_repository.AgendaItemRepository
 import de.glasparlament.agendaitem_repository.AgendaItemRepositoryImpl
@@ -75,6 +75,6 @@ class AgendaItemModule {
         abstract fun contributeAgendaItemListFragment(): AgendaItemFragment
 
         @ContributesAndroidInjector
-        abstract fun contributeAgendaItemDetailFragment(): de.glasparlament.agendaitem.application.detail.AgendaItemDetailFragment
+        abstract fun contributeAgendaItemDetailFragment(): de.glasparlament.agendaitem.detail.AgendaItemDetailFragment
     }
 }

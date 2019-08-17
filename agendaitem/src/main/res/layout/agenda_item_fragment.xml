@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="de.glasparlament.agendaitem.application.overview.AgendaItemViewModel" />
+            type="de.glasparlament.agendaitem.overview.AgendaItemViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

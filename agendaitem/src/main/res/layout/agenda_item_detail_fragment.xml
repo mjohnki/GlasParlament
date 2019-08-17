@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="de.glasparlament.agendaitem.application.detail.AgendaItemDetailViewModel" />
+            type="de.glasparlament.agendaitem.detail.AgendaItemDetailViewModel" />
     </data>
 
     <RelativeLayout

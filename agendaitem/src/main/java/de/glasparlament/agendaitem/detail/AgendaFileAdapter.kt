@@ -1,4 +1,4 @@
-package de.glasparlament.agendaitem.application.detail
+package de.glasparlament.agendaitem.detail
 
 import android.view.LayoutInflater
 import android.view.View

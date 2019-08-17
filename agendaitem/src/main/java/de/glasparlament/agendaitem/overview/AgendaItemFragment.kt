@@ -1,4 +1,4 @@
-package de.glasparlament.agendaitem.application.overview
+package de.glasparlament.agendaitem.overview
 
 import android.annotation.SuppressLint
 import android.os.Bundle

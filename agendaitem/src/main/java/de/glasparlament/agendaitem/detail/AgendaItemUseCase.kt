@@ -1,4 +1,4 @@
-package de.glasparlament.agendaitem.domain
+package de.glasparlament.agendaitem.detail
 
 import de.glasparlament.agendaitem_repository.AgendaItemRepository
 import de.glasparlament.data.Transfer

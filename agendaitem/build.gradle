@@ -39,6 +39,7 @@ dependencies {
     implementation project(':remote-data')
     implementation project(':agendaitem-repository')
     implementation project(':meeting-repository')
+    testImplementation project(':test-lib')
 
     //Lifecycle
     implementation libraries.lifecycleViewmodel
@@ -57,8 +58,10 @@ dependencies {
 
     //Tests
     testImplementation libraries.junit
-    androidTestImplementation libraries.junitExt
+    testImplementation libraries.mockk
+    testImplementation libraries.coroutinesTest
     androidTestImplementation libraries.espresso
+    implementation libraries.coreTesting
 
     //Other
     implementation libraries.customtabs

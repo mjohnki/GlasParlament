@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/agenda_fragment"
-        android:name="de.glasparlament.agendaitem.application.overview.AgendaItemFragment"
+        android:name="de.glasparlament.agendaitem.overview.AgendaItemFragment"
         android:label="@string/app_name"
         tools:layout="@layout/agenda_item_fragment">
         <argument
@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/agenda_item_fragment"
-        android:name="de.glasparlament.agendaitem.application.detail.AgendaItemDetailFragment"
+        android:name="de.glasparlament.agendaitem.detail.AgendaItemDetailFragment"
         android:label="@string/app_name"
         tools:layout="@layout/agenda_item_fragment">
         <argument

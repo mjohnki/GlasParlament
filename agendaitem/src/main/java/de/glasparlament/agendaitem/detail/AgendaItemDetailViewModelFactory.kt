@@ -1,8 +1,7 @@
-package de.glasparlament.agendaitem.application.detail
+package de.glasparlament.agendaitem.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import de.glasparlament.agendaitem.domain.AgendaItemUseCase
 
 class AgendaItemDetailViewModelFactory(private val useCase: AgendaItemUseCase)
     : ViewModelProvider.NewInstanceFactory() {
