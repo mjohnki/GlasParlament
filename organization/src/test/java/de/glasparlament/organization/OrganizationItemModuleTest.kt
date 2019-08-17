@@ -12,7 +12,7 @@ class OrganizationItemModuleTest {
     private val itemModule  = OrganizationItemModule()
 
     @Test
-    fun testMapper() {
+    fun testItemModule() {
         //given:
         val organizationName =  mockk<TextView>()
         val viewBinder =  mockk<ViewBinder>()

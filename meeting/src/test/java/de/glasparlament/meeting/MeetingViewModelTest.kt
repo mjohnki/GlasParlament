@@ -1,10 +1,7 @@
 package de.glasparlament.meeting
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import de.glasparlament.common_android.NavigationCommand
 import de.glasparlament.data.Transfer
-import de.glasparlament.organization.OrganizationListFragmentDirections
-import de.glasparlament.test_lib.observeOnce
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -41,20 +38,15 @@ class MeetingViewModelTest {
         val data = Transfer.Error(errorMessage)
         coEvery { useCase.execute(url) } returns data
         viewModel = MeetingViewModelImpl(useCase)
-        // Check State Loading
-        viewModel.uiModel.observeOnce {
-            Assert.assertFalse(it.listVisibility)
-            Assert.assertTrue(it.progressBarVisibility)
-        }
 
         //when:
         viewModel.bind(url)
+        Thread.sleep(200)
+
 
         //then:
-        viewModel.uiModel.observeOnce {
-            Assert.assertFalse(it.listVisibility)
-            Assert.assertTrue(it.progressBarVisibility)
-        }
+        Assert.assertFalse(viewModel.uiModel.value!!.listVisibility)
+        Assert.assertTrue(viewModel.uiModel.value!!.progressBarVisibility)
     }
 
     @Test
@@ -64,42 +56,14 @@ class MeetingViewModelTest {
         val data = Transfer.Success(TestData.meetings)
         coEvery { useCase.execute(url) } returns data
         viewModel = MeetingViewModelImpl(useCase)
-        // Check Loading State
-        viewModel.uiModel.observeOnce {
-            Assert.assertFalse(it.listVisibility)
-            Assert.assertTrue(it.progressBarVisibility)
-        }
 
         //when:
         viewModel.bind(url)
-        Thread.sleep(1000)
+        Thread.sleep(200)
 
         //then:
-        //Loaded State
-        viewModel.uiModel.observeOnce {
-            Assert.assertTrue(it.listVisibility)
-            Assert.assertFalse(it.progressBarVisibility)
-            Assert.assertEquals(it.meetings, TestData.meetings)
-        }
+        Assert.assertTrue(viewModel.uiModel.value!!.listVisibility)
+        Assert.assertFalse(viewModel.uiModel.value!!.progressBarVisibility)
+        Assert.assertEquals(viewModel.uiModel.value!!.meetings, TestData.meetings)
     }
-
-    @Test
-    fun testUseCaseNavigate() {
-        //given:
-        val url = "http://test.test"
-        val data = Transfer.Success(TestData.meetings)
-        coEvery { useCase.execute(url) } returns data
-        val direction =
-                MeetingListFragmentDirections.actionMeetingListFragmentToAgendaFragment("meetingId", "title")
-        viewModel = MeetingViewModelImpl(useCase)
-
-        //when:
-        viewModel.navigate(direction)
-
-        //then:
-        viewModel.navigationCommand.observeOnce {
-            Assert.assertTrue(it is NavigationCommand.To)
-        }
-    }
-
 }

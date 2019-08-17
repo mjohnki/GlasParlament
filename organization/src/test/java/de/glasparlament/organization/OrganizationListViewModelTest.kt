@@ -1,9 +1,7 @@
 package de.glasparlament.organization
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import de.glasparlament.common_android.NavigationCommand
 import de.glasparlament.data.Transfer
-import de.glasparlament.test_lib.observeOnce
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -39,20 +37,14 @@ class OrganizationListViewModelTest {
         val data = Transfer.Error(errorMessage)
         coEvery { useCase.execute() } returns data
         viewModel = OrganizationListViewModelImpl(useCase)
-        // Check State Loading
-        viewModel.uiModel.observeOnce {
-            Assert.assertFalse(it.listVisibility)
-            Assert.assertTrue(it.progressBarVisibility)
-        }
 
         //when:
         viewModel.loadData()
+        Thread.sleep(200)
 
         //then:
-        viewModel.uiModel.observeOnce {
-            Assert.assertFalse(it.listVisibility)
-            Assert.assertTrue(it.progressBarVisibility)
-        }
+        Assert.assertFalse(viewModel.uiModel.value!!.listVisibility)
+        Assert.assertTrue(viewModel.uiModel.value!!.progressBarVisibility)
     }
 
     @Test
@@ -61,41 +53,15 @@ class OrganizationListViewModelTest {
         val data = Transfer.Success(TestData.bodyOrganizations)
         coEvery { useCase.execute() } returns data
         viewModel = OrganizationListViewModelImpl(useCase)
-        // Check Loading State
-        viewModel.uiModel.observeOnce {
-            Assert.assertFalse(it.listVisibility)
-            Assert.assertTrue(it.progressBarVisibility)
-        }
 
         //when:
         viewModel.loadData()
-        Thread.sleep(1000)
+        Thread.sleep(200)
 
         //then:
-        //Loaded State
-        viewModel.uiModel.observeOnce {
-            Assert.assertTrue(it.listVisibility)
-            Assert.assertFalse(it.progressBarVisibility)
-            Assert.assertEquals(it.organizations, TestData.bodyOrganizations)
-        }
-    }
-
-    @Test
-    fun testUseCaseNavigate() {
-        //given:
-        val data = Transfer.Success(TestData.bodyOrganizations)
-        coEvery { useCase.execute() } returns data
-        val direction =
-                OrganizationListFragmentDirections.actionOrganizationListFragmentToMeetingListFragment("meeting", "name")
-        viewModel = OrganizationListViewModelImpl(useCase)
-
-        //when:
-        viewModel.navigate(direction)
-
-        //then:
-        viewModel.navigationCommand.observeOnce {
-            Assert.assertTrue(it is NavigationCommand.To)
-        }
+        Assert.assertTrue(viewModel.uiModel.value!!.listVisibility)
+        Assert.assertFalse(viewModel.uiModel.value!!.progressBarVisibility)
+        Assert.assertEquals(viewModel.uiModel.value!!.organizations, TestData.bodyOrganizations)
     }
 }
 

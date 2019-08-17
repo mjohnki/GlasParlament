@@ -13,7 +13,7 @@ class OrganizationItemClickEventTest {
     private val clickEvent  = OrganizationItemClickEvent(viewModel)
 
     @Test
-    fun testMapper() {
+    fun testItemClickEvent() {
         //given:
         val viewBinder =  mockk<ViewBinder>()
         val model = TestData.bodyOrganization

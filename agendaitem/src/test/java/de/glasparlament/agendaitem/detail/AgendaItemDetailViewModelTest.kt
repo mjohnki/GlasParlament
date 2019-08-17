@@ -41,6 +41,7 @@ class AgendaItemDetailViewModelTest {
 
         //when:
         viewModel.bind(url)
+        Thread.sleep(200)
 
         //then:
         Assert.assertNull(viewModel.uiModel.value!!.agendaItem)
@@ -56,10 +57,9 @@ class AgendaItemDetailViewModelTest {
 
         //when:
         viewModel.bind(url)
-        Thread.sleep(1000)
+        Thread.sleep(200)
 
         //then:
-        //Loaded State
-        Assert.assertNull(viewModel.uiModel.value)
+        Assert.assertNotNull(viewModel.uiModel.value)
     }
 }

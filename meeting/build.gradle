@@ -41,7 +41,6 @@ dependencies {
     implementation project(':meeting-repository')
     implementation project(':common-android')
     implementation project(':remote-data')
-    testImplementation project(':test-lib')
 
     //Navigation
     implementation libraries.navigationFragment
