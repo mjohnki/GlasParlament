@@ -43,7 +43,6 @@ ext {
 
             //Other
             customtabs              : 'com.android.support:customtabs:28.0.0',
-            oneadapter              : 'com.ironsource.aura.oneadapter:oneadapter:1.0.0',
 
             //Appcenter
             appcenterAnalytics      : "com.microsoft.appcenter:appcenter-analytics:2.0.0",

@@ -58,9 +58,4 @@ dependencies {
     testImplementation libraries.mockk
     testImplementation libraries.coroutinesTest
     implementation libraries.coreTesting
-
-    //Other
-    implementation libraries.oneadapter
-
-
 }

@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="bodyOrganization"
+            type="de.glasparlament.organization.BodyOrganization" />
         <variable
             name="clickListener"
             type="android.view.View.OnClickListener" />
@@ -29,6 +31,7 @@
                 android:layout_alignParentTop="true"
                 android:textStyle="bold"
                 android:textSize="20sp"
+                android:text="@{bodyOrganization.name}"
                 tools:text="Organization name" />
 
             <ImageView

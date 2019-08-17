@@ -2,6 +2,7 @@ package de.glasparlament.glasparlament
 
 import android.os.Bundle
 import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import com.microsoft.appcenter.AppCenter
 import com.microsoft.appcenter.analytics.Analytics
 import com.microsoft.appcenter.crashes.Crashes
@@ -18,11 +19,12 @@ class MainActivity : DaggerAppCompatActivity(){
         }
 
         //Add back navigation in the title bar
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        //supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        NavigationUI.setupActionBarWithNavController(this, Navigation.findNavController(this, R.id.navigationHost))
     }
 
-    //Both navigation bar back press and title bar back press will trigger this method
-    override fun onBackPressed() {
+    override fun onSupportNavigateUp(): Boolean {
         Navigation.findNavController(this, R.id.navigationHost).navigateUp()
+        return super.onSupportNavigateUp()
     }
 }

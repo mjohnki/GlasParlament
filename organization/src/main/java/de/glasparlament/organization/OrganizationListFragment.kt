@@ -8,18 +8,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.idanatz.oneadapter.OneAdapter
 import de.glasparlament.common_android.NavigationFragment
 import de.glasparlament.common_android.NavigationViewModel
 import de.glasparlament.organization.databinding.OrganizationListFragmentBinding
 import javax.inject.Inject
 
-class OrganizationListFragment : NavigationFragment() {
+class OrganizationListFragment : NavigationFragment(), OrganizationAdapter.OnItemClickListener {
 
     @Inject
     lateinit var factory: OrganizationListViewModelFactory
-
-    private val oneAdapter: OneAdapter = OneAdapter()
 
     lateinit var viewModel: OrganizationListViewModel
 
@@ -30,31 +27,34 @@ class OrganizationListFragment : NavigationFragment() {
         viewModel.loadData()
 
         (activity as AppCompatActivity).supportActionBar!!.setTitle(R.string.app_name)
-        //Add back navigation in the title bar
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
+
+        val adapter = OrganizationAdapter(this)
         val binding = DataBindingUtil.inflate<OrganizationListFragmentBinding>(
                 inflater, R.layout.organization_list_fragment, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        binding.organizationList.adapter = adapter
 
-        oneAdapter.attachItemModule(OrganizationItemModule()
-                .addEventHook(OrganizationItemClickEvent(viewModel)))
-        oneAdapter.attachTo(binding.organizationList)
-
-        subscribe(viewModel)
+        subscribe(viewModel, adapter)
 
         return binding.root
     }
 
-    private fun subscribe(viewModel: OrganizationListViewModel) {
+    override fun onItemClick(bodyOrganization: BodyOrganization) {
+        val direction =
+                OrganizationListFragmentDirections.actionOrganizationListFragmentToMeetingListFragment(bodyOrganization.meeting, bodyOrganization.name)
+        viewModel.navigate(direction)
+    }
+
+    private fun subscribe(viewModel: OrganizationListViewModel, adapter: OrganizationAdapter) {
         viewModel.uiModel.observe(this, Observer { model ->
-            oneAdapter.add(model.organizations)
+            adapter.submitList(model.organizations)
         })
     }
 

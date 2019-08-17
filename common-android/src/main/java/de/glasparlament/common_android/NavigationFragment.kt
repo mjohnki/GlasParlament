@@ -13,10 +13,11 @@ abstract class NavigationFragment : DaggerFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getViewModel().navigationCommand.observe(this, Observer { command ->
-            when (command) {
-                is NavigationCommand.To -> findNavController().navigate(command.directions)
+            command.getContentIfNotHandled()?.let{
+                when (it) {
+                    is NavigationCommand.To -> findNavController().navigate(it.directions)
+                }
             }
         })
     }
-
 }

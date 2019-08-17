@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 
 abstract class NavigationViewModel : ViewModel() {
-    val navigationCommand = MutableLiveData<NavigationCommand>()
+    val navigationCommand = MutableLiveData<Event<NavigationCommand>>()
 
     fun navigate(directions: NavDirections) {
-        navigationCommand.postValue(NavigationCommand.To(directions))
+        navigationCommand.postValue(Event(NavigationCommand.To(directions)))
     }
 }

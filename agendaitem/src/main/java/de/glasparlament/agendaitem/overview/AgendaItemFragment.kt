@@ -1,39 +1,25 @@
 package de.glasparlament.agendaitem.overview
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.idanatz.oneadapter.OneAdapter
-import com.idanatz.oneadapter.external.events.ClickEventHook
-import com.idanatz.oneadapter.external.modules.ItemModule
-import com.idanatz.oneadapter.external.modules.ItemModuleConfig
-import com.idanatz.oneadapter.internal.holders.ViewBinder
-import dagger.android.support.DaggerFragment
 import de.glasparlament.agendaitem.R
 import de.glasparlament.agendaitem.databinding.AgendaItemFragmentBinding
-import de.glasparlament.common_android.NavigationCommand
 import de.glasparlament.common_android.NavigationFragment
 import de.glasparlament.common_android.NavigationViewModel
 import de.glasparlament.data.AgendaItem
-import org.jetbrains.annotations.NotNull
 import javax.inject.Inject
 
-class AgendaItemFragment : NavigationFragment() {
+class AgendaItemFragment : NavigationFragment(), AgendaItemAdapter.OnItemClickListener {
 
     @Inject
     lateinit var factory: AgendaItemViewModelFactory
-
-    private val oneAdapter: OneAdapter = OneAdapter()
 
     private lateinit var viewModel: AgendaItemViewModel
 
@@ -51,57 +37,31 @@ class AgendaItemFragment : NavigationFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        val adapter = AgendaItemAdapter(this)
         val binding = DataBindingUtil.inflate<AgendaItemFragmentBinding>(
                 inflater, R.layout.agenda_item_fragment, container, false)
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        binding.agendaList.adapter = adapter
 
-        oneAdapter.attachItemModule(AgendaItemModule()
-                .addEventHook(ItemClickEvent(viewModel)))
-        oneAdapter.attachTo(binding.agendaList)
-
-        subscribeUi(viewModel)
+        subscribeUi(viewModel, adapter)
 
         return binding.root
     }
 
-    private fun subscribeUi(viewModel: AgendaItemViewModel) {
+    private fun subscribeUi(viewModel: AgendaItemViewModel, adapter : AgendaItemAdapter) {
         viewModel.uiModel.observe(viewLifecycleOwner, Observer { model ->
-            oneAdapter.add(model.agendaItems)
+            adapter.submitList(model.agendaItems)
         })
+    }
+
+    override fun onItemClick(agendaItem: AgendaItem) {
+        val direction
+                = AgendaItemFragmentDirections.actionAgendaFragmentToAgendaItemFragment(agendaItem.id)
+        viewModel.navigate(direction)
     }
 
     override fun getViewModel(): NavigationViewModel =
             viewModel
-}
-
-private class ItemClickEvent(val viewModel: AgendaItemViewModel) : ClickEventHook<AgendaItem>() {
-
-    override fun onClick(@NonNull model: AgendaItem, @NonNull viewBinder: ViewBinder) {
-        val direction = AgendaItemFragmentDirections.actionAgendaFragmentToAgendaItemFragment(model.id)
-        viewModel.navigate(direction)
-    }
-}
-
-
-private class AgendaItemModule : ItemModule<AgendaItem>() {
-
-    @NotNull
-    override fun provideModuleConfig(): ItemModuleConfig {
-        return object : ItemModuleConfig() {
-            override fun withLayoutResource(): Int {
-                return R.layout.agenda_item
-            }
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    override fun onBind(@NotNull model: AgendaItem, @NotNull viewBinder: ViewBinder) {
-        val agendaItemNumber: TextView = viewBinder.findViewById(R.id.agendaItemNumber)
-        agendaItemNumber.text = "TOP ${model.number}"
-
-        val agendaItemName: TextView = viewBinder.findViewById(R.id.agendaItemName)
-        agendaItemName.text = model.name
-    }
 }

@@ -62,5 +62,4 @@ dependencies {
 
     //Other
     implementation libraries.customtabs
-    implementation libraries.oneadapter
 }
