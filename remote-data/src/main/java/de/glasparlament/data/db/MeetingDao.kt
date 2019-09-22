@@ -15,7 +15,7 @@ interface MeetingDao {
     suspend fun  getMeeting(id: String): Meeting
 
     @Query("SELECT COUNT(*) from Meeting WHERE meetingId = :id")
-    suspend fun  hasVoucher(id: String): Boolean
+    suspend fun  hasMeeting(id: String): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(meetings: Meeting)

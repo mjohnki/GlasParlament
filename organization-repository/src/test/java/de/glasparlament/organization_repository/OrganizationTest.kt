@@ -1,5 +1,6 @@
 package de.glasparlament.organization_repository
 
+import de.glasparlament.data.OrganizationList
 import de.glasparlament.data.Transfer
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -32,7 +33,7 @@ class OrganizationTest {
     fun testGetMeetingWithSuccess() {
         //given:
         val url = "http://test.test"
-        val transfer = Transfer.Success(TestData.organizationList)
+        val transfer = Transfer.Success(OrganizationList())
         coEvery { repository.getOrganizationList(url) } returns transfer
 
         //when:
@@ -40,6 +41,6 @@ class OrganizationTest {
 
         //then:
         Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(TestData.organizationList, (result as Transfer.Success).data)
+        Assert.assertEquals(OrganizationList(), (result as Transfer.Success).data)
     }
 }

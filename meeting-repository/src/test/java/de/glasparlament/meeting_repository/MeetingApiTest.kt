@@ -11,6 +11,7 @@ import okhttp3.ResponseBody
 import org.junit.Assert
 import org.junit.Test
 import retrofit2.Response
+import java.util.ArrayList
 
 class MeetingApiTest {
 
@@ -37,7 +38,7 @@ class MeetingApiTest {
     fun testGetMeetingListWithSuccess() {
         //given:
         val url = "http://test.test"
-        val response = Response.success(200,  TestData.meetingList)
+        val response = Response.success(200,  MeetingList())
         coEvery { endpoint.getMeetingList(url) } returns response
 
         //when:
@@ -45,7 +46,7 @@ class MeetingApiTest {
 
         //then:
         Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(TestData.meetingList, (result as Transfer.Success).data)
+        Assert.assertEquals(MeetingList(), (result as Transfer.Success).data)
     }
 
     @Test
@@ -68,7 +69,8 @@ class MeetingApiTest {
     fun testGetMeetingWithSuccess() {
         //given:
         val url = "http://test.test"
-        val response = Response.success(200,  TestData.meeting)
+        val meeting = MeetingRemote("", "",  ArrayList(), ArrayList(), "")
+        val response = Response.success(200,  meeting)
         coEvery { endpoint.getMeeting(url) } returns response
 
         //when:
@@ -76,6 +78,6 @@ class MeetingApiTest {
 
         //then:
         Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(TestData.meeting, (result as Transfer.Success).data)
+        Assert.assertEquals(meeting, (result as Transfer.Success).data)
     }
 }
