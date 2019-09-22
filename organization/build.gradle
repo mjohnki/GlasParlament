@@ -29,6 +29,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    lintOptions {
+        disable 'IconLocation'
+    }
+
     kotlinOptions {
         jvmTarget =  "1.8"
     }

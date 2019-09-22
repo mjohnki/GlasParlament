@@ -41,7 +41,7 @@
             android:layout_below="@+id/name"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:text="Drucksachen"/>
+            android:text="@string/printing"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/file_list"

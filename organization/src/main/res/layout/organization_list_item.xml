@@ -41,7 +41,8 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/abgeordnetenhaus" />
+                android:src="@drawable/abgeordnetenhaus"
+                tools:ignore="ContentDescription" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
