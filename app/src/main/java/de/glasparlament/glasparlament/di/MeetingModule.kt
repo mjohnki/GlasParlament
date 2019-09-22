@@ -3,6 +3,10 @@ package de.glasparlament.glasparlament.di
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
+import de.glasparlament.data.db.AgendaItemDao
+import de.glasparlament.data.db.FileDao
+import de.glasparlament.data.db.GPDatabase
+import de.glasparlament.data.db.MeetingDao
 import de.glasparlament.meeting.MeetingListFragment
 import de.glasparlament.meeting.MeetingViewModelFactory
 import de.glasparlament.meeting_repository.MeetingApi
@@ -34,8 +38,12 @@ class MeetingModule {
     /** Repository*/
     @Provides
     @Singleton
-    fun provideMeetingRepository(api: MeetingApi): MeetingRepository {
-        return MeetingRepositoryImpl(api)
+    fun provideMeetingRepository(
+            api: MeetingApi,
+            meetingDao : MeetingDao,
+            agendaItemDao: AgendaItemDao,
+            fileDao: FileDao): MeetingRepository {
+        return MeetingRepositoryImpl(api, meetingDao, agendaItemDao, fileDao)
     }
 
     /** UseCase*/
@@ -52,6 +60,12 @@ class MeetingModule {
         return MeetingViewModelFactory(useCase)
     }
 
+    /** DAO **/
+    @Provides
+    @Singleton
+    fun provideMeetingDao(database: GPDatabase) : MeetingDao {
+        return database.meetingDao()
+    }
 
     @Module
     abstract class Binding {

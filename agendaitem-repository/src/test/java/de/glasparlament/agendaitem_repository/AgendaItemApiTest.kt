@@ -1,6 +1,6 @@
 package de.glasparlament.agendaitem_repository
 
-import de.glasparlament.data.AgendaItem
+import de.glasparlament.data.AgendaItemRemote
 import de.glasparlament.data.Transfer
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -22,7 +22,7 @@ class AgendaItemApiTest {
         //given:
         val url = "http://test.test"
         val errorBody = ResponseBody.create(MediaType.get("text/plain"), "Error")
-        val response = Response.error<AgendaItem>(400,  errorBody)
+        val response = Response.error<AgendaItemRemote>(400,  errorBody)
         coEvery { endpoint.getAgendaItem(url) } returns response
 
        //when:

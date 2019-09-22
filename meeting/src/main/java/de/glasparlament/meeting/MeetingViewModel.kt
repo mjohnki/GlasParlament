@@ -1,13 +1,11 @@
 package de.glasparlament.meeting
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavDirections
-import de.glasparlament.common_android.NavigationCommand
 import de.glasparlament.common_android.NavigationViewModel
 import de.glasparlament.data.Transfer
-import de.glasparlament.data.Meeting
+import de.glasparlament.data.MeetingRemote
+import de.glasparlament.meeting_repository.Meeting
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

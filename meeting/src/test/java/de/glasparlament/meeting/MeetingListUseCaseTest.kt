@@ -1,6 +1,5 @@
 package de.glasparlament.meeting
 
-import de.glasparlament.data.Meeting
 import de.glasparlament.data.Transfer
 import de.glasparlament.meeting_repository.MeetingRepository
 import io.mockk.coEvery

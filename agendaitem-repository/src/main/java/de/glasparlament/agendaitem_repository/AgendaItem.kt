@@ -1,11 +1,11 @@
-package de.glasparlament.data
+package de.glasparlament.agendaitem_repository
 
-class AgendaItem constructor(
+data class AgendaItem(
         var id: String,
         var number: String,
         var name: String,
         var meeting: String,
-        var auxiliaryFile: List<File> ){
+        var auxiliaryFile: List<File>) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

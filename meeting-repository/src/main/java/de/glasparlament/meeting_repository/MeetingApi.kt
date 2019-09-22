@@ -2,7 +2,7 @@ package de.glasparlament.meeting_repository
 
 import de.glasparlament.data.BaseApi
 import de.glasparlament.data.Transfer
-import de.glasparlament.data.Meeting
+import de.glasparlament.data.MeetingRemote
 import de.glasparlament.data.MeetingList
 
 class MeetingApi(private val endpoint: MeetingEndpoint) : BaseApi() {
@@ -14,7 +14,7 @@ class MeetingApi(private val endpoint: MeetingEndpoint) : BaseApi() {
         )
     }
 
-    suspend fun getMeeting(url: String): Transfer<Meeting> {
+    suspend fun getMeeting(url: String): Transfer<MeetingRemote> {
         return safeApiCall(
                 call = { endpoint.getMeeting(url) },
                 errorMessage = errorMessageMeeting

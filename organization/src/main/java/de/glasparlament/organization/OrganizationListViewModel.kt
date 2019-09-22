@@ -1,6 +1,7 @@
 package de.glasparlament.organization
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import de.glasparlament.common_android.NavigationViewModel
 import de.glasparlament.data.Transfer

@@ -3,7 +3,7 @@ package de.glasparlament.meeting
 import de.glasparlament.data.*
 
 object TestData {
-    val meeting = Meeting(
+    val meeting = MeetingRemote(
             id = "id",
             name = "39. Sitzung des Plenums",
             agendaItem = listOf(),

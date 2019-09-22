@@ -1,12 +1,9 @@
 package de.glasparlament.agendaitem.overview
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavDirections
-import de.glasparlament.common_android.NavigationCommand
+import de.glasparlament.agendaitem_repository.AgendaItem
 import de.glasparlament.common_android.NavigationViewModel
-import de.glasparlament.data.AgendaItem
 import de.glasparlament.data.Transfer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

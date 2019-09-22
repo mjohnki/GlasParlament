@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_organization_list_fragment_to_meeting_list_fragment"
             app:destination="@id/meeting_list_fragment" />
+        <action
+            android:id="@+id/action_agenda_item_search_fragment"
+            app:destination="@id/agenda_item_search_fragment" />
     </fragment>
 
     <fragment
@@ -56,6 +59,17 @@
         <argument
             android:name="agendaId"
             app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/agenda_item_search_fragment"
+        android:name="de.glasparlament.agendaitem.search.AgendaItemSearchFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/agenda_item_search_fragment">
+
+        <action
+            android:id="@+id/agenda_item_fragment"
+            app:destination="@id/agenda_item_fragment" />
     </fragment>
 
 </navigation>

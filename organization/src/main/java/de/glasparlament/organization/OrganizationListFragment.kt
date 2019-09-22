@@ -1,5 +1,7 @@
 package de.glasparlament.organization
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +15,7 @@ import de.glasparlament.common_android.NavigationViewModel
 import de.glasparlament.organization.databinding.OrganizationListFragmentBinding
 import javax.inject.Inject
 
-class OrganizationListFragment : NavigationFragment(), OrganizationAdapter.OnItemClickListener {
+class OrganizationListFragment : NavigationFragment(), OrganizationAdapter.OnItemClickListener, View.OnClickListener {
 
     @Inject
     lateinit var factory: OrganizationListViewModelFactory
@@ -38,6 +40,7 @@ class OrganizationListFragment : NavigationFragment(), OrganizationAdapter.OnIte
         val binding = DataBindingUtil.inflate<OrganizationListFragmentBinding>(
                 inflater, R.layout.organization_list_fragment, container, false)
         binding.viewModel = viewModel
+        binding.clickListener = this
         binding.lifecycleOwner = this
         binding.organizationList.adapter = adapter
 
@@ -56,6 +59,12 @@ class OrganizationListFragment : NavigationFragment(), OrganizationAdapter.OnIte
         viewModel.uiModel.observe(this, Observer { model ->
             adapter.submitList(model.organizations)
         })
+    }
+
+    override fun onClick(v: View?) {
+        val direction =
+                OrganizationListFragmentDirections.actionAgendaItemSearchFragment()
+        viewModel.navigate(direction)
     }
 
     override fun getViewModel(): NavigationViewModel =

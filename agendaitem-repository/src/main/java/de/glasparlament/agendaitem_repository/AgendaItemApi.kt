@@ -1,11 +1,11 @@
 package de.glasparlament.agendaitem_repository
 
-import de.glasparlament.data.AgendaItem
+import de.glasparlament.data.AgendaItemRemote
 import de.glasparlament.data.Transfer
 
 class AgendaItemApi(private val endpoint: AgendaItemEndpoint)  {
 
-    suspend fun getAgendaItem(url: String): Transfer<AgendaItem> {
+    suspend fun getAgendaItem(url: String): Transfer<AgendaItemRemote> {
 
         val response = endpoint.getAgendaItem(url)
 

@@ -8,7 +8,7 @@
             type="android.view.View.OnClickListener"/>
         <variable
             name="file"
-            type="de.glasparlament.data.File" />
+            type="de.glasparlament.agendaitem_repository.File" />
     </data>
 
         <RelativeLayout

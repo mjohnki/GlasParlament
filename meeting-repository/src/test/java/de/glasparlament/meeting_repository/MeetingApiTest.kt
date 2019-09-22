@@ -1,6 +1,6 @@
 package de.glasparlament.meeting_repository
 
-import de.glasparlament.data.Meeting
+import de.glasparlament.data.MeetingRemote
 import de.glasparlament.data.MeetingList
 import de.glasparlament.data.Transfer
 import io.mockk.coEvery
@@ -53,7 +53,7 @@ class MeetingApiTest {
         //given:
         val url = "http://test.test"
         val errorBody = ResponseBody.create(MediaType.get("text/plain"), "Error")
-        val response = Response.error<Meeting>(400,  errorBody)
+        val response = Response.error<MeetingRemote>(400,  errorBody)
         coEvery { endpoint.getMeeting(url) } returns response
 
         //when:

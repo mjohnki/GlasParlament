@@ -1,3 +1,3 @@
 package de.glasparlament.data
 
-class MeetingList(val data: List<Meeting> = listOf())
+class MeetingList(val data: List<MeetingRemote> = listOf())

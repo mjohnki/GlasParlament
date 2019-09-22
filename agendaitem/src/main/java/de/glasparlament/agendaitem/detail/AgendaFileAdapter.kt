@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import de.glasparlament.data.File
 import de.glasparlament.agendaitem.databinding.AgendaFileItemBinding
+import de.glasparlament.agendaitem_repository.File
 
 class AgendaFileAdapter(private val listener: OnItemClickListener) : ListAdapter<File, AgendaFileAdapter.ViewHolder>(DiffCallback()) {
 

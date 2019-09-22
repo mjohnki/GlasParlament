@@ -5,7 +5,7 @@
     <data>
         <variable
             name="meeting"
-            type="de.glasparlament.data.Meeting" />
+            type="de.glasparlament.meeting_repository.Meeting" />
         <variable
             name="clickListener"
             type="android.view.View.OnClickListener" />

@@ -11,8 +11,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import de.glasparlament.common_android.NavigationFragment
 import de.glasparlament.common_android.NavigationViewModel
-import de.glasparlament.data.Meeting
+import de.glasparlament.data.MeetingRemote
 import de.glasparlament.meeting.databinding.MeetingListFragmentBinding
+import de.glasparlament.meeting_repository.Meeting
 import javax.inject.Inject
 
 class MeetingListFragment : NavigationFragment(), MeetingAdapter.OnItemClickListener {

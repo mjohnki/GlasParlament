@@ -7,6 +7,10 @@ import com.microsoft.appcenter.AppCenter
 import com.microsoft.appcenter.analytics.Analytics
 import com.microsoft.appcenter.crashes.Crashes
 import dagger.android.support.DaggerAppCompatActivity
+import android.content.Intent
+import android.net.Uri
+
+
 
 class MainActivity : DaggerAppCompatActivity(){
 

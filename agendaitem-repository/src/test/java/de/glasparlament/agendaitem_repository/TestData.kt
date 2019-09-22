@@ -1,8 +1,8 @@
 package de.glasparlament.agendaitem_repository
 
-import de.glasparlament.data.AgendaItem
+import de.glasparlament.data.AgendaItemRemote
 import java.util.ArrayList
 
 object TestData {
-    val agendaItem = AgendaItem("", "", "", "", ArrayList())
+    val agendaItem = AgendaItemRemote("", "", "", "", ArrayList())
 }

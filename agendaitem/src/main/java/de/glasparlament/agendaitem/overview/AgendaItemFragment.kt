@@ -11,9 +11,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import de.glasparlament.agendaitem.R
 import de.glasparlament.agendaitem.databinding.AgendaItemFragmentBinding
+import de.glasparlament.agendaitem_repository.AgendaItem
 import de.glasparlament.common_android.NavigationFragment
 import de.glasparlament.common_android.NavigationViewModel
-import de.glasparlament.data.AgendaItem
+import de.glasparlament.data.AgendaItemRemote
 import javax.inject.Inject
 
 class AgendaItemFragment : NavigationFragment(), AgendaItemAdapter.OnItemClickListener {

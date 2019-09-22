@@ -1,9 +1,11 @@
 package de.glasparlament.glasparlament.di
 
+import androidx.room.Room
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
+import de.glasparlament.data.db.GPDatabase
 import de.glasparlament.glasparlament.AuthInterceptor
 import de.glasparlament.glasparlament.BaseApplication
 import de.glasparlament.glasparlament.BuildConfig
@@ -42,6 +44,16 @@ class ApplicationModule(private val application: BaseApplication) {
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .baseUrl(BuildConfig.BASE_URL)
                 .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDB(app : BaseApplication) : GPDatabase {
+        return Room.databaseBuilder(
+                app.applicationContext,
+                GPDatabase::class.java,
+                "Database"
+        ).build()
     }
 
     @Module

@@ -1,8 +1,7 @@
 package de.glasparlament.meeting
 
 import de.glasparlament.data.Transfer
-import de.glasparlament.data.Meeting
-import de.glasparlament.data.MeetingList
+import de.glasparlament.meeting_repository.Meeting
 import de.glasparlament.meeting_repository.MeetingRepository
 
 class MeetingListUseCase(private val repository: MeetingRepository) {
@@ -14,11 +13,6 @@ class MeetingListUseCase(private val repository: MeetingRepository) {
         }
     }
 
-    private fun map(meetingList: MeetingList) : List<Meeting>{
-        val result = meetingList.data
-
-        result.sortedBy { meeting -> meeting.name }
-
-        return result
-    }
+    private fun map(meetings: List<Meeting>) : List<Meeting> =
+        meetings.sortedBy { meeting -> meeting.name }
 }

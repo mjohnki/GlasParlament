@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import de.glasparlament.data.Meeting
 import de.glasparlament.meeting.databinding.MeetingListItemBinding
+import de.glasparlament.meeting_repository.Meeting
 
 class MeetingAdapter(private val listener: OnItemClickListener) : ListAdapter<Meeting, MeetingAdapter.ViewHolder>(DiffCallback()) {
 
@@ -17,8 +17,8 @@ class MeetingAdapter(private val listener: OnItemClickListener) : ListAdapter<Me
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val file = getItem(position)
-        holder.bind(file, createOnClickListener(file))
+        val meeting = getItem(position)
+        holder.bind(meeting, createOnClickListener(meeting))
     }
 
     private fun createOnClickListener(meeting: Meeting): View.OnClickListener {

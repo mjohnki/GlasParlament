@@ -1,8 +1,8 @@
 package de.glasparlament.data
 
-data class Meeting(
+data class MeetingRemote(
         var id: String = "",
         var name: String = "",
-        var agendaItem: List<AgendaItem> =  mutableListOf(),
+        var agendaItem: List<AgendaItemRemote> =  mutableListOf(),
         var organization: List<String> = mutableListOf(),
         var body: String = "")

@@ -1,9 +1,9 @@
-package de.glasparlament.data
+package de.glasparlament.agendaitem_repository
 
 class File constructor(
-       var id: String,
+        var id: String,
         var name: String,
-        var accessUrl: String){
+        var accessUrl: String) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
