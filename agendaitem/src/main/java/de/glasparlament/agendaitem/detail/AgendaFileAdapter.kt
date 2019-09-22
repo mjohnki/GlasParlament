@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import de.glasparlament.agendaitem.databinding.AgendaFileItemBinding
-import de.glasparlament.agendaitem_repository.File
+import de.glasparlament.agendaItemRepository.File
 
-class AgendaFileAdapter(private val listener: OnItemClickListener) : ListAdapter<File, AgendaFileAdapter.ViewHolder>(DiffCallback()) {
+class AgendaFileAdapter(private val listener: OnItemClickListener) :
+        ListAdapter<File, AgendaFileAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(AgendaFileItemBinding.inflate(

@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import de.glasparlament.common_android.NavigationFragment
-import de.glasparlament.common_android.NavigationViewModel
+import de.glasparlament.common.NavigationFragment
+import de.glasparlament.common.NavigationViewModel
 import de.glasparlament.organization.databinding.OrganizationListFragmentBinding
 import javax.inject.Inject
 
@@ -49,7 +49,10 @@ class OrganizationListFragment : NavigationFragment(), OrganizationAdapter.OnIte
 
     override fun onItemClick(bodyOrganization: BodyOrganization) {
         val direction =
-                OrganizationListFragmentDirections.actionOrganizationListFragmentToMeetingListFragment(bodyOrganization.meeting, bodyOrganization.name)
+                OrganizationListFragmentDirections.
+                        actionOrganizationListFragmentToMeetingListFragment(
+                                bodyOrganization.meeting,
+                                bodyOrganization.name)
         viewModel.navigate(direction)
     }
 

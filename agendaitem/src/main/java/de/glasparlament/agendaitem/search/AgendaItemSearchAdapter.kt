@@ -6,12 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import de.glasparlament.agendaitem.databinding.AgendaItemBinding
 import de.glasparlament.agendaitem.databinding.AgendaItemSearchBinding
-import de.glasparlament.agendaitem_repository.AgendaItem
-import de.glasparlament.agendaitem_repository.AgendaItemSearchResult
+import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
 
-class AgendaItemSearchAdapter(private val listener: OnItemClickListener) : ListAdapter<AgendaItemSearchResult, AgendaItemSearchAdapter.ViewHolder>(DiffCallback()) {
+class AgendaItemSearchAdapter(private val listener: OnItemClickListener)
+    : ListAdapter<AgendaItemSearchResult, AgendaItemSearchAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(AgendaItemSearchBinding.inflate(

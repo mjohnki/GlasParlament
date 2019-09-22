@@ -12,10 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import de.glasparlament.agendaitem.R
 import de.glasparlament.agendaitem.databinding.AgendaItemSearchFragmentBinding
-import de.glasparlament.agendaitem_repository.AgendaItem
-import de.glasparlament.agendaitem_repository.AgendaItemSearchResult
-import de.glasparlament.common_android.NavigationFragment
-import de.glasparlament.common_android.NavigationViewModel
+import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
+import de.glasparlament.common.NavigationFragment
+import de.glasparlament.common.NavigationViewModel
 import javax.inject.Inject
 
 class AgendaItemSearchFragment : NavigationFragment(), AgendaItemSearchAdapter.OnItemClickListener , TextWatcher {

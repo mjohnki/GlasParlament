@@ -1,7 +1,7 @@
 package de.glasparlament.meeting
 
 import de.glasparlament.data.Transfer
-import de.glasparlament.meeting_repository.Meeting
+import de.glasparlament.meetingRepository.Meeting
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers

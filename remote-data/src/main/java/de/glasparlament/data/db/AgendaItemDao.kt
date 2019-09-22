@@ -1,7 +1,11 @@
 package de.glasparlament.data.db
 
-import androidx.room.*
-import de.glasparlament.data.MeetingRemote
+import androidx.room.Dao
+import androidx.room.Transaction
+import androidx.room.Query
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+
 
 @Dao
 interface AgendaItemDao {

@@ -13,7 +13,7 @@ buildscript {
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.3'
         classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.1"
         classpath 'com.dicedmelon.gradle:jacoco-android:0.1.4'
         classpath "de.mannodermaus.gradle.plugins:android-junit5:1.5.1.0"
     }
@@ -24,6 +24,7 @@ allprojects {
         google()
         jcenter()
     }
+    apply from: "$rootDir/detekt.gradle"
 }
 
 task clean(type: Delete) {

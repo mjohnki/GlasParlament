@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import de.glasparlament.meeting.databinding.MeetingListItemBinding
-import de.glasparlament.meeting_repository.Meeting
+import de.glasparlament.meetingRepository.Meeting
 
-class MeetingAdapter(private val listener: OnItemClickListener) : ListAdapter<Meeting, MeetingAdapter.ViewHolder>(DiffCallback()) {
+class MeetingAdapter(private val listener: OnItemClickListener) :
+        ListAdapter<Meeting, MeetingAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(MeetingListItemBinding.inflate(

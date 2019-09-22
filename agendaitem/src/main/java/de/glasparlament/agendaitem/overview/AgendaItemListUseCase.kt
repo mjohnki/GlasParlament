@@ -1,10 +1,8 @@
 package de.glasparlament.agendaitem.overview
 
-import de.glasparlament.agendaitem_repository.AgendaItem
-import de.glasparlament.agendaitem_repository.AgendaItemRepository
-import de.glasparlament.data.AgendaItemRemote
+import de.glasparlament.agendaItemRepository.AgendaItem
+import de.glasparlament.agendaItemRepository.AgendaItemRepository
 import de.glasparlament.data.Transfer
-import de.glasparlament.meeting_repository.MeetingRepository
 
 class AgendaItemListUseCase(private val repository: AgendaItemRepository) {
 

@@ -2,10 +2,9 @@ package de.glasparlament.meeting
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import de.glasparlament.common_android.NavigationViewModel
+import de.glasparlament.common.NavigationViewModel
 import de.glasparlament.data.Transfer
-import de.glasparlament.data.MeetingRemote
-import de.glasparlament.meeting_repository.Meeting
+import de.glasparlament.meetingRepository.Meeting
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,7 +18,10 @@ abstract class MeetingViewModel : NavigationViewModel() {
     companion object {
         fun loading() = UIModel(progressBarVisibility = true, listVisibility = false)
         fun error() = UIModel(progressBarVisibility = true, listVisibility = false)
-        fun loaded(meetings: List<Meeting>) = UIModel(progressBarVisibility = false, listVisibility = true, meetings = meetings)
+        fun loaded(meetings: List<Meeting>) = UIModel(
+                progressBarVisibility = false,
+                listVisibility = true,
+                meetings = meetings)
     }
 }
 

@@ -6,7 +6,7 @@
 
         <variable
             name="agendaItem"
-            type="de.glasparlament.agendaitem_repository.AgendaItem" />
+            type="de.glasparlament.agendaItemRepository.AgendaItem" />
 
         <variable
             name="clickListener"

@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import de.glasparlament.organization.databinding.OrganizationListItemBinding
 
-class OrganizationAdapter(private val listener: OnItemClickListener) : ListAdapter<BodyOrganization, OrganizationAdapter.ViewHolder>(DiffCallback()) {
+class OrganizationAdapter(private val listener: OnItemClickListener) :
+        ListAdapter<BodyOrganization, OrganizationAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(OrganizationListItemBinding.inflate(

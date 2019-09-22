@@ -1,9 +1,8 @@
 package de.glasparlament.organization
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import de.glasparlament.common_android.NavigationViewModel
+import de.glasparlament.common.NavigationViewModel
 import de.glasparlament.data.Transfer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +17,10 @@ abstract class OrganizationListViewModel : NavigationViewModel() {
     companion object {
         fun loading() = UIModel(progressBarVisibility = true, listVisibility = false)
         fun error() = UIModel(progressBarVisibility = true, listVisibility = false)
-        fun loaded(organizations: List<BodyOrganization>) = UIModel(progressBarVisibility = false, listVisibility = true, organizations = organizations)
+        fun loaded(organizations: List<BodyOrganization>) = UIModel(
+                progressBarVisibility = false,
+                listVisibility = true,
+                organizations = organizations)
     }
 }
 
