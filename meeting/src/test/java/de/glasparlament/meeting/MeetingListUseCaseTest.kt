@@ -1,6 +1,7 @@
 package de.glasparlament.meeting
 
 import de.glasparlament.data.Transfer
+import de.glasparlament.meeting_repository.Meeting
 import de.glasparlament.meeting_repository.MeetingRepository
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -33,7 +34,13 @@ class MeetingListUseCaseTest {
     fun testUseCaseWithSuccess() {
         //given:
         val url = "http://test.test"
-        val meetingList = Transfer.Success(TestData.meetingList)
+        val meeting = Meeting(
+                id = "id",
+                name = "39. Sitzung des Plenums",
+                agendaItem = listOf(),
+                body = "http://test.test"
+        )
+        val meetingList = Transfer.Success(listOf(meeting))
         coEvery { repository.getMeetingList(url) } returns  meetingList
 
         //when:

@@ -1,6 +1,6 @@
 package de.glasparlament.agendaitem.detail
 
-import de.glasparlament.agendaitem.TestData
+import de.glasparlament.agendaitem_repository.AgendaItem
 import de.glasparlament.agendaitem_repository.AgendaItemRepository
 import de.glasparlament.data.Transfer
 import io.mockk.coEvery
@@ -33,8 +33,15 @@ class AgendaItemUseCaseTest {
     @Test
     fun testUseCaseSuccess() {
         //given:
+        val agendaItem = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "16",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
         val url = "http://test.test"
-        val data = Transfer.Success(TestData.agendaItem_17)
+        val data = Transfer.Success(agendaItem)
         coEvery { repository.getAgendaItem(url) } returns  data
 
         //when:
@@ -42,6 +49,6 @@ class AgendaItemUseCaseTest {
 
         //then:
         Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(TestData.agendaItem_17, (result as Transfer.Success).data)
+        Assert.assertEquals(agendaItem, (result as Transfer.Success).data)
     }
 }

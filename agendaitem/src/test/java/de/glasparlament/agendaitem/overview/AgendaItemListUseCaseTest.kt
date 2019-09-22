@@ -1,8 +1,8 @@
 package de.glasparlament.agendaitem.overview
 
-import de.glasparlament.agendaitem.TestData
+import de.glasparlament.agendaitem_repository.AgendaItem
+import de.glasparlament.agendaitem_repository.AgendaItemRepository
 import de.glasparlament.data.Transfer
-import de.glasparlament.meeting_repository.MeetingRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -11,7 +11,7 @@ import org.junit.Test
 
 class AgendaItemListUseCaseTest {
 
-    private val repository = mockk<MeetingRepository>()
+    private val repository = mockk<AgendaItemRepository>()
     private val useCase = AgendaItemListUseCase(repository)
 
     @Test
@@ -20,7 +20,7 @@ class AgendaItemListUseCaseTest {
         val url = "http://test.test"
         val errorMessage = "Error Loading Data"
         val bodyList = Transfer.Error(errorMessage)
-        coEvery { repository.getMeeting(url) } returns bodyList
+        coEvery { repository.getAgendaItems(url) } returns bodyList
 
         //when:
         val result = runBlocking { useCase.execute(url) }
@@ -34,8 +34,15 @@ class AgendaItemListUseCaseTest {
     fun testUseCaseSuccessSingle() {
         //given:
         val url = "http://test.test"
-        val data = Transfer.Success(TestData.meeting_single_agendaitem)
-        coEvery { repository.getMeeting(url) } returns data
+        val agendaItem = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "17",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
+        val data = Transfer.Success(listOf(agendaItem))
+        coEvery { repository.getAgendaItems(url) } returns data
 
         //when:
         val result = runBlocking { useCase.execute(url) }
@@ -43,7 +50,7 @@ class AgendaItemListUseCaseTest {
         //then:
         Assert.assertTrue(result is Transfer.Success)
         Assert.assertEquals(
-                listOf(TestData.meeting_single_agendaitem.agendaItem[0]),
+                listOf(agendaItem),
                 (result as Transfer.Success).data
         )
     }
@@ -52,8 +59,22 @@ class AgendaItemListUseCaseTest {
     fun testUseCaseSuccess_16_17() {
         //given:
         val url = "http://test.test"
-        val data = Transfer.Success(TestData.meeting_agendaitem_16_17)
-        coEvery { repository.getMeeting(url) } returns data
+        val agendaItem17 = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "17",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
+        val agendaItem16 = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "16",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
+        val data = Transfer.Success(listOf(agendaItem16, agendaItem17))
+        coEvery { repository.getAgendaItems(url) } returns data
 
         //when:
         val result = runBlocking { useCase.execute(url) }
@@ -61,7 +82,7 @@ class AgendaItemListUseCaseTest {
         //then:
         Assert.assertTrue(result is Transfer.Success)
         Assert.assertEquals(
-                listOf(TestData.agendaItem_16, TestData.agendaItem_17),
+                listOf(agendaItem16, agendaItem17),
                 (result as Transfer.Success).data
         )
     }
@@ -70,8 +91,22 @@ class AgendaItemListUseCaseTest {
     fun testUseCaseSuccess_17_16() {
         //given:
         val url = "http://test.test"
-        val data = Transfer.Success(TestData.meeting_agendaitem_17_16)
-        coEvery { repository.getMeeting(url) } returns data
+        val agendaItem17 = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "17",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
+        val agendaItem16 = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "16",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
+        val data = Transfer.Success(listOf(agendaItem17, agendaItem16))
+        coEvery { repository.getAgendaItems(url) } returns data
 
         //when:
         val result = runBlocking { useCase.execute(url) }
@@ -79,7 +114,7 @@ class AgendaItemListUseCaseTest {
         //then:
         Assert.assertTrue(result is Transfer.Success)
         Assert.assertEquals(
-                listOf(TestData.agendaItem_16, TestData.agendaItem_17),
+                listOf(agendaItem16, agendaItem17),
                 (result as Transfer.Success).data
         )
     }
@@ -88,8 +123,22 @@ class AgendaItemListUseCaseTest {
     fun testUseCaseSuccess_17a_17b() {
         //given:
         val url = "http://test.test"
-        val data = Transfer.Success(TestData.meeting_agendaitem_17a_17b)
-        coEvery { repository.getMeeting(url) } returns data
+        val agendaItem17a = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "17.a",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
+        val agendaItem17b = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "17.b",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
+        val data = Transfer.Success(listOf(agendaItem17a, agendaItem17b))
+        coEvery { repository.getAgendaItems(url) } returns data
 
         //when:
         val result = runBlocking { useCase.execute(url) }
@@ -97,7 +146,7 @@ class AgendaItemListUseCaseTest {
         //then:
         Assert.assertTrue(result is Transfer.Success)
         Assert.assertEquals(
-                listOf(TestData.agendaItem_17a, TestData.agendaItem_17b),
+                listOf(agendaItem17a, agendaItem17b),
                 (result as Transfer.Success).data
         )
     }
@@ -106,8 +155,36 @@ class AgendaItemListUseCaseTest {
     fun testUseCaseSuccess_17a_17b_16_18() {
         //given:
         val url = "http://test.test"
-        val data = Transfer.Success(TestData.meeting_agendaitem_17a_17b_16_18)
-        coEvery { repository.getMeeting(url) } returns data
+        val agendaItem17a = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "17.a",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
+        val agendaItem17b = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "17.b",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
+        val agendaItem16 = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "16",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
+        val agendaItem18 = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "18",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
+        val data = Transfer.Success(listOf(agendaItem17a, agendaItem17b, agendaItem16, agendaItem18))
+        coEvery { repository.getAgendaItems(url) } returns data
 
         //when:
         val result = runBlocking { useCase.execute(url) }
@@ -115,7 +192,7 @@ class AgendaItemListUseCaseTest {
         //then:
         Assert.assertTrue(result is Transfer.Success)
         Assert.assertEquals(
-                listOf(TestData.agendaItem_16, TestData.agendaItem_17a, TestData.agendaItem_17b, TestData.agendaItem_18),
+                listOf(agendaItem16, agendaItem17a, agendaItem17b, agendaItem18),
                 (result as Transfer.Success).data
         )
     }
@@ -123,8 +200,36 @@ class AgendaItemListUseCaseTest {
     fun testUseCaseSuccess_7_4_6_5() {
         //given:
         val url = "http://test.test"
-        val data = Transfer.Success(TestData.meeting_agendaitem_7_4_6_5)
-        coEvery { repository.getMeeting(url) } returns data
+        val agendaItem4 = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "4",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
+        val agendaItem5 = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "5",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
+        val agendaItem6 = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "6",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
+        val agendaItem7 = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "7",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
+        val data = Transfer.Success(listOf(agendaItem7, agendaItem4, agendaItem6, agendaItem5))
+        coEvery { repository.getAgendaItems(url) } returns data
 
         //when:
         val result = runBlocking { useCase.execute(url) }
@@ -132,7 +237,7 @@ class AgendaItemListUseCaseTest {
         //then:
         Assert.assertTrue(result is Transfer.Success)
         Assert.assertEquals(
-                listOf(TestData.agendaItem_4, TestData.agendaItem_5, TestData.agendaItem_6, TestData.agendaItem_7),
+                listOf(agendaItem4, agendaItem5, agendaItem6, agendaItem7),
                 (result as Transfer.Success).data
         )
     }

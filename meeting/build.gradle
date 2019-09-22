@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 
 apply plugin: 'jacoco-android'
@@ -37,14 +37,14 @@ dependencies {
     //dagger
     implementation libraries.daggerAndroidSupport
 
+    //Lifecycle
+    implementation libraries.lifecycleViewmodel
+    implementation libraries.lifecycleExtensions
+
     //project
     implementation project(':meeting-repository')
     implementation project(':common-android')
     implementation project(':remote-data')
-
-    //Lifecycle
-    implementation libraries.lifecycleViewmodel
-    implementation libraries.lifecycleExtensions
 
     //Navigation
     implementation libraries.navigationFragment

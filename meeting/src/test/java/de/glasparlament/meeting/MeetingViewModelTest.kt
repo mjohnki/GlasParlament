@@ -2,14 +2,17 @@ package de.glasparlament.meeting
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import de.glasparlament.data.Transfer
+import de.glasparlament.meeting_repository.Meeting
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.*
 
+@ExperimentalCoroutinesApi
 class MeetingViewModelTest {
 
     @get:Rule
@@ -53,7 +56,13 @@ class MeetingViewModelTest {
     fun testUseCaseSuccess() {
         //given:
         val url = "http://test.test"
-        val data = Transfer.Success(TestData.meetings)
+        val meeting = Meeting(
+                id = "id",
+                name = "39. Sitzung des Plenums",
+                agendaItem = listOf(),
+                body = "http://test.test"
+        )
+        val data = Transfer.Success(listOf(meeting))
         coEvery { useCase.execute(url) } returns data
         viewModel = MeetingViewModelImpl(useCase)
 
@@ -64,6 +73,6 @@ class MeetingViewModelTest {
         //then:
         Assert.assertTrue(viewModel.uiModel.value!!.listVisibility)
         Assert.assertFalse(viewModel.uiModel.value!!.progressBarVisibility)
-        Assert.assertEquals(viewModel.uiModel.value!!.meetings, TestData.meetings)
+        Assert.assertEquals(viewModel.uiModel.value!!.meetings, listOf(meeting))
     }
 }

@@ -1,16 +1,18 @@
 package de.glasparlament.agendaitem.overview
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import de.glasparlament.agendaitem.TestData
+import de.glasparlament.agendaitem_repository.AgendaItem
 import de.glasparlament.data.Transfer
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.*
 
+@ExperimentalCoroutinesApi
 class AgendaItemViewModelTest {
 
     @get:Rule
@@ -52,7 +54,14 @@ class AgendaItemViewModelTest {
     fun testUseCaseSuccess() {
         //given:
         val url = "http://test.test"
-        val data = Transfer.Success(listOf(TestData.agendaItem_16))
+        val agendaItem16 = AgendaItem(
+                id = "id",
+                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                number = "16",
+                meeting = "http://test.test",
+                auxiliaryFile = listOf()
+        )
+        val data = Transfer.Success(listOf(agendaItem16))
         coEvery { useCase.execute(url) } returns data
         val viewModel = AgendaItemViewModelImpl(useCase)
 
@@ -64,6 +73,6 @@ class AgendaItemViewModelTest {
         //Loaded State
         Assert.assertTrue(viewModel.uiModel.value!!.listVisibility)
         Assert.assertFalse(viewModel.uiModel.value!!.progressBarVisibility)
-        Assert.assertEquals(viewModel.uiModel.value!!.agendaItems, listOf(TestData.agendaItem_16))
+        Assert.assertEquals(viewModel.uiModel.value!!.agendaItems, listOf(agendaItem16))
     }
 }
