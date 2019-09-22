@@ -24,7 +24,7 @@ android:
     - 'google-gdk-license-.+'
 
 script:
-  - ./gradlew build lint jacocoTestReport
+  - ./gradlew build lint detekt jacocoTestReport
 
 after_success:
     - bash <(curl -s https://codecov.io/bash)
