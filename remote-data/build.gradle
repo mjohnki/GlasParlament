@@ -27,6 +27,10 @@ android {
         }
     }
 
+    lintOptions {
+        warningsAsErrors true
+    }
+
     // used by Room, to test migrations
     sourceSets {
         androidTest.assets.srcDirs +=
