@@ -3,17 +3,17 @@ package de.glasparlament.glasparlament.di
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
-import de.glasparlament.body_repository.BodyApi
-import de.glasparlament.body_repository.BodyEndpoint
+import de.glasparlament.bodyRepository.BodyApi
+import de.glasparlament.bodyRepository.BodyEndpoint
 import de.glasparlament.organization.OrganizationListViewModelFactory
-import de.glasparlament.body_repository.BodyRepository
-import de.glasparlament.body_repository.BodyRepositoryImpl
+import de.glasparlament.bodyRepository.BodyRepository
+import de.glasparlament.bodyRepository.BodyRepositoryImpl
 import de.glasparlament.organization.OrganizationListFragment
-import de.glasparlament.organization_repository.OrganizationRepository
-import de.glasparlament.organization_repository.OrganizationRepositoryImpl
+import de.glasparlament.organizationRepository.OrganizationRepository
+import de.glasparlament.organizationRepository.OrganizationRepositoryImpl
 import de.glasparlament.organization.OrganizationListUseCase
-import de.glasparlament.organization_repository.OrganizationApi
-import de.glasparlament.organization_repository.OrganizationEndpoint
+import de.glasparlament.organizationRepository.OrganizationApi
+import de.glasparlament.organizationRepository.OrganizationEndpoint
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -62,14 +62,18 @@ class OrganizationModule {
     /** UseCase*/
     @Provides
     @Singleton
-    fun provideOrganizationListUseCase(bodyRepository: BodyRepository, organizationRepository: OrganizationRepository): OrganizationListUseCase {
+    fun provideOrganizationListUseCase(
+            bodyRepository: BodyRepository,
+            organizationRepository: OrganizationRepository)
+            : OrganizationListUseCase {
         return OrganizationListUseCase(organizationRepository, bodyRepository)
     }
 
     /** ViewModelFactory*/
     @Provides
     @Singleton
-    fun provideOrganizationListViewModelFactory(organizationListUseCase: OrganizationListUseCase): OrganizationListViewModelFactory {
+    fun provideOrganizationListViewModelFactory(organizationListUseCase: OrganizationListUseCase)
+            : OrganizationListViewModelFactory {
         return OrganizationListViewModelFactory(organizationListUseCase)
     }
 
@@ -78,6 +82,6 @@ class OrganizationModule {
     abstract class Binding {
 
         @ContributesAndroidInjector
-        abstract fun OrganizationActivity(): OrganizationListFragment
+        abstract fun organizationActivity(): OrganizationListFragment
     }
 }

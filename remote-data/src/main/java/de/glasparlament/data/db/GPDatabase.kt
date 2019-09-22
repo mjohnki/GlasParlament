@@ -12,6 +12,4 @@ public abstract class GPDatabase : RoomDatabase() {
     abstract fun agendaItemDao(): AgendaItemDao
 
     abstract fun fileDao(): FileDao
-
-
 }

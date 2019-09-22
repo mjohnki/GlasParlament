@@ -9,10 +9,10 @@ import de.glasparlament.data.db.GPDatabase
 import de.glasparlament.data.db.MeetingDao
 import de.glasparlament.meeting.MeetingListFragment
 import de.glasparlament.meeting.MeetingViewModelFactory
-import de.glasparlament.meeting_repository.MeetingApi
-import de.glasparlament.meeting_repository.MeetingEndpoint
-import de.glasparlament.meeting_repository.MeetingRepository
-import de.glasparlament.meeting_repository.MeetingRepositoryImpl
+import de.glasparlament.meetingRepository.MeetingApi
+import de.glasparlament.meetingRepository.MeetingEndpoint
+import de.glasparlament.meetingRepository.MeetingRepository
+import de.glasparlament.meetingRepository.MeetingRepositoryImpl
 import de.glasparlament.meeting.MeetingListUseCase
 import retrofit2.Retrofit
 import javax.inject.Singleton
@@ -71,6 +71,6 @@ class MeetingModule {
     abstract class Binding {
 
         @ContributesAndroidInjector
-        abstract fun MeetingActivity(): MeetingListFragment
+        abstract fun meetingActivity(): MeetingListFragment
     }
 }

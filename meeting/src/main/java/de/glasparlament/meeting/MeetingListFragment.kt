@@ -9,11 +9,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
-import de.glasparlament.common_android.NavigationFragment
-import de.glasparlament.common_android.NavigationViewModel
-import de.glasparlament.data.MeetingRemote
+import de.glasparlament.common.NavigationFragment
+import de.glasparlament.common.NavigationViewModel
 import de.glasparlament.meeting.databinding.MeetingListFragmentBinding
-import de.glasparlament.meeting_repository.Meeting
+import de.glasparlament.meetingRepository.Meeting
 import javax.inject.Inject
 
 class MeetingListFragment : NavigationFragment(), MeetingAdapter.OnItemClickListener {

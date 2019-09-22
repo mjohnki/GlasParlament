@@ -1,6 +1,7 @@
 package de.glasparlament.data.db
 
-import androidx.room.*
+import androidx.room.Embedded
+import androidx.room.Relation
 
 class AgendaItemFile (
         @Embedded

@@ -2,8 +2,8 @@ package de.glasparlament.agendaitem.overview
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import de.glasparlament.agendaitem_repository.AgendaItem
-import de.glasparlament.common_android.NavigationViewModel
+import de.glasparlament.agendaItemRepository.AgendaItem
+import de.glasparlament.common.NavigationViewModel
 import de.glasparlament.data.Transfer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,7 +17,10 @@ abstract class AgendaItemViewModel : NavigationViewModel() {
     companion object {
         fun loading() = UIModel(progressBarVisibility = true, listVisibility = false)
         fun error() = UIModel(progressBarVisibility = true, listVisibility = false)
-        fun loaded(agendaItems: List<AgendaItem>) = UIModel(progressBarVisibility = false, listVisibility = true, agendaItems = agendaItems)
+        fun loaded(agendaItems: List<AgendaItem>) = UIModel(
+                progressBarVisibility = false,
+                listVisibility = true,
+                agendaItems = agendaItems)
     }
 }
 

@@ -1,8 +1,8 @@
 package de.glasparlament.organization
 
-import de.glasparlament.body_repository.BodyRepository
+import de.glasparlament.bodyRepository.BodyRepository
 import de.glasparlament.data.Transfer
-import de.glasparlament.organization_repository.OrganizationRepository
+import de.glasparlament.organizationRepository.OrganizationRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking

@@ -1,9 +1,10 @@
 package de.glasparlament.organization
 
 import de.glasparlament.data.Transfer
-import de.glasparlament.body_repository.BodyRepository
+import de.glasparlament.bodyRepository.BodyRepository
+import de.glasparlament.data.Body
 import de.glasparlament.data.Organization
-import de.glasparlament.organization_repository.OrganizationRepository
+import de.glasparlament.organizationRepository.OrganizationRepository
 
 class OrganizationListUseCase(private val organizationRepository: OrganizationRepository,
                               private val bodyRepository: BodyRepository) {
@@ -14,18 +15,24 @@ class OrganizationListUseCase(private val organizationRepository: OrganizationRe
             is Transfer.Success -> {
                 val bodyOrganizations = ArrayList<BodyOrganization>()
                 bodies.data.data.forEach { body ->
-                    run {
-                        when (val organizations = organizationRepository.getOrganizationList(body.organization)) {
-                            is Transfer.Success -> organizations.data.data.forEach { organization: Organization ->
-                                bodyOrganizations.add(BodyOrganizationMapper.map(body, organization))
-                            }
-                        }
-
-
+                    val bodyOrganization = getBodyOrganization(body)
+                    if(bodyOrganization != null) {
+                        bodyOrganizations.add(bodyOrganization)
                     }
                 }
                 Transfer.Success(bodyOrganizations)
             }
+        }
+    }
+
+    private suspend fun getBodyOrganization(body : Body) : BodyOrganization? {
+        run {
+            when (val organizations = organizationRepository.getOrganizationList(body.organization)) {
+                is Transfer.Success -> organizations.data.data.forEach { organization: Organization ->
+                     return BodyOrganizationMapper.map(body, organization)
+                }
+            }
+            return null
         }
     }
 }
