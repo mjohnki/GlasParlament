@@ -6,8 +6,8 @@ import de.glasparlament.data.Transfer
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class AgendaItemListUseCaseTest {
 
@@ -26,8 +26,8 @@ class AgendaItemListUseCaseTest {
         val result = runBlocking { useCase.execute(url) }
 
         //then:
-        Assert.assertTrue(result is Transfer.Error)
-        Assert.assertEquals(errorMessage, (result as Transfer.Error).exception)
+        Assertions.assertTrue(result is Transfer.Error)
+        Assertions.assertEquals(errorMessage, (result as Transfer.Error).exception)
     }
 
     @Test
@@ -48,8 +48,8 @@ class AgendaItemListUseCaseTest {
         val result = runBlocking { useCase.execute(url) }
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals(
                 listOf(agendaItem),
                 (result as Transfer.Success).data
         )
@@ -80,8 +80,8 @@ class AgendaItemListUseCaseTest {
         val result = runBlocking { useCase.execute(url) }
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals(
                 listOf(agendaItem16, agendaItem17),
                 (result as Transfer.Success).data
         )
@@ -112,8 +112,8 @@ class AgendaItemListUseCaseTest {
         val result = runBlocking { useCase.execute(url) }
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals(
                 listOf(agendaItem16, agendaItem17),
                 (result as Transfer.Success).data
         )
@@ -144,8 +144,8 @@ class AgendaItemListUseCaseTest {
         val result = runBlocking { useCase.execute(url) }
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals(
                 listOf(agendaItem17a, agendaItem17b),
                 (result as Transfer.Success).data
         )
@@ -190,8 +190,8 @@ class AgendaItemListUseCaseTest {
         val result = runBlocking { useCase.execute(url) }
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals(
                 listOf(agendaItem16, agendaItem17a, agendaItem17b, agendaItem18),
                 (result as Transfer.Success).data
         )
@@ -235,8 +235,8 @@ class AgendaItemListUseCaseTest {
         val result = runBlocking { useCase.execute(url) }
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals(
                 listOf(agendaItem4, agendaItem5, agendaItem6, agendaItem7),
                 (result as Transfer.Success).data
         )

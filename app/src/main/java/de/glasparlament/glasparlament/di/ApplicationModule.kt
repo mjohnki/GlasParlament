@@ -1,7 +1,6 @@
 package de.glasparlament.glasparlament.di
 
 import androidx.room.Room
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -41,7 +40,6 @@ class ApplicationModule(private val application: BaseApplication) {
         return Retrofit.Builder()
                 .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .baseUrl(BuildConfig.BASE_URL)
                 .build()
     }

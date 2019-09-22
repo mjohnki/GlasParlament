@@ -1,8 +1,8 @@
 package de.glasparlament.agendaitem_repository
 
 import de.glasparlament.data.db.File
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class FileMapperTest {
     val mapper = FileMapper
@@ -21,8 +21,8 @@ class FileMapperTest {
         val result = mapper.map(file)
 
         //then:
-        Assert.assertEquals(file.id, result.id)
-        Assert.assertEquals(file.name, result.name)
-        Assert.assertEquals(file.accessUrl, result.accessUrl)
+        Assertions.assertEquals(file.id, result.id)
+        Assertions.assertEquals(file.name, result.name)
+        Assertions.assertEquals(file.accessUrl, result.accessUrl)
     }
 }

@@ -4,6 +4,4 @@ data class AgendaItemSearchResult(
         var id: String,
         var number: String,
         var name: String,
-        var meetingName: String) {
-
-}
+        var meetingName: String)

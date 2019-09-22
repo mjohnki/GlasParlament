@@ -1,6 +1,6 @@
 package de.glasparlament.agendaitem.overview
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import de.glasparlament.agendaitem.InstantExecutorExtension
 import de.glasparlament.agendaitem_repository.AgendaItem
 import de.glasparlament.data.Transfer
 import io.mockk.coEvery
@@ -10,23 +10,26 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import org.junit.*
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
 @ExperimentalCoroutinesApi
+@ExtendWith(InstantExecutorExtension::class)
 class AgendaItemViewModelTest {
 
-    @get:Rule
-    val rule = InstantTaskExecutorRule()
     private val testDispatcher = TestCoroutineDispatcher()
 
     private val useCase = mockk<AgendaItemListUseCase>()
 
-    @Before
+    @BeforeEach
     fun before() {
         Dispatchers.setMain(testDispatcher)
     }
 
-    @After
+    @AfterEach
     fun cleanUp() {
         Dispatchers.resetMain()
         testDispatcher.cleanupTestCoroutines()
@@ -46,8 +49,8 @@ class AgendaItemViewModelTest {
         Thread.sleep(200)
 
         //then:
-        Assert.assertFalse(viewModel.uiModel.value!!.listVisibility)
-        Assert.assertTrue(viewModel.uiModel.value!!.progressBarVisibility)
+        Assertions.assertFalse(viewModel.uiModel.value!!.listVisibility)
+        Assertions.assertTrue(viewModel.uiModel.value!!.progressBarVisibility)
     }
 
     @Test
@@ -71,8 +74,8 @@ class AgendaItemViewModelTest {
 
         //then:
         //Loaded State
-        Assert.assertTrue(viewModel.uiModel.value!!.listVisibility)
-        Assert.assertFalse(viewModel.uiModel.value!!.progressBarVisibility)
-        Assert.assertEquals(viewModel.uiModel.value!!.agendaItems, listOf(agendaItem16))
+        Assertions.assertTrue(viewModel.uiModel.value!!.listVisibility)
+        Assertions.assertFalse(viewModel.uiModel.value!!.progressBarVisibility)
+        Assertions.assertEquals(viewModel.uiModel.value!!.agendaItems, listOf(agendaItem16))
     }
 }

@@ -1,19 +1,18 @@
 package de.glasparlament.glasparlament
 
-import android.app.Activity
 import android.app.Application
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
+import dagger.android.HasAndroidInjector
 import de.glasparlament.glasparlament.di.ApplicationModule
 import de.glasparlament.glasparlament.di.DaggerApplicationComponent
 import javax.inject.Inject
 
 
-class BaseApplication : Application(), HasActivityInjector {
+class BaseApplication : Application(), HasAndroidInjector {
 
     @Inject
-    lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     override fun onCreate() {
         super.onCreate()
@@ -22,7 +21,7 @@ class BaseApplication : Application(), HasActivityInjector {
                 ApplicationModule(this)).build().inject(this)
     }
 
-    override fun activityInjector(): AndroidInjector<Activity> {
-        return activityDispatchingAndroidInjector
+    override fun androidInjector(): AndroidInjector<Any> {
+        return androidInjector
     }
 }

@@ -3,8 +3,8 @@ package de.glasparlament.meeting_repository
 import de.glasparlament.data.db.AgendaItem
 import de.glasparlament.data.db.Meeting
 import de.glasparlament.data.db.MeetingAgendaItem
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class MeetingMapperTest {
 
@@ -33,10 +33,10 @@ class MeetingMapperTest {
         val result = mapper.map(data)
 
         //then:
-        Assert.assertEquals(meeting.id, result.id)
-        Assert.assertEquals(meeting.body, result.body)
-        Assert.assertEquals(meeting.name, result.name)
-        Assert.assertEquals(1, result.agendaItem.size)
-        Assert.assertEquals(agendaItem.id, result.agendaItem[0])
+        Assertions.assertEquals(meeting.id, result.id)
+        Assertions.assertEquals(meeting.body, result.body)
+        Assertions.assertEquals(meeting.name, result.name)
+        Assertions.assertEquals(1, result.agendaItem.size)
+        Assertions.assertEquals(agendaItem.id, result.agendaItem[0])
     }
 }

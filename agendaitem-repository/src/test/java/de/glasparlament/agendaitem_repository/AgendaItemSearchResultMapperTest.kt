@@ -4,8 +4,8 @@ import de.glasparlament.data.db.AgendaItem
 import de.glasparlament.data.db.AgendaItemFile
 import de.glasparlament.data.db.File
 import de.glasparlament.data.db.Meeting
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class AgendaItemSearchResultMapperTest {
 
@@ -41,10 +41,10 @@ class AgendaItemSearchResultMapperTest {
         val result = mapper.map(agendaItemFile, meeting)
 
         //then:
-        Assert.assertEquals(agendaItem.id, result.id)
-        Assert.assertEquals(agendaItem.name, result.name)
-        Assert.assertEquals(agendaItem.number, result.number)
-        Assert.assertEquals(meeting.name, result.meetingName)
+        Assertions.assertEquals(agendaItem.id, result.id)
+        Assertions.assertEquals(agendaItem.name, result.name)
+        Assertions.assertEquals(agendaItem.number, result.number)
+        Assertions.assertEquals(meeting.name, result.meetingName)
     }
 
 }

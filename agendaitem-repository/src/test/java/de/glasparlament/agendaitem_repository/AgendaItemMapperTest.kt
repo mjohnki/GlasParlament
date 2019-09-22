@@ -3,8 +3,8 @@ package de.glasparlament.agendaitem_repository
 import de.glasparlament.data.db.AgendaItem
 import de.glasparlament.data.db.AgendaItemFile
 import de.glasparlament.data.db.File
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class AgendaItemMapperTest {
 
@@ -35,11 +35,11 @@ class AgendaItemMapperTest {
         val result = mapper.map(agendaItemFile)
 
         //then:
-        Assert.assertEquals(agendaItem.id, result.id)
-        Assert.assertEquals(agendaItem.name, result.name)
-        Assert.assertEquals(agendaItem.number, result.number)
-        Assert.assertEquals(agendaItem.meeting, result.meeting)
-        Assert.assertEquals(1, result.auxiliaryFile.size)
-        Assert.assertEquals(file.id, result.auxiliaryFile[0].id)
+        Assertions.assertEquals(agendaItem.id, result.id)
+        Assertions.assertEquals(agendaItem.name, result.name)
+        Assertions.assertEquals(agendaItem.number, result.number)
+        Assertions.assertEquals(agendaItem.meeting, result.meeting)
+        Assertions.assertEquals(1, result.auxiliaryFile.size)
+        Assertions.assertEquals(file.id, result.auxiliaryFile[0].id)
     }
 }

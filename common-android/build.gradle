@@ -30,7 +30,4 @@ dependencies {
 
     //dagger
     implementation libraries.daggerAndroidSupport
-
-    //Tests
-    testImplementation libraries.junit
 }

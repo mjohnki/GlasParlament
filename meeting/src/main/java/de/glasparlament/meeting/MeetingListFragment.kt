@@ -21,7 +21,7 @@ class MeetingListFragment : NavigationFragment(), MeetingAdapter.OnItemClickList
     @Inject
     lateinit var factory: MeetingViewModelFactory
 
-    private val args by navArgs<MeetingListFragmentArgs>()
+    private val args : MeetingListFragmentArgs by navArgs()
 
     lateinit var viewModel: MeetingViewModel
 

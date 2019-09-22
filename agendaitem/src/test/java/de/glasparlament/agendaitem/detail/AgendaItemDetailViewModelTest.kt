@@ -1,6 +1,6 @@
 package de.glasparlament.agendaitem.detail
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import de.glasparlament.agendaitem.InstantExecutorExtension
 import de.glasparlament.agendaitem_repository.AgendaItem
 import de.glasparlament.data.Transfer
 import io.mockk.coEvery
@@ -10,23 +10,26 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import org.junit.*
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
 @ExperimentalCoroutinesApi
+@ExtendWith(InstantExecutorExtension::class)
 class AgendaItemDetailViewModelTest {
 
-    @get:Rule
-    val rule = InstantTaskExecutorRule()
     private val testDispatcher = TestCoroutineDispatcher()
 
     private val useCase = mockk<AgendaItemUseCase>()
 
-    @Before
+    @BeforeEach
     fun before() {
         Dispatchers.setMain(testDispatcher)
     }
 
-    @After
+    @AfterEach
     fun cleanUp() {
         Dispatchers.resetMain()
         testDispatcher.cleanupTestCoroutines()
@@ -46,7 +49,7 @@ class AgendaItemDetailViewModelTest {
         Thread.sleep(200)
 
         //then:
-        Assert.assertNull(viewModel.uiModel.value!!.agendaItem)
+        Assertions.assertNull(viewModel.uiModel.value!!.agendaItem)
     }
 
     @Test
@@ -69,6 +72,6 @@ class AgendaItemDetailViewModelTest {
         Thread.sleep(200)
 
         //then:
-        Assert.assertNotNull(viewModel.uiModel.value)
+        Assertions.assertNotNull(viewModel.uiModel.value)
     }
 }

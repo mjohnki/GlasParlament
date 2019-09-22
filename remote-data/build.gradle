@@ -2,6 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "de.mannodermaus.android-junit5"
+
 apply plugin: 'jacoco-android'
 
 jacoco { toolVersion "0.8.4" }
@@ -49,4 +51,5 @@ dependencies {
 
     //Tests
     testImplementation libraries.junit
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.5.1"
 }

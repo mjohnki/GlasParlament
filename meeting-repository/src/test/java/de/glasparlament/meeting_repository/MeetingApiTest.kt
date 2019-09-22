@@ -8,8 +8,8 @@ import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType
 import okhttp3.ResponseBody
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 import retrofit2.Response
 import java.util.ArrayList
 
@@ -30,8 +30,8 @@ class MeetingApiTest {
         val result = runBlocking {api.getMeetingList(url)}
 
         //then:
-        Assert.assertTrue(result is Transfer.Error)
-        Assert.assertEquals(MeetingApi.errorMessageMeetingList, (result as Transfer.Error).exception)
+        Assertions.assertTrue(result is Transfer.Error)
+        Assertions.assertEquals(MeetingApi.errorMessageMeetingList, (result as Transfer.Error).exception)
     }
 
     @Test
@@ -45,8 +45,8 @@ class MeetingApiTest {
         val result = runBlocking {api.getMeetingList(url)}
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(MeetingList(), (result as Transfer.Success).data)
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals(MeetingList(), (result as Transfer.Success).data)
     }
 
     @Test
@@ -61,8 +61,8 @@ class MeetingApiTest {
         val result = runBlocking {api.getMeeting(url)}
 
         //then:
-        Assert.assertTrue(result is Transfer.Error)
-        Assert.assertEquals(MeetingApi.errorMessageMeeting, (result as Transfer.Error).exception)
+        Assertions.assertTrue(result is Transfer.Error)
+        Assertions.assertEquals(MeetingApi.errorMessageMeeting, (result as Transfer.Error).exception)
     }
 
     @Test
@@ -77,7 +77,7 @@ class MeetingApiTest {
         val result = runBlocking {api.getMeeting(url)}
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(meeting, (result as Transfer.Success).data)
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals(meeting, (result as Transfer.Success).data)
     }
 }

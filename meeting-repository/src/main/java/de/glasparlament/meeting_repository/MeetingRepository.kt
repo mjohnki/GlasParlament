@@ -3,8 +3,6 @@ package de.glasparlament.meeting_repository
 import de.glasparlament.data.MeetingRemote
 import de.glasparlament.data.Transfer
 import de.glasparlament.data.db.*
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 
 interface MeetingRepository {
     suspend fun getMeetingList(url: String): Transfer<List<Meeting>>
