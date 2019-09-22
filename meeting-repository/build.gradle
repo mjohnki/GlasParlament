@@ -17,6 +17,10 @@ android {
         versionCode vcode
         versionName vname
     }
+
+    lintOptions {
+        warningsAsErrors true
+    }
 }
 
 dependencies {
