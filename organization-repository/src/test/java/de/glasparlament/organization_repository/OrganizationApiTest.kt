@@ -36,7 +36,7 @@ class OrganizationApiTest {
     fun testGetMeetingListWithSuccess() {
         //given:
         val url = "http://test.test"
-        val response = Response.success(200,  TestData.organizationList)
+        val response = Response.success(200,  OrganizationList())
         coEvery { endpoint.getOrganizationList(url) } returns response
 
         //when:
@@ -44,6 +44,6 @@ class OrganizationApiTest {
 
         //then:
         Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(TestData.organizationList, (result as Transfer.Success).data)
+        Assert.assertEquals(OrganizationList(), (result as Transfer.Success).data)
     }
 }

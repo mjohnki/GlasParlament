@@ -9,7 +9,7 @@ object AgendaItemMapper {
                     id = agendaItemFile.agendaItem.id,
                     number = agendaItemFile.agendaItem.number,
                     name = agendaItemFile.agendaItem.name,
-                    meeting = agendaItemFile.agendaItem.name,
+                    meeting = agendaItemFile.agendaItem.meeting,
                     auxiliaryFile = FileMapper.map(agendaItemFile.files)
             )
 

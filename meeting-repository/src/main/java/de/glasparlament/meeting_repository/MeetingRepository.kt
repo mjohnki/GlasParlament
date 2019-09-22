@@ -8,7 +8,6 @@ import kotlinx.coroutines.coroutineScope
 
 interface MeetingRepository {
     suspend fun getMeetingList(url: String): Transfer<List<Meeting>>
-    suspend fun getMeeting(url: String): Transfer<MeetingRemote>
 }
 
 class MeetingRepositoryImpl(
@@ -31,7 +30,7 @@ class MeetingRepositoryImpl(
             }
 
     private suspend fun saveMeeting(meetingRemote: MeetingRemote) {
-        if(meetingDao.hasVoucher(meetingRemote.id)) {
+        if(meetingDao.hasMeeting(meetingRemote.id)) {
             return
         }
         meetingDao.insert(MeetingDbMapper.map(meetingRemote))
@@ -39,10 +38,6 @@ class MeetingRepositoryImpl(
             agendaItemDao.insert(AgendaItemDbMapper.map(agendaItem))
             fileDao.insert(FileDbMapper.map(agendaItem.auxiliaryFile, agendaItem.id))
         }
-    }
-
-    override suspend fun getMeeting(url: String): Transfer<MeetingRemote> {
-        return api.getMeeting(url)
     }
 }
 

@@ -11,6 +11,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import retrofit2.Response
+import java.util.ArrayList
 
 class AgendaItemApiTest {
 
@@ -37,7 +38,8 @@ class AgendaItemApiTest {
     fun testGetAgendaItemWithSuccess() {
         //given:
         val url = "http://test.test"
-        val response = Response.success(200, TestData.agendaItem)
+        val agendaItem = AgendaItemRemote("", "", "", "", ArrayList())
+        val response = Response.success(200, agendaItem)
         coEvery { endpoint.getAgendaItem(url) } returns response
 
         //when:
@@ -45,6 +47,6 @@ class AgendaItemApiTest {
 
         //then:
         assertTrue(result is Transfer.Success)
-        assertEquals(TestData.agendaItem, (result as Transfer.Success).data)
+        assertEquals(agendaItem, (result as Transfer.Success).data)
     }
 }
