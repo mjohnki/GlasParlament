@@ -2,8 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply plugin: 'jacoco-android'
+apply plugin: "de.mannodermaus.android-junit5"
 
 android {
 
@@ -45,6 +46,10 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget =  "1.8"
     }
     buildToolsVersion = '28.0.3'
 }
@@ -93,13 +98,13 @@ dependencies {
     //retrofit
     implementation libraries.retrofit
     implementation libraries.retrofitGson
-    implementation libraries.retrofitCoroutines
     implementation libraries.httpLogging
 
     //test
     androidTestImplementation libraries.testRunner
     testImplementation libraries.junit
     androidTestImplementation libraries.espresso
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.5.1"
 
 }
 repositories {

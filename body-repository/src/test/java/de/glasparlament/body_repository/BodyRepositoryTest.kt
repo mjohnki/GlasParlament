@@ -3,11 +3,9 @@ package de.glasparlament.body_repository
 import de.glasparlament.data.Transfer
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class BodyRepositoryTest {
 
@@ -25,8 +23,8 @@ class BodyRepositoryTest {
         val result = runBlocking {repository.getBodyList()}
 
         //then:
-        Assert.assertTrue(result is Transfer.Error)
-        Assert.assertEquals(errorMessage, (result as Transfer.Error).exception)
+        Assertions.assertTrue(result is Transfer.Error)
+        Assertions.assertEquals(errorMessage, (result as Transfer.Error).exception)
     }
 
     @Test
@@ -39,7 +37,7 @@ class BodyRepositoryTest {
         val result = runBlocking {repository.getBodyList()}
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(TestData.bodyList, (result as Transfer.Success).data)
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals(TestData.bodyList, (result as Transfer.Success).data)
     }
 }

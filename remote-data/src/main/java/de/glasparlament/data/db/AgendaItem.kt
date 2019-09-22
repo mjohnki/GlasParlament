@@ -14,5 +14,4 @@ data class AgendaItem (
         @ColumnInfo(name = "name")
         var name: String,
         @ColumnInfo(name = "meeting")
-        var meeting: String ){
-}
+        var meeting: String )

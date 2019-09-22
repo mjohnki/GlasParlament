@@ -5,8 +5,8 @@ import de.glasparlament.data.Transfer
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class OrganizationTest {
 
@@ -25,8 +25,8 @@ class OrganizationTest {
         val result = runBlocking { repository.getOrganizationList(url) }
 
         //then:
-        Assert.assertTrue(result is Transfer.Error)
-        Assert.assertEquals(errorMessage, (result as Transfer.Error).exception)
+        Assertions.assertTrue(result is Transfer.Error)
+        Assertions.assertEquals(errorMessage, (result as Transfer.Error).exception)
     }
 
     @Test
@@ -40,7 +40,7 @@ class OrganizationTest {
         val result = runBlocking { repository.getOrganizationList(url) }
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(OrganizationList(), (result as Transfer.Success).data)
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals(OrganizationList(), (result as Transfer.Success).data)
     }
 }

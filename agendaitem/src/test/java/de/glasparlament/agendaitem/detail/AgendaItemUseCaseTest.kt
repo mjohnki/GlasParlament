@@ -6,8 +6,8 @@ import de.glasparlament.data.Transfer
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class AgendaItemUseCaseTest {
 
@@ -26,8 +26,8 @@ class AgendaItemUseCaseTest {
         val result = runBlocking {useCase.execute(url)}
 
         //then:
-        Assert.assertTrue(result is Transfer.Error)
-        Assert.assertEquals(errorMessage, (result as Transfer.Error).exception)
+        Assertions.assertTrue(result is Transfer.Error)
+        Assertions.assertEquals(errorMessage, (result as Transfer.Error).exception)
     }
 
     @Test
@@ -48,7 +48,7 @@ class AgendaItemUseCaseTest {
         val result = runBlocking {useCase.execute(url)}
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(agendaItem, (result as Transfer.Success).data)
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals(agendaItem, (result as Transfer.Success).data)
     }
 }

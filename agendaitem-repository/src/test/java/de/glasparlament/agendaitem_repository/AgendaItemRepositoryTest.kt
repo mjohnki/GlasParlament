@@ -7,8 +7,8 @@ import de.glasparlament.data.db.File
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class AgendaItemRepositoryTest {
 
@@ -43,8 +43,8 @@ class AgendaItemRepositoryTest {
         val result = runBlocking { repository.getAgendaItem(url) }
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals("123", (result as Transfer.Success).data.id)
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals("123", (result as Transfer.Success).data.id)
     }
 
     @Test
@@ -74,9 +74,9 @@ class AgendaItemRepositoryTest {
         val result = runBlocking { repository.getAgendaItems(url) }
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(1, (result as Transfer.Success).data.size)
-        Assert.assertEquals("123", result.data[0].id)
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals(1, (result as Transfer.Success).data.size)
+        Assertions.assertEquals("123", result.data[0].id)
     }
 
     @Test
@@ -112,8 +112,8 @@ class AgendaItemRepositoryTest {
         val result = runBlocking { repository.searchAgendaItems(search) }
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(1, (result as Transfer.Success).data.size)
-        Assert.assertEquals("123", result.data[0].id)
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals(1, (result as Transfer.Success).data.size)
+        Assertions.assertEquals("123", result.data[0].id)
     }
 }

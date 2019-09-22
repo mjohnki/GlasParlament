@@ -8,8 +8,8 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class MeetingRepositoryTest {
 
@@ -37,7 +37,7 @@ class MeetingRepositoryTest {
         val result = runBlocking { repository.getMeetingList(url) }
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
+        Assertions.assertTrue(result is Transfer.Success)
         coVerify(exactly = 0) { meetingDao.insert(any()) }
     }
 
@@ -72,7 +72,7 @@ class MeetingRepositoryTest {
         val result = runBlocking { repository.getMeetingList(url) }
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
+        Assertions.assertTrue(result is Transfer.Success)
         coVerify(exactly = 1) { meetingDao.insert(any()) }
         coVerify(exactly = 1) { agendaItemDao.insert(any()) }
         coVerify(exactly = 1) { fileDao.insert(any()) }
@@ -90,7 +90,7 @@ class MeetingRepositoryTest {
         val result = runBlocking { repository.getMeetingList(url) }
 
         //then:
-        Assert.assertTrue(result is Transfer.Error)
-        Assert.assertEquals(errorMessage, (result as Transfer.Error).exception)
+        Assertions.assertTrue(result is Transfer.Error)
+        Assertions.assertEquals(errorMessage, (result as Transfer.Error).exception)
     }
 }

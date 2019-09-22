@@ -1,7 +1,8 @@
 package de.glasparlament.organization
 
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+
 
 class BodyOrganizationMapperTest {
 
@@ -11,7 +12,7 @@ class BodyOrganizationMapperTest {
         val result = BodyOrganizationMapper.map(TestData.body, TestData.organization)
 
         //then:
-        Assert.assertEquals(result, BodyOrganization(
+        Assertions.assertEquals(result, BodyOrganization(
                 organizationId = TestData.organization.id,
                 organizationName = TestData.organization.name,
                 bodyId = TestData.body.id,

@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: "de.mannodermaus.android-junit5"
 
 apply plugin: 'jacoco-android'
 
@@ -29,11 +30,11 @@ dependencies {
     //retrofit
     implementation libraries.retrofit
     implementation libraries.retrofitGson
-    implementation libraries.retrofitCoroutines
 
     //Tests
     testImplementation libraries.junit
     testImplementation libraries.mockk
     testImplementation libraries.coroutinesTest
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.5.1"
 
 }

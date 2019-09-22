@@ -1,6 +1,5 @@
 package de.glasparlament.meeting
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import de.glasparlament.data.Transfer
 import de.glasparlament.meeting_repository.Meeting
 import io.mockk.coEvery
@@ -10,24 +9,27 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import org.junit.*
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
 @ExperimentalCoroutinesApi
+@ExtendWith(InstantExecutorExtension::class)
 class MeetingViewModelTest {
 
-    @get:Rule
-    val rule = InstantTaskExecutorRule()
     private val testDispatcher = TestCoroutineDispatcher()
 
     private val useCase = mockk<MeetingListUseCase>()
     private lateinit var viewModel: MeetingViewModel
 
-    @Before
+    @BeforeEach
     fun before() {
         Dispatchers.setMain(testDispatcher)
     }
 
-    @After
+    @AfterEach
     fun cleanUp() {
         Dispatchers.resetMain()
         testDispatcher.cleanupTestCoroutines()
@@ -48,8 +50,8 @@ class MeetingViewModelTest {
 
 
         //then:
-        Assert.assertFalse(viewModel.uiModel.value!!.listVisibility)
-        Assert.assertTrue(viewModel.uiModel.value!!.progressBarVisibility)
+        Assertions.assertFalse(viewModel.uiModel.value!!.listVisibility)
+        Assertions.assertTrue(viewModel.uiModel.value!!.progressBarVisibility)
     }
 
     @Test
@@ -71,8 +73,8 @@ class MeetingViewModelTest {
         Thread.sleep(200)
 
         //then:
-        Assert.assertTrue(viewModel.uiModel.value!!.listVisibility)
-        Assert.assertFalse(viewModel.uiModel.value!!.progressBarVisibility)
-        Assert.assertEquals(viewModel.uiModel.value!!.meetings, listOf(meeting))
+        Assertions.assertTrue(viewModel.uiModel.value!!.listVisibility)
+        Assertions.assertFalse(viewModel.uiModel.value!!.progressBarVisibility)
+        Assertions.assertEquals(viewModel.uiModel.value!!.meetings, listOf(meeting))
     }
 }

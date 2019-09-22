@@ -6,8 +6,8 @@ import de.glasparlament.meeting_repository.MeetingRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class MeetingListUseCaseTest {
 
@@ -26,8 +26,8 @@ class MeetingListUseCaseTest {
         val result = runBlocking {useCase.execute(url)}
 
         //then:
-        Assert.assertTrue(result is Transfer.Error)
-        Assert.assertEquals(errorMessage, (result as Transfer.Error).exception)
+        Assertions.assertTrue(result is Transfer.Error)
+        Assertions.assertEquals(errorMessage, (result as Transfer.Error).exception)
     }
 
     @Test
@@ -47,7 +47,7 @@ class MeetingListUseCaseTest {
         val result = runBlocking {useCase.execute(url)}
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals((result as Transfer.Success).data.size,  1)
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals((result as Transfer.Success).data.size,  1)
     }
 }

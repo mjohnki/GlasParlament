@@ -7,8 +7,8 @@ import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType
 import okhttp3.ResponseBody
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 import retrofit2.Response
 
 class OrganizationApiTest {
@@ -28,8 +28,8 @@ class OrganizationApiTest {
         val result = runBlocking {api.getOrganizationList(url)}
 
         //then:
-        Assert.assertTrue(result is Transfer.Error)
-        Assert.assertEquals(OrganizationApi.errorMessageOrganizationList, (result as Transfer.Error).exception)
+        Assertions.assertTrue(result is Transfer.Error)
+        Assertions.assertEquals(OrganizationApi.errorMessageOrganizationList, (result as Transfer.Error).exception)
     }
 
     @Test
@@ -43,7 +43,7 @@ class OrganizationApiTest {
         val result = runBlocking {api.getOrganizationList(url)}
 
         //then:
-        Assert.assertTrue(result is Transfer.Success)
-        Assert.assertEquals(OrganizationList(), (result as Transfer.Success).data)
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals(OrganizationList(), (result as Transfer.Success).data)
     }
 }

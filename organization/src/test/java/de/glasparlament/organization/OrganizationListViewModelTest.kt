@@ -1,6 +1,5 @@
 package de.glasparlament.organization
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import de.glasparlament.data.Transfer
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -9,24 +8,27 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import org.junit.*
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
 @ExperimentalCoroutinesApi
+@ExtendWith(InstantExecutorExtension::class)
 class OrganizationListViewModelTest {
 
-    @get:Rule
-    val rule = InstantTaskExecutorRule()
     private val testDispatcher = TestCoroutineDispatcher()
 
     private val useCase = mockk<OrganizationListUseCase>()
     private lateinit var viewModel: OrganizationListViewModel
 
-    @Before
+    @BeforeEach
     fun before() {
         Dispatchers.setMain(testDispatcher)
     }
 
-    @After
+    @AfterEach
     fun cleanUp() {
         Dispatchers.resetMain()
         testDispatcher.cleanupTestCoroutines()
@@ -45,8 +47,8 @@ class OrganizationListViewModelTest {
         Thread.sleep(200)
 
         //then:
-        Assert.assertFalse(viewModel.uiModel.value!!.listVisibility)
-        Assert.assertTrue(viewModel.uiModel.value!!.progressBarVisibility)
+        Assertions.assertFalse(viewModel.uiModel.value!!.listVisibility)
+        Assertions.assertTrue(viewModel.uiModel.value!!.progressBarVisibility)
     }
 
     @Test
@@ -61,9 +63,9 @@ class OrganizationListViewModelTest {
         Thread.sleep(200)
 
         //then:
-        Assert.assertTrue(viewModel.uiModel.value!!.listVisibility)
-        Assert.assertFalse(viewModel.uiModel.value!!.progressBarVisibility)
-        Assert.assertEquals(viewModel.uiModel.value!!.organizations, TestData.bodyOrganizations)
+        Assertions.assertTrue(viewModel.uiModel.value!!.listVisibility)
+        Assertions.assertFalse(viewModel.uiModel.value!!.progressBarVisibility)
+        Assertions.assertEquals(viewModel.uiModel.value!!.organizations, TestData.bodyOrganizations)
     }
 }
 

@@ -7,9 +7,8 @@ import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType
 import okhttp3.ResponseBody
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 import retrofit2.Response
 import java.util.ArrayList
 
@@ -30,8 +29,8 @@ class AgendaItemApiTest {
         val result = runBlocking {api.getAgendaItem(url)}
 
         //then:
-        assertTrue(result is Transfer.Error)
-        assertEquals(AgendaItemApi.errorMessage, (result as Transfer.Error).exception)
+        Assertions.assertTrue(result is Transfer.Error)
+        Assertions.assertEquals(AgendaItemApi.errorMessage, (result as Transfer.Error).exception)
     }
 
     @Test
@@ -46,7 +45,7 @@ class AgendaItemApiTest {
         val result = runBlocking {api.getAgendaItem(url)}
 
         //then:
-        assertTrue(result is Transfer.Success)
-        assertEquals(agendaItem, (result as Transfer.Success).data)
+        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertEquals(agendaItem, (result as Transfer.Success).data)
     }
 }

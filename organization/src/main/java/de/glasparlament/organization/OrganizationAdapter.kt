@@ -42,7 +42,7 @@ class OrganizationAdapter(private val listener: OnItemClickListener) : ListAdapt
 
     internal class DiffCallback : DiffUtil.ItemCallback<BodyOrganization>() {
         override fun areItemsTheSame(oldItem: BodyOrganization, newItem: BodyOrganization): Boolean {
-            return oldItem == newItem
+            return oldItem === newItem
         }
 
         override fun areContentsTheSame(oldItem: BodyOrganization, newItem: BodyOrganization): Boolean {
