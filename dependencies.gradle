@@ -39,6 +39,7 @@ ext {
 
             //Tests
             junit                   : 'org.junit.jupiter:junit-jupiter-api:5.5.2',
+            junitEngine             : 'org.junit.jupiter:junit-jupiter-engine:5.5.2',
             junitExt                : 'androidx.test.ext:junit:1.1.1',
             espresso                : 'androidx.test.espresso:espresso-core:3.2.0',
             testRunner              : 'androidx.test:runner:1.2.0',
