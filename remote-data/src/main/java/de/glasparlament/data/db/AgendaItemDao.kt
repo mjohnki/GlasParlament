@@ -19,7 +19,7 @@ interface AgendaItemDao {
     suspend fun getAgendaItem(id: String): AgendaItemFile
 
     @Transaction
-    @Query("SELECT * FROM agendaItem WHERE name LIKE :search ORDER BY meeting")
+    @Query("SELECT * FROM agendaItem WHERE name LIKE :search ORDER BY meeting DESC")
     suspend fun searchtAgendaItems(search: String): List<AgendaItemFile>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
