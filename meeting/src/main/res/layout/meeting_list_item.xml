@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="meeting"
             type="de.glasparlament.meetingRepository.Meeting" />
+
         <variable
             name="clickListener"
             type="android.view.View.OnClickListener" />
     </data>
 
-    <FrameLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:onClick="@{clickListener}"
-        tools:context=".ui.agenda.MeetingFragment">
+        app:cardElevation="5dp">
 
-        <com.google.android.material.card.MaterialCardView
+        <TextView
+            android:id="@+id/meetingName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
+            android:text="@{meeting.name}"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="Meeting name" />
 
-            <TextView
-                android:id="@+id/meetingName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_margin="10dp"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:text="@{meeting.name}"
-                tools:text="Meeting name" />
-
-        </com.google.android.material.card.MaterialCardView>
-    </FrameLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>
