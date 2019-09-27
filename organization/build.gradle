@@ -73,5 +73,5 @@ dependencies {
     testImplementation libraries.junit
     testImplementation libraries.mockk
     testImplementation libraries.coroutinesTest
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.5.1"
+    testRuntimeOnly libraries.junitEngine
 }

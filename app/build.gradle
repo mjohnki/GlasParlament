@@ -109,7 +109,7 @@ dependencies {
     androidTestImplementation libraries.testRunner
     testImplementation libraries.junit
     androidTestImplementation libraries.espresso
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.5.1"
+    testRuntimeOnly libraries.junitEngine
 
 }
 repositories {
