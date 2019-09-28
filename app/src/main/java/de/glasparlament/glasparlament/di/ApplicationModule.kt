@@ -1,63 +1,30 @@
 package de.glasparlament.glasparlament.di
 
-import androidx.room.Room
-import dagger.Module
-import dagger.Provides
-import dagger.android.ContributesAndroidInjector
-import de.glasparlament.data.db.GPDatabase
 import de.glasparlament.glasparlament.AuthInterceptor
-import de.glasparlament.glasparlament.BaseApplication
 import de.glasparlament.glasparlament.BuildConfig
-import de.glasparlament.glasparlament.MainActivity
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
+val applicationModule = module {
+    single<Retrofit> { provideRetrofit() }
+}
 
-@Module(includes = [ApplicationModule.Binding::class])
-class ApplicationModule(private val application: BaseApplication) {
+fun provideRetrofit(): Retrofit {
 
-    @Provides
-    @Singleton
-    fun provideApplication(): BaseApplication {
-        return application
-    }
+    val loggingInterceptor = HttpLoggingInterceptor()
+    loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-    @Provides
-    @Singleton
-    fun provideRetrofit(): Retrofit {
+    val httpClient = OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .addInterceptor(AuthInterceptor())
+            .build()
 
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
-        val httpClient = OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .addInterceptor(AuthInterceptor())
-                .build()
-
-        return Retrofit.Builder()
-                .client(httpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(BuildConfig.BASE_URL)
-                .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideDB(app : BaseApplication) : GPDatabase {
-        return Room.databaseBuilder(
-                app.applicationContext,
-                GPDatabase::class.java,
-                "Database"
-        ).build()
-    }
-
-    @Module
-    abstract class Binding {
-
-        @ContributesAndroidInjector
-        abstract fun contributeMainActivity(): MainActivity
-    }
+    return Retrofit.Builder()
+            .client(httpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(BuildConfig.BASE_URL)
+            .build()
 }

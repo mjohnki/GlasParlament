@@ -58,8 +58,9 @@ dependencies {
     implementation libraries.lifecycleViewmodel
     implementation libraries.lifecycleExtensions
 
-    //dagger
-    implementation libraries.daggerAndroidSupport
+    //koin
+    implementation libraries.koin
+    implementation libraries.koinViewmodel
 
     //Navigation
     implementation libraries.navigationFragment

@@ -6,25 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import de.glasparlament.common.NavigationFragment
-import de.glasparlament.common.NavigationViewModel
+import androidx.navigation.fragment.findNavController
+import de.glasparlament.common.NavigationCommand
 import de.glasparlament.organization.databinding.OrganizationListFragmentBinding
-import javax.inject.Inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class OrganizationListFragment : NavigationFragment(), OrganizationAdapter.OnItemClickListener, View.OnClickListener {
+class OrganizationListFragment : Fragment(), OrganizationAdapter.OnItemClickListener, View.OnClickListener {
 
-    @Inject
-    lateinit var factory: OrganizationListViewModelFactory
-
-    lateinit var viewModel: OrganizationListViewModel
+    val organizationViewModel: OrganizationListViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this, factory).get(OrganizationListViewModel::class.java)
-        viewModel.loadData()
+        organizationViewModel.loadData()
 
         (activity as AppCompatActivity).supportActionBar!!.setTitle(R.string.app_name)
     }
@@ -37,12 +33,20 @@ class OrganizationListFragment : NavigationFragment(), OrganizationAdapter.OnIte
         val adapter = OrganizationAdapter(this)
         val binding = DataBindingUtil.inflate<OrganizationListFragmentBinding>(
                 inflater, R.layout.organization_list_fragment, container, false)
-        binding.viewModel = viewModel
+        binding.viewModel = organizationViewModel
         binding.clickListener = this
         binding.lifecycleOwner = this
         binding.organizationList.adapter = adapter
 
-        subscribe(viewModel, adapter)
+        subscribe(organizationViewModel, adapter)
+
+        organizationViewModel.navigationCommand.observe(this, Observer { command ->
+            command.getContentIfNotHandled()?.let{
+                when (it) {
+                    is NavigationCommand.To -> findNavController().navigate(it.directions)
+                }
+            }
+        })
 
         return binding.root
     }
@@ -53,7 +57,7 @@ class OrganizationListFragment : NavigationFragment(), OrganizationAdapter.OnIte
                         actionOrganizationListFragmentToMeetingListFragment(
                                 bodyOrganization.meeting,
                                 bodyOrganization.name)
-        viewModel.navigate(direction)
+        organizationViewModel.navigate(direction)
     }
 
     private fun subscribe(viewModel: OrganizationListViewModel, adapter: OrganizationAdapter) {
@@ -65,9 +69,6 @@ class OrganizationListFragment : NavigationFragment(), OrganizationAdapter.OnIte
     override fun onClick(v: View?) {
         val direction =
                 OrganizationListFragmentDirections.actionAgendaItemSearchFragment()
-        viewModel.navigate(direction)
+        organizationViewModel.navigate(direction)
     }
-
-    override fun getViewModel(): NavigationViewModel =
-            viewModel
 }
