@@ -17,6 +17,7 @@ ext {
             //koin
             'koin'                  : "org.koin:koin-android:2.0.1",
             'koinViewmodel'         : "org.koin:koin-android-viewmodel:2.0.1",
+            'koinTest'              : "org.koin:koin-test:2.0.1",
 
             //Lifecycle
             lifecycleViewmodel      : "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0",
