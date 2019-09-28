@@ -10,17 +10,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 abstract class AgendaItemViewModel : NavigationViewModel() {
+
     abstract fun bind(url: String)
+
+    val state = MutableLiveData<State>()
 
     val uiModel = MutableLiveData<UIModel>()
 
-    companion object {
-        fun loading() = UIModel(progressBarVisibility = true, listVisibility = false)
-        fun error() = UIModel(progressBarVisibility = true, listVisibility = false)
-        fun loaded(agendaItems: List<AgendaItem>) = UIModel(
-                progressBarVisibility = false,
-                listVisibility = true,
-                agendaItems = agendaItems)
+    sealed class State {
+        object Loading : State()
+        object Error : State()
+        data class Loaded(val agendaItems: List<AgendaItem>) : State()
     }
 }
 
@@ -32,20 +32,17 @@ class AgendaItemViewModelImpl(private val useCase: AgendaItemListUseCase) : Agen
         }
     }
 
-    private suspend fun getAgendaItems(url: String) = withContext(Dispatchers.Default) {
-        uiModel.postValue(loading())
-        when (val result = useCase.execute(url)) {
-            is Transfer.Success -> {
-                uiModel.postValue(loaded(result.data))
+    private suspend fun getAgendaItems(url: String) =
+            withContext(Dispatchers.Default) {
+                state.postValue(State.Loading)
+                when (val result = useCase.execute(url)) {
+                    is Transfer.Success -> state.postValue(State.Loaded(result.data))
+                    is Transfer.Error -> state.postValue(State.Error)
+                }
             }
-            is Transfer.Error -> {
-                uiModel.postValue(error())
-            }
-        }
-    }
 }
 
 data class UIModel(
-        val progressBarVisibility: Boolean,
-        val listVisibility: Boolean,
-        val agendaItems: List<AgendaItem> = emptyList())
+                val progressBarVisibility: Boolean,
+                val listVisibility: Boolean,
+                val agendaItems: List<AgendaItem> = emptyList())

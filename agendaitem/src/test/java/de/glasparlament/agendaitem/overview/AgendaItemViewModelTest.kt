@@ -49,8 +49,7 @@ class AgendaItemViewModelTest {
         Thread.sleep(200)
 
         //then:
-        Assertions.assertFalse(viewModel.uiModel.value!!.listVisibility)
-        Assertions.assertTrue(viewModel.uiModel.value!!.progressBarVisibility)
+        Assertions.assertTrue(viewModel.state.value is AgendaItemViewModel.State.Error)
     }
 
     @Test
@@ -73,9 +72,6 @@ class AgendaItemViewModelTest {
         Thread.sleep(200)
 
         //then:
-        //Loaded State
-        Assertions.assertTrue(viewModel.uiModel.value!!.listVisibility)
-        Assertions.assertFalse(viewModel.uiModel.value!!.progressBarVisibility)
-        Assertions.assertEquals(viewModel.uiModel.value!!.agendaItems, listOf(agendaItem16))
+        Assertions.assertTrue(viewModel.state.value is AgendaItemViewModel.State.Loaded)
     }
 }

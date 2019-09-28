@@ -16,9 +16,9 @@ abstract class AgendaItemDetailViewModel : NavigationViewModel() {
     val state = MutableLiveData<State>()
 
     sealed class State {
-        object Loading: State()
-        object Error: State()
-        data class Loaded(val agendaItem: AgendaItem): State()
+        object Loading : State()
+        object Error : State()
+        data class Loaded(val agendaItem: AgendaItem) : State()
     }
 }
 
@@ -30,15 +30,13 @@ class AgendaItemDetailViewModelImpl(private val useCase: AgendaItemUseCase) : Ag
         }
     }
 
-    private suspend fun getAgendaItem(url: String) = withContext(Dispatchers.Default) {
-        state.postValue(State.Loading)
-        when (val result = useCase.execute(url)) {
-            is Transfer.Success -> {
-                state.postValue(State.Loaded(result.data))
+    private suspend fun getAgendaItem(url: String) =
+            withContext(Dispatchers.Default) {
+                state.postValue(State.Loading)
+                when (val result = useCase.execute(url)) {
+                    is Transfer.Success -> state.postValue(State.Loaded(result.data))
+                    is Transfer.Error -> state.postValue(State.Error)
+
+                }
             }
-            is Transfer.Error -> {
-                state.postValue(State.Error)
-            }
-        }
-    }
 }
