@@ -5,22 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import de.glasparlament.agendaItemRepository.AgendaItem
 import de.glasparlament.agendaitem.R
-import de.glasparlament.agendaitem.databinding.AgendaItemFragmentBinding
-import de.glasparlament.common.NavigationCommand
+import de.glasparlament.agendaitem.detail.AgendaItemDetailViewBinder
+import de.glasparlament.common.observe
+import de.glasparlament.common.observeNavigation
+import kotlinx.android.synthetic.main.agenda_item_detail_fragment.*
+import kotlinx.android.synthetic.main.agenda_item_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class AgendaItemFragment : Fragment(), AgendaItemAdapter.OnItemClickListener {
 
-    val agendaViewModel: AgendaItemViewModel by viewModel()
-
+    private val agendaViewModel: AgendaItemViewModel by viewModel()
     private val args: AgendaItemFragmentArgs by navArgs()
+    private val adapter = AgendaItemAdapter()
+    private val binder = AgendaItemViewBinder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,37 +34,24 @@ class AgendaItemFragment : Fragment(), AgendaItemAdapter.OnItemClickListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val adapter = AgendaItemAdapter(this)
-        val binding = DataBindingUtil.inflate<AgendaItemFragmentBinding>(
-                inflater, R.layout.agenda_item_fragment, container, false)
+                              savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.agenda_item_fragment, container, false)
 
-        binding.lifecycleOwner = this
-        binding.viewModel = agendaViewModel
-        binding.agendaList.adapter = adapter
-
-        subscribeUi(agendaViewModel, adapter)
-
-        agendaViewModel.navigationCommand.observe(this, Observer { command ->
-            command.getContentIfNotHandled()?.let{
-                when (it) {
-                    is NavigationCommand.To -> findNavController().navigate(it.directions)
-                }
-            }
-        })
-
-        return binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        adapter.listener = this
+        observe(agendaViewModel.state, ::updateUI)
+        observeNavigation(agendaViewModel.navigationCommand, findNavController())
     }
 
-    private fun subscribeUi(viewModel: AgendaItemViewModel, adapter : AgendaItemAdapter) {
-        viewModel.uiModel.observe(viewLifecycleOwner, Observer { model ->
-            adapter.submitList(model.agendaItems)
-        })
+    private fun updateUI(state: AgendaItemViewModel.State) {
+        binder(AgendaItemViewBinder.Params(state, adapter,
+                AgendaItemViewBinder.Views(agenda_list, progressBar)
+        ))
     }
 
     override fun onItemClick(agendaItem: AgendaItem) {
-        val direction
-                = AgendaItemFragmentDirections.actionAgendaFragmentToAgendaItemFragment(agendaItem.id)
+        val direction = AgendaItemFragmentDirections.actionAgendaFragmentToAgendaItemFragment(agendaItem.id)
         agendaViewModel.navigate(direction)
     }
 }
