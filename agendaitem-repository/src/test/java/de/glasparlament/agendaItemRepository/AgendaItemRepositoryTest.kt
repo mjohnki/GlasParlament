@@ -1,5 +1,6 @@
 package de.glasparlament.agendaItemRepository
 
+import de.glasparlament.agendaItemRepository.di.agendaItemRepositoryModule
 import de.glasparlament.data.Transfer
 import de.glasparlament.data.db.*
 import de.glasparlament.data.db.AgendaItem
@@ -9,16 +10,22 @@ import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.dsl.module
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
-class AgendaItemRepositoryTest {
+class AgendaItemRepositoryTest : KoinTest {
 
+    private val repository by inject<AgendaItemRepository>()
     private val agendaItemDao = mockk<AgendaItemDao>()
     private val meetingDao = mockk<MeetingDao>()
-    private val repository: AgendaItemRepository = AgendaItemRepositoryImpl(agendaItemDao, meetingDao)
 
     @Test
     fun test_getAgendaItem_should_work() {
         //given:
+        startKoin { modules(listOf(agendaItemRepositoryModule, testModule)) }
         val url = "http://test.test"
         val agendaItem = AgendaItem(
                 id = "123",
@@ -45,11 +52,13 @@ class AgendaItemRepositoryTest {
         //then:
         Assertions.assertTrue(result is Transfer.Success)
         Assertions.assertEquals("123", (result as Transfer.Success).data.id)
+        stopKoin()
     }
 
     @Test
     fun test_getAgendaItems_should_work() {
         //given:
+        startKoin { modules(listOf(agendaItemRepositoryModule, testModule)) }
         val url = "http://test.test"
         val agendaItem = AgendaItem(
                 id = "123",
@@ -77,11 +86,13 @@ class AgendaItemRepositoryTest {
         Assertions.assertTrue(result is Transfer.Success)
         Assertions.assertEquals(1, (result as Transfer.Success).data.size)
         Assertions.assertEquals("123", result.data[0].id)
+        stopKoin()
     }
 
     @Test
     fun test_searchAgendaItems_should_work() {
         //given:
+        startKoin { modules(listOf(agendaItemRepositoryModule, testModule)) }
         val search = "holz"
         val meeting = Meeting(
                 id = "1",
@@ -115,5 +126,11 @@ class AgendaItemRepositoryTest {
         Assertions.assertTrue(result is Transfer.Success)
         Assertions.assertEquals(1, (result as Transfer.Success).data.size)
         Assertions.assertEquals("123", result.data[0].id)
+        stopKoin()
+    }
+
+    private val testModule = module {
+        single<AgendaItemDao> { agendaItemDao }
+        single<MeetingDao> { meetingDao }
     }
 }
