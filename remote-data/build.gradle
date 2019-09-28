@@ -48,6 +48,9 @@ dependencies {
     //retrofit
     implementation libraries.retrofit
 
+    //koin
+    implementation libraries.koin
+
     //Room
     implementation libraries.roomRuntime
     implementation libraries.roomKtx

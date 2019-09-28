@@ -6,29 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import de.glasparlament.common.NavigationFragment
-import de.glasparlament.common.NavigationViewModel
+import de.glasparlament.common.NavigationCommand
 import de.glasparlament.meeting.databinding.MeetingListFragmentBinding
 import de.glasparlament.meetingRepository.Meeting
-import javax.inject.Inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class MeetingListFragment : NavigationFragment(), MeetingAdapter.OnItemClickListener {
-
-    @Inject
-    lateinit var factory: MeetingViewModelFactory
+class MeetingListFragment : Fragment(), MeetingAdapter.OnItemClickListener {
 
     private val args : MeetingListFragmentArgs by navArgs()
 
-    lateinit var viewModel: MeetingViewModel
+    val meetingViewModel: MeetingViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this, factory).get(MeetingViewModel::class.java)
-        viewModel.bind(args.meetingListId)
+        meetingViewModel.bind(args.meetingListId)
 
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar!!.title = args.title
@@ -40,11 +36,19 @@ class MeetingListFragment : NavigationFragment(), MeetingAdapter.OnItemClickList
         val adapter = MeetingAdapter(this)
         val binding = DataBindingUtil.inflate<MeetingListFragmentBinding>(
                 inflater, R.layout.meeting_list_fragment, container, false)
-        binding.viewModel = viewModel
+        binding.viewModel = meetingViewModel
         binding.lifecycleOwner = this
         binding.meetingList.adapter = adapter
 
-        subscribe(viewModel, adapter)
+        subscribe(meetingViewModel, adapter)
+
+        meetingViewModel.navigationCommand.observe(this, Observer { command ->
+            command.getContentIfNotHandled()?.let{
+                when (it) {
+                    is NavigationCommand.To -> findNavController().navigate(it.directions)
+                }
+            }
+        })
 
         return binding.root
     }
@@ -55,12 +59,9 @@ class MeetingListFragment : NavigationFragment(), MeetingAdapter.OnItemClickList
         })
     }
 
-    override fun getViewModel(): NavigationViewModel =
-            viewModel
-
     override fun onItemClick(meeting: Meeting) {
         val direction =
                 MeetingListFragmentDirections.actionMeetingListFragmentToAgendaFragment(meeting.id, meeting.name)
-        viewModel.navigate(direction)
+        meetingViewModel.navigate(direction)
     }
 }

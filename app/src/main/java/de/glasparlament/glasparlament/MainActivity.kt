@@ -6,13 +6,10 @@ import androidx.navigation.ui.NavigationUI
 import com.microsoft.appcenter.AppCenter
 import com.microsoft.appcenter.analytics.Analytics
 import com.microsoft.appcenter.crashes.Crashes
-import dagger.android.support.DaggerAppCompatActivity
-import android.content.Intent
-import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
 
 
-
-class MainActivity : DaggerAppCompatActivity(){
+class MainActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

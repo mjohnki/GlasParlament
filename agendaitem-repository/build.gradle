@@ -31,6 +31,9 @@ dependencies {
     //project
     implementation project(':remote-data')
 
+    //koin
+    implementation libraries.koin
+
     //retrofit
     implementation libraries.retrofit
     implementation libraries.retrofitGson

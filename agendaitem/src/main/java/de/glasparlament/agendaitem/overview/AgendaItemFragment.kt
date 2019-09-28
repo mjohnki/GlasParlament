@@ -6,30 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import de.glasparlament.agendaItemRepository.AgendaItem
 import de.glasparlament.agendaitem.R
 import de.glasparlament.agendaitem.databinding.AgendaItemFragmentBinding
-import de.glasparlament.agendaItemRepository.AgendaItem
-import de.glasparlament.common.NavigationFragment
-import de.glasparlament.common.NavigationViewModel
-import javax.inject.Inject
+import de.glasparlament.common.NavigationCommand
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class AgendaItemFragment : NavigationFragment(), AgendaItemAdapter.OnItemClickListener {
+class AgendaItemFragment : Fragment(), AgendaItemAdapter.OnItemClickListener {
 
-    @Inject
-    lateinit var factory: AgendaItemViewModelFactory
-
-    private lateinit var viewModel: AgendaItemViewModel
+    val agendaViewModel: AgendaItemViewModel by viewModel()
 
     private val args: AgendaItemFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this, factory).get(AgendaItemViewModel::class.java)
-        viewModel.bind(args.meetingId)
+        agendaViewModel.bind(args.meetingId)
 
         (activity as AppCompatActivity).supportActionBar!!.title = args.title
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -42,10 +38,18 @@ class AgendaItemFragment : NavigationFragment(), AgendaItemAdapter.OnItemClickLi
                 inflater, R.layout.agenda_item_fragment, container, false)
 
         binding.lifecycleOwner = this
-        binding.viewModel = viewModel
+        binding.viewModel = agendaViewModel
         binding.agendaList.adapter = adapter
 
-        subscribeUi(viewModel, adapter)
+        subscribeUi(agendaViewModel, adapter)
+
+        agendaViewModel.navigationCommand.observe(this, Observer { command ->
+            command.getContentIfNotHandled()?.let{
+                when (it) {
+                    is NavigationCommand.To -> findNavController().navigate(it.directions)
+                }
+            }
+        })
 
         return binding.root
     }
@@ -59,9 +63,6 @@ class AgendaItemFragment : NavigationFragment(), AgendaItemAdapter.OnItemClickLi
     override fun onItemClick(agendaItem: AgendaItem) {
         val direction
                 = AgendaItemFragmentDirections.actionAgendaFragmentToAgendaItemFragment(agendaItem.id)
-        viewModel.navigate(direction)
+        agendaViewModel.navigate(direction)
     }
-
-    override fun getViewModel(): NavigationViewModel =
-            viewModel
 }

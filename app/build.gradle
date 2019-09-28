@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply plugin: 'jacoco-android'
 apply plugin: "de.mannodermaus.android-junit5"
@@ -93,20 +92,15 @@ dependencies {
     implementation libraries.navigationFragment
     implementation libraries.navigationUi
 
-    //Room
-    implementation libraries.roomRuntime
-    implementation libraries.roomKtx
-    kapt libraries.roomCompiler
-    implementation libraries.roomTesting
-
     //Appcenter
     implementation libraries.appcenterAnalytics
     implementation libraries.appcenterCrashes
 
-    //dagger
-    kapt libraries.daggerCompiler
-    kapt libraries.daggerAndroidProcessor
-    implementation libraries.daggerAndroidSupport
+    //Room
+    implementation libraries.roomRuntime
+
+    //koin
+    implementation libraries.koin
 
     //retrofit
     implementation libraries.retrofit
