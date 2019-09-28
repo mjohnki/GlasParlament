@@ -33,6 +33,7 @@ dependencies {
 
     //koin
     implementation libraries.koin
+    testImplementation libraries.koinTest
 
     //retrofit
     implementation libraries.retrofit
