@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import de.glasparlament.agendaitem.databinding.AgendaFileItemBinding
 import de.glasparlament.agendaItemRepository.File
 
-class AgendaFileAdapter(private val listener: OnItemClickListener) :
-        ListAdapter<File, AgendaFileAdapter.ViewHolder>(DiffCallback()) {
+class AgendaFileAdapter : ListAdapter<File, AgendaFileAdapter.ViewHolder>(DiffCallback()) {
+
+    var listener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(AgendaFileItemBinding.inflate(
@@ -24,7 +25,7 @@ class AgendaFileAdapter(private val listener: OnItemClickListener) :
 
     private fun createOnClickListener(file: File): View.OnClickListener {
         return View.OnClickListener {
-            listener.onItemClick(file)
+            listener?.onItemClick(file)
         }
     }
 
