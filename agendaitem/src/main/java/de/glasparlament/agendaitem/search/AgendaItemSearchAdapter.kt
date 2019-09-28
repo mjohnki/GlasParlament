@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import de.glasparlament.agendaitem.databinding.AgendaItemSearchBinding
 import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
 
-class AgendaItemSearchAdapter(private val listener: OnItemClickListener)
-    : ListAdapter<AgendaItemSearchResult, AgendaItemSearchAdapter.ViewHolder>(DiffCallback()) {
+class AgendaItemSearchAdapter: ListAdapter<AgendaItemSearchResult, AgendaItemSearchAdapter.ViewHolder>(DiffCallback()) {
+
+    var listener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(AgendaItemSearchBinding.inflate(
@@ -24,7 +25,7 @@ class AgendaItemSearchAdapter(private val listener: OnItemClickListener)
 
     private fun createOnClickListener(agendaItem: AgendaItemSearchResult): View.OnClickListener {
         return View.OnClickListener {
-            listener.onItemClick(agendaItem)
+            listener?.onItemClick(agendaItem)
         }
     }
 
@@ -44,7 +45,7 @@ class AgendaItemSearchAdapter(private val listener: OnItemClickListener)
 
     internal class DiffCallback : DiffUtil.ItemCallback<AgendaItemSearchResult>() {
         override fun areItemsTheSame(oldItem: AgendaItemSearchResult, newItem: AgendaItemSearchResult): Boolean {
-            return oldItem == newItem
+            return oldItem === newItem
         }
 
         override fun areContentsTheSame(oldItem: AgendaItemSearchResult, newItem: AgendaItemSearchResult): Boolean {
