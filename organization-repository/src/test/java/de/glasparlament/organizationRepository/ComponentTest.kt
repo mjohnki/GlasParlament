@@ -4,6 +4,7 @@ import de.glasparlament.data.OrganizationList
 import de.glasparlament.data.Transfer
 import de.glasparlament.organizationRepository.di.organizationRepositoryModule
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType
@@ -18,11 +19,13 @@ import org.koin.test.AutoCloseKoinTest
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import retrofit2.Response
+import retrofit2.Retrofit
 
 internal class ComponentTest : KoinTest {
 
     private val repository by inject<OrganizationRepository>()
     private val endpoint = mockk<OrganizationEndpoint>()
+    private val retrofit = mockk<Retrofit>()
 
     @Test
     fun testGetOrganizationListWithError() {
@@ -30,8 +33,8 @@ internal class ComponentTest : KoinTest {
         startKoin { modules(listOf(organizationRepositoryModule, testModule)) }
         val url = "http://test.test"
         val errorBody = ResponseBody.create(MediaType.get("text/plain"), "Error")
-        val erroResponse = Response.error<OrganizationList>(400, errorBody)
-        coEvery { endpoint.getOrganizationList(url) } returns erroResponse
+        val response = Response.error<OrganizationList>(400, errorBody)
+        setupMocks(response)
 
         //when:
         val result = runBlocking { repository.getOrganizationList(url) }
@@ -48,7 +51,7 @@ internal class ComponentTest : KoinTest {
         startKoin { modules(listOf(organizationRepositoryModule, testModule)) }
         val url = "http://test.test"
         val response = Response.success(200, OrganizationList())
-        coEvery { endpoint.getOrganizationList(url) } returns response
+        setupMocks(response)
 
         //when:
         val result = runBlocking { repository.getOrganizationList(url) }
@@ -59,7 +62,13 @@ internal class ComponentTest : KoinTest {
         stopKoin()
     }
 
+    private fun setupMocks(response: Response<OrganizationList>){
+        val  service : Class<OrganizationEndpoint> = OrganizationEndpoint::class.java
+        every { retrofit.create(eq(service)) } returns endpoint
+        coEvery { endpoint.getOrganizationList(any()) } returns response
+    }
+
     private val testModule = module {
-        single<OrganizationEndpoint>(override = true) { endpoint }
+        single<Retrofit> { retrofit }
     }
 }
