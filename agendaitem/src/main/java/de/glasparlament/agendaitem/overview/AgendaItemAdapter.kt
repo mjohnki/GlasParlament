@@ -44,7 +44,7 @@ class AgendaItemAdapter(private val listener: OnItemClickListener) :
 
     internal class DiffCallback : DiffUtil.ItemCallback<AgendaItem>() {
         override fun areItemsTheSame(oldItem: AgendaItem, newItem: AgendaItem): Boolean {
-            return oldItem == newItem
+            return oldItem === newItem
         }
 
         override fun areContentsTheSame(oldItem: AgendaItem, newItem: AgendaItem): Boolean {
