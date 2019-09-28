@@ -1,7 +1,7 @@
-package de.glasparlament.agendaitem.detail
+package de.glasparlament.agendaitem.search
 
-import de.glasparlament.agendaItemRepository.AgendaItem
 import de.glasparlament.agendaItemRepository.AgendaItemRepository
+import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
 import de.glasparlament.data.Transfer
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -9,10 +9,10 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-class AgendaItemUseCaseTest {
+class AgendaItemSearchUseCaseTest {
 
     private val repository = mockk<AgendaItemRepository>()
-    private val useCase  = AgendaItemUseCase(repository)
+    private val useCase  = AgendaItemSearchUseCase(repository)
 
     @Test
     fun testUseCaseError() {
@@ -20,7 +20,7 @@ class AgendaItemUseCaseTest {
         val url = "http://test.test"
         val errorMessage = "Error Loading Data"
         val bodyList = Transfer.Error(errorMessage)
-        coEvery { repository.getAgendaItem(url) } returns  bodyList
+        coEvery { repository.searchAgendaItems(url) } returns  bodyList
 
         //when:
         val result = runBlocking {useCase.execute(url)}
@@ -33,22 +33,20 @@ class AgendaItemUseCaseTest {
     @Test
     fun testUseCaseSuccess() {
         //given:
-        val agendaItem = AgendaItem(
+        val agendaItem = AgendaItemSearchResult(
                 id = "id",
                 name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
                 number = "16",
-                meeting = "http://test.test",
-                auxiliaryFile = listOf()
-        )
+                meetingName = "meeting")
         val url = "http://test.test"
-        val data = Transfer.Success(agendaItem)
-        coEvery { repository.getAgendaItem(url) } returns  data
+        val data = Transfer.Success(listOf(agendaItem))
+        coEvery { repository.searchAgendaItems(url) } returns  data
 
         //when:
         val result = runBlocking {useCase.execute(url)}
 
         //then:
         Assertions.assertTrue(result is Transfer.Success)
-        Assertions.assertEquals(agendaItem, (result as Transfer.Success).data)
+        Assertions.assertEquals(listOf(agendaItem), (result as Transfer.Success).data)
     }
 }

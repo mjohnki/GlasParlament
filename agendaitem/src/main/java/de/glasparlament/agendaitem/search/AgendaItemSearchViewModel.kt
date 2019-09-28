@@ -2,6 +2,7 @@ package de.glasparlament.agendaitem.search
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import de.glasparlament.agendaItemRepository.AgendaItem
 import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
 import de.glasparlament.common.NavigationViewModel
 import de.glasparlament.data.Transfer
@@ -12,16 +13,14 @@ import kotlinx.coroutines.withContext
 abstract class AgendaItemSearchViewModel : NavigationViewModel() {
 
     val uiModel = MutableLiveData<UIModel>()
+    val state = MutableLiveData<State>()
 
     abstract fun search(text: String)
 
-    companion object {
-        fun loading() = UIModel(progressBarVisibility = true, listVisibility = false)
-        fun error() = UIModel(progressBarVisibility = true, listVisibility = false)
-        fun loaded(agendaItems: List<AgendaItemSearchResult>) = UIModel(
-                progressBarVisibility = false,
-                listVisibility = true,
-                agendaItems = agendaItems)
+    sealed class State {
+        object Loading : State()
+        object Error : State()
+        data class Loaded(val agendaItems: List<AgendaItemSearchResult>) : State()
     }
 }
 
@@ -33,17 +32,14 @@ class AgendaItemSearchViewModelImpl(private val useCase: AgendaItemSearchUseCase
         }
     }
 
-    private suspend fun searchAgendaItems(text: String) = withContext(Dispatchers.Default) {
-        uiModel.postValue(loading())
-        when (val result = useCase.execute(text)) {
-            is Transfer.Success -> {
-                uiModel.postValue(loaded(result.data))
+    private suspend fun searchAgendaItems(text: String) =
+            withContext(Dispatchers.Default) {
+                state.postValue(State.Loading)
+                when (val result = useCase.execute(text)) {
+                    is Transfer.Success -> state.postValue(State.Loaded(result.data))
+                    is Transfer.Error -> state.postValue(State.Error)
+                }
             }
-            is Transfer.Error -> {
-                uiModel.postValue(error())
-            }
-        }
-    }
 }
 
 data class UIModel(

@@ -7,19 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
 import de.glasparlament.agendaitem.R
-import de.glasparlament.agendaitem.databinding.AgendaItemSearchFragmentBinding
-import de.glasparlament.common.NavigationCommand
+import de.glasparlament.common.observe
+import de.glasparlament.common.observeNavigation
+import kotlinx.android.synthetic.main.agenda_item_search_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class AgendaItemSearchFragment : Fragment(), AgendaItemSearchAdapter.OnItemClickListener , TextWatcher {
+class AgendaItemSearchFragment : Fragment(), AgendaItemSearchAdapter.OnItemClickListener, TextWatcher {
 
-    val agendaViewModel: AgendaItemSearchViewModel by viewModel()
+    private val agendaViewModel: AgendaItemSearchViewModel by viewModel()
+    private val adapter = AgendaItemSearchAdapter()
+    private val binder = AgendaItemSearchViewBinder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,38 +30,25 @@ class AgendaItemSearchFragment : Fragment(), AgendaItemSearchAdapter.OnItemClick
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val adapter = AgendaItemSearchAdapter(this)
-        val binding = DataBindingUtil.inflate<AgendaItemSearchFragmentBinding>(
-                inflater, R.layout.agenda_item_search_fragment, container, false)
+                              savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.agenda_item_search_fragment, container, false)
 
-        binding.lifecycleOwner = this
-        binding.textWatcher = this
-        binding.viewModel = agendaViewModel
-        binding.agendaList.adapter = adapter
-
-        subscribeUi(agendaViewModel, adapter)
-
-        agendaViewModel.navigationCommand.observe(this, Observer { command ->
-            command.getContentIfNotHandled()?.let{
-                when (it) {
-                    is NavigationCommand.To -> findNavController().navigate(it.directions)
-                }
-            }
-        })
-
-        return binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        adapter.listener = this
+        search.addTextChangedListener(this)
+        observe(agendaViewModel.state, ::updateUI)
+        observeNavigation(agendaViewModel.navigationCommand, findNavController())
     }
 
-    private fun subscribeUi(viewModel: AgendaItemSearchViewModel, adapter : AgendaItemSearchAdapter) {
-        viewModel.uiModel.observe(viewLifecycleOwner, Observer { model ->
-            adapter.submitList(model.agendaItems)
-        })
+    private fun updateUI(state: AgendaItemSearchViewModel.State) {
+        binder(AgendaItemSearchViewBinder.Params(state, adapter,
+                AgendaItemSearchViewBinder.Views(agenda_list, progressBar)
+        ))
     }
 
     override fun onItemClick(agendaItem: AgendaItemSearchResult) {
-        val direction
-                = AgendaItemSearchFragmentDirections.agendaItemFragment(agendaItem.id)
+        val direction = AgendaItemSearchFragmentDirections.agendaItemFragment(agendaItem.id)
         agendaViewModel.navigate(direction)
     }
 
