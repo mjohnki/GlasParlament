@@ -49,7 +49,7 @@ class AgendaItemDetailViewModelTest {
         Thread.sleep(200)
 
         //then:
-        Assertions.assertNull(viewModel.uiModel.value!!.agendaItem)
+        Assertions.assertTrue(viewModel.state.value is AgendaItemDetailViewModel.State.Error)
     }
 
     @Test
@@ -72,6 +72,6 @@ class AgendaItemDetailViewModelTest {
         Thread.sleep(200)
 
         //then:
-        Assertions.assertNotNull(viewModel.uiModel.value)
+        Assertions.assertTrue(viewModel.state.value is AgendaItemDetailViewModel.State.Loaded)
     }
 }
