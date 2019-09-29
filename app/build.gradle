@@ -107,6 +107,9 @@ dependencies {
     implementation libraries.retrofitGson
     implementation libraries.httpLogging
 
+    //leakcanary
+    debugImplementation libraries.leakcanary
+
     //test
     androidTestImplementation libraries.testRunner
     testImplementation libraries.junit

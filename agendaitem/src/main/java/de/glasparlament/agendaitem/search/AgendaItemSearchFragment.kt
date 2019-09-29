@@ -40,6 +40,16 @@ class AgendaItemSearchFragment : Fragment(), AgendaItemSearchAdapter.OnItemClick
         observeNavigation(agendaViewModel.navigationCommand, findNavController())
     }
 
+    override fun onPause() {
+        super.onPause()
+        agenda_list.adapter = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        agenda_list.adapter = adapter
+    }
+
     private fun updateUI(state: AgendaItemSearchViewModel.State) {
         binder(AgendaItemSearchViewBinder.Params(state, adapter,
                 AgendaItemSearchViewBinder.Views(agenda_list, progressBar)

@@ -38,6 +38,17 @@ class AgendaItemDetailFragment : Fragment(), AgendaFileAdapter.OnItemClickListen
         observeNavigation(agendaViewModel.navigationCommand, findNavController())
     }
 
+    override fun onPause() {
+        super.onPause()
+        file_list.adapter = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        file_list.adapter = adapter
+    }
+
+
     override fun onItemClick(file: File) {
         val builder = CustomTabsIntent.Builder()
         val customTabsIntent = builder.build()

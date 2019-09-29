@@ -45,6 +45,16 @@ class OrganizationListFragment : Fragment(), OrganizationAdapter.OnItemClickList
         organizationViewModel.navigate(direction)
     }
 
+    override fun onPause() {
+        super.onPause()
+        organization_list.adapter = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        organization_list.adapter = adapter
+    }
+
     private fun updateUI(state: OrganizationListViewModel.State) {
         floating_action_button.setOnClickListener(this)
         binder(OrganizationViewStateBinder.Params(state, adapter,

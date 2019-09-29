@@ -40,6 +40,16 @@ class MeetingListFragment : Fragment(), MeetingAdapter.OnItemClickListener {
         observeNavigation(meetingViewModel.navigationCommand, findNavController())
     }
 
+    override fun onPause() {
+        super.onPause()
+        meeting_list.adapter = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        meeting_list.adapter = adapter
+    }
+
     private fun updateUI(state: MeetingViewModel.State) {
         binder(MeetingViewStateBinder.Params(state, adapter,
                 MeetingViewStateBinder.Views(meeting_list, progressBar)
