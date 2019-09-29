@@ -1,12 +1,12 @@
 package de.glasparlament.organization
 
-data class BodyOrganization constructor(
+data class BodyOrganization(
         var organizationId: String,
         var organizationName: String,
         var bodyId: String,
         var bodyName: String,
         var meeting: String,
-        var bodyShortname: String){
+        var bodyShortname: String) {
 
     val name: String
         get() = "$bodyName · $organizationName"
