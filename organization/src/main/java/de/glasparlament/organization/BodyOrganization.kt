@@ -1,12 +1,12 @@
 package de.glasparlament.organization
 
 data class BodyOrganization(
-        var organizationId: String,
-        var organizationName: String,
-        var bodyId: String,
-        var bodyName: String,
-        var meeting: String,
-        var bodyShortname: String) {
+        val organizationId: String,
+        val organizationName: String,
+        val bodyId: String,
+        val bodyName: String,
+        val meeting: String,
+        val bodyShortname: String) {
 
     val name: String
         get() = "$bodyName · $organizationName"

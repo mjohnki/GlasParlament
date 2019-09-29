@@ -11,20 +11,18 @@ import kotlinx.android.synthetic.main.organization_list_item.view.*
 internal class OrganizationAdapter(private val listener: OnItemClickListener) :
         ListAdapter<BodyOrganization, OrganizationViewHolder>(DiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrganizationViewHolder {
-        return OrganizationViewHolder.create(parent)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrganizationViewHolder =
+            OrganizationViewHolder.create(parent)
 
     override fun onBindViewHolder(holder: OrganizationViewHolder, position: Int) {
         val file = getItem(position)
         holder.bind(file, createOnClickListener(file))
     }
 
-    private fun createOnClickListener(bodyOrganization: BodyOrganization): View.OnClickListener {
-        return View.OnClickListener {
-            listener.onItemClick(bodyOrganization)
-        }
-    }
+    private fun createOnClickListener(bodyOrganization: BodyOrganization): View.OnClickListener =
+            View.OnClickListener {
+                listener.onItemClick(bodyOrganization)
+            }
 
     interface OnItemClickListener {
         fun onItemClick(bodyOrganization: BodyOrganization)
