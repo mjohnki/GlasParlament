@@ -20,11 +20,10 @@ internal class MeetingAdapter(private val listener: OnItemClickListener) :
         holder.bind(meeting, createOnClickListener(meeting))
     }
 
-    private fun createOnClickListener(meeting: Meeting): View.OnClickListener {
-        return View.OnClickListener {
-            listener.onItemClick(meeting)
-        }
-    }
+    private fun createOnClickListener(meeting: Meeting) =
+            View.OnClickListener {
+                listener.onItemClick(meeting)
+            }
 
     interface OnItemClickListener {
         fun onItemClick(meeting: Meeting)
@@ -40,17 +39,17 @@ internal class MeetingViewHolder(private val view: View) : RecyclerView.ViewHold
 
     companion object {
         fun create(parent: ViewGroup) =
-                MeetingViewHolder(LayoutInflater.from(parent.context).
-                        inflate(R.layout.meeting_list_item, parent, false))
+                MeetingViewHolder(LayoutInflater.from(parent.context)
+                        .inflate(R.layout.meeting_list_item, parent, false))
     }
 }
 
 internal class DiffCallback : DiffUtil.ItemCallback<Meeting>() {
-    override fun areItemsTheSame(oldItem: Meeting, newItem: Meeting): Boolean {
-        return oldItem == newItem
-    }
+    override fun areItemsTheSame(oldItem: Meeting, newItem: Meeting) =
+            oldItem === newItem
 
-    override fun areContentsTheSame(oldItem: Meeting, newItem: Meeting): Boolean {
-        return oldItem == newItem
-    }
+
+    override fun areContentsTheSame(oldItem: Meeting, newItem: Meeting) =
+            oldItem == newItem
+
 }
