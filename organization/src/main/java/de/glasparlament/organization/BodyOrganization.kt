@@ -6,11 +6,4 @@ data class BodyOrganization(
         val bodyId: String,
         val bodyName: String,
         val meeting: String,
-        val bodyShortname: String) {
-
-    val name: String
-        get() = "$bodyName · $organizationName"
-
-    val shortname: String
-        get() = "$bodyShortname · $organizationName"
-}
+        val bodyShortname: String)
