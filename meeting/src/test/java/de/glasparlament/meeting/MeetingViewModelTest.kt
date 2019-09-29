@@ -50,8 +50,7 @@ class MeetingViewModelTest {
 
 
         //then:
-        Assertions.assertFalse(viewModel.uiModel.value!!.listVisibility)
-        Assertions.assertTrue(viewModel.uiModel.value!!.progressBarVisibility)
+        Assertions.assertTrue(viewModel.state.value is MeetingViewModel.State.Error)
     }
 
     @Test
@@ -73,8 +72,6 @@ class MeetingViewModelTest {
         Thread.sleep(200)
 
         //then:
-        Assertions.assertTrue(viewModel.uiModel.value!!.listVisibility)
-        Assertions.assertFalse(viewModel.uiModel.value!!.progressBarVisibility)
-        Assertions.assertEquals(viewModel.uiModel.value!!.meetings, listOf(meeting))
+        Assertions.assertTrue(viewModel.state.value is MeetingViewModel.State.Loaded)
     }
 }

@@ -11,17 +11,14 @@ import kotlinx.coroutines.withContext
 
 abstract class MeetingViewModel : NavigationViewModel() {
 
-    val uiModel = MutableLiveData<UIModel>()
+    val state = MutableLiveData<State>()
 
     abstract fun bind(url: String)
 
-    companion object {
-        fun loading() = UIModel(progressBarVisibility = true, listVisibility = false)
-        fun error() = UIModel(progressBarVisibility = true, listVisibility = false)
-        fun loaded(meetings: List<Meeting>) = UIModel(
-                progressBarVisibility = false,
-                listVisibility = true,
-                meetings = meetings)
+    sealed class State {
+        object Loading : State()
+        object Error : State()
+        data class Loaded(val meetings: List<Meeting>) : State()
     }
 }
 
@@ -33,20 +30,16 @@ class MeetingViewModelImpl(private val useCase: MeetingListUseCase) : MeetingVie
         }
     }
 
-    private suspend fun getMeetings(url: String) = withContext(Dispatchers.Default) {
-        uiModel.postValue(loading())
-        when (val result = useCase.execute(url)) {
-            is Transfer.Success -> {
-                uiModel.postValue(loaded(result.data))
+    private suspend fun getMeetings(url: String) =
+            withContext(Dispatchers.Default) {
+                state.postValue(State.Loading)
+                when (val result = useCase.execute(url)) {
+                    is Transfer.Success -> {
+                        state.postValue(State.Loaded(result.data))
+                    }
+                    is Transfer.Error -> {
+                        state.postValue(State.Error)
+                    }
+                }
             }
-            is Transfer.Error -> {
-                uiModel.postValue(error())
-            }
-        }
-    }
 }
-
-data class UIModel(
-        val progressBarVisibility: Boolean,
-        val listVisibility: Boolean,
-        val meetings: List<Meeting> = emptyList())

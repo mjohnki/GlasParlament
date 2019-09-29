@@ -6,18 +6,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import de.glasparlament.meeting.databinding.MeetingListItemBinding
 import de.glasparlament.meetingRepository.Meeting
+import kotlinx.android.synthetic.main.meeting_list_item.view.*
 
-class MeetingAdapter(private val listener: OnItemClickListener) :
-        ListAdapter<Meeting, MeetingAdapter.ViewHolder>(DiffCallback()) {
+internal class MeetingAdapter(private val listener: OnItemClickListener) :
+        ListAdapter<Meeting, MeetingViewHolder>(DiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(MeetingListItemBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false))
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+            MeetingViewHolder.create(parent)
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MeetingViewHolder, position: Int) {
         val meeting = getItem(position)
         holder.bind(meeting, createOnClickListener(meeting))
     }
@@ -31,24 +29,28 @@ class MeetingAdapter(private val listener: OnItemClickListener) :
     interface OnItemClickListener {
         fun onItemClick(meeting: Meeting)
     }
+}
 
+internal class MeetingViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    inner class ViewHolder(private val binding: MeetingListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(meeting: Meeting, listener: View.OnClickListener) {
-            binding.meeting = meeting
-            binding.clickListener = listener
-            binding.executePendingBindings()
-        }
+    fun bind(meeting: Meeting, listener: View.OnClickListener) {
+        view.meetingItem.setOnClickListener(listener)
+        view.meetingName.text = meeting.name
     }
 
-    internal class DiffCallback : DiffUtil.ItemCallback<Meeting>() {
-        override fun areItemsTheSame(oldItem: Meeting, newItem: Meeting): Boolean {
-            return oldItem == newItem
-        }
+    companion object {
+        fun create(parent: ViewGroup) =
+                MeetingViewHolder(LayoutInflater.from(parent.context).
+                        inflate(R.layout.meeting_list_item, parent, false))
+    }
+}
 
-        override fun areContentsTheSame(oldItem: Meeting, newItem: Meeting): Boolean {
-            return oldItem == newItem
-        }
+internal class DiffCallback : DiffUtil.ItemCallback<Meeting>() {
+    override fun areItemsTheSame(oldItem: Meeting, newItem: Meeting): Boolean {
+        return oldItem == newItem
+    }
+
+    override fun areContentsTheSame(oldItem: Meeting, newItem: Meeting): Boolean {
+        return oldItem == newItem
     }
 }
