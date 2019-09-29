@@ -42,6 +42,16 @@ class AgendaItemFragment : Fragment(), AgendaItemAdapter.OnItemClickListener {
         observeNavigation(agendaViewModel.navigationCommand, findNavController())
     }
 
+    override fun onPause() {
+        super.onPause()
+        agenda_list.adapter = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        agenda_list.adapter = adapter
+    }
+
     private fun updateUI(state: AgendaItemViewModel.State) {
         binder(AgendaItemViewBinder.Params(state, adapter,
                 AgendaItemViewBinder.Views(agenda_list, progressBar)

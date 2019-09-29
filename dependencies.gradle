@@ -42,6 +42,9 @@ ext {
             retrofitGson            : "com.squareup.retrofit2:converter-gson:2.6.1",
             httpLogging             : 'com.squareup.okhttp3:logging-interceptor:4.2.0',
 
+            //leakcanary
+            leakcanary              : 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3',
+
             //Tests
             junit                   : 'org.junit.jupiter:junit-jupiter-api:5.5.2',
             junitEngine             : 'org.junit.jupiter:junit-jupiter-engine:5.5.2',
