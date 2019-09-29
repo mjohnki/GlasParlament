@@ -5,13 +5,13 @@ import de.glasparlament.data.Organization
 
 object BodyOrganizationMapper {
 
-    fun map(body: Body, organization: Organization) : BodyOrganization {
-        return BodyOrganization(
-                organization.id,
-                organization.name,
-                body.id,
-                body.name,
-                organization.meeting,
-                body.shortname)
-    }
+    fun map(body: Body, organization: Organization): BodyOrganization =
+            BodyOrganization(
+                    organizationId = organization.id,
+                    organizationName = organization.name,
+                    bodyId = body.id,
+                    bodyName = body.name,
+                    meeting = organization.meeting,
+                    bodyShortname = body.shortname)
+
 }
