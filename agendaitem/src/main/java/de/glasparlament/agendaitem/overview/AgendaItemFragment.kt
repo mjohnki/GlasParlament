@@ -21,14 +21,13 @@ class AgendaItemFragment : Fragment(), AgendaItemAdapter.OnItemClickListener {
 
     private val agendaViewModel: AgendaItemViewModel by viewModel()
     private val args: AgendaItemFragmentArgs by navArgs()
-    private val adapter = AgendaItemAdapter()
+    private val adapter = AgendaItemAdapter(this)
     private val binder = AgendaItemViewBinder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         agendaViewModel.bind(args.meetingId)
-
         (activity as AppCompatActivity).supportActionBar!!.title = args.title
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
@@ -39,7 +38,6 @@ class AgendaItemFragment : Fragment(), AgendaItemAdapter.OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter.listener = this
         observe(agendaViewModel.state, ::updateUI)
         observeNavigation(agendaViewModel.navigationCommand, findNavController())
     }

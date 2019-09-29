@@ -10,10 +10,8 @@ import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
 import de.glasparlament.agendaitem.R
 import kotlinx.android.synthetic.main.agenda_item_search.view.*
 
-internal class AgendaItemSearchAdapter :
+internal class AgendaItemSearchAdapter(private val listener: OnItemClickListener) :
         ListAdapter<AgendaItemSearchResult, AgendaItemSearchViewHolder>(DiffCallback()) {
-
-    var listener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             AgendaItemSearchViewHolder.create(parent)
@@ -25,7 +23,7 @@ internal class AgendaItemSearchAdapter :
 
     private fun createOnClickListener(agendaItem: AgendaItemSearchResult): View.OnClickListener {
         return View.OnClickListener {
-            listener?.onItemClick(agendaItem)
+            listener.onItemClick(agendaItem)
         }
     }
 
@@ -51,11 +49,11 @@ internal class AgendaItemSearchViewHolder(private val view: View) : RecyclerView
 }
 
 internal class DiffCallback : DiffUtil.ItemCallback<AgendaItemSearchResult>() {
-    override fun areItemsTheSame(oldItem: AgendaItemSearchResult, newItem: AgendaItemSearchResult): Boolean {
-        return oldItem === newItem
-    }
+    override fun areItemsTheSame(oldItem: AgendaItemSearchResult, newItem: AgendaItemSearchResult) =
+            oldItem === newItem
 
-    override fun areContentsTheSame(oldItem: AgendaItemSearchResult, newItem: AgendaItemSearchResult): Boolean {
-        return oldItem == newItem
-    }
+
+    override fun areContentsTheSame(oldItem: AgendaItemSearchResult, newItem: AgendaItemSearchResult) =
+            oldItem == newItem
+
 }
