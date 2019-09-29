@@ -12,7 +12,6 @@ import kotlinx.coroutines.withContext
 
 abstract class AgendaItemSearchViewModel : NavigationViewModel() {
 
-    val uiModel = MutableLiveData<UIModel>()
     val state = MutableLiveData<State>()
 
     abstract fun search(text: String)
@@ -41,8 +40,3 @@ class AgendaItemSearchViewModelImpl(private val useCase: AgendaItemSearchUseCase
                 }
             }
 }
-
-data class UIModel(
-        val progressBarVisibility: Boolean,
-        val listVisibility: Boolean,
-        val agendaItems: List<AgendaItemSearchResult> = emptyList())

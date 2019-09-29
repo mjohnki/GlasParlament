@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import de.glasparlament.agendaItemRepository.AgendaItem
 import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
 
-class AgendaItemSearchViewBinder {
+internal class AgendaItemSearchViewBinder {
 
     data class Params(
             val state: AgendaItemSearchViewModel.State,
