@@ -5,7 +5,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import de.glasparlament.agendaItemRepository.AgendaItem
 
-class AgendaItemViewBinder {
+internal class AgendaItemViewBinder {
 
     data class Params(
             val state: AgendaItemViewModel.State,

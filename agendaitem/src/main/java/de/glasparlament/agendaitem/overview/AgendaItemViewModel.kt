@@ -15,8 +15,6 @@ abstract class AgendaItemViewModel : NavigationViewModel() {
 
     val state = MutableLiveData<State>()
 
-    val uiModel = MutableLiveData<UIModel>()
-
     sealed class State {
         object Loading : State()
         object Error : State()
@@ -41,8 +39,3 @@ class AgendaItemViewModelImpl(private val useCase: AgendaItemListUseCase) : Agen
                 }
             }
 }
-
-data class UIModel(
-                val progressBarVisibility: Boolean,
-                val listVisibility: Boolean,
-                val agendaItems: List<AgendaItem> = emptyList())

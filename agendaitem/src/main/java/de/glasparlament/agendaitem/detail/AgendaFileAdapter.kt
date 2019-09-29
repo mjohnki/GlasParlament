@@ -6,19 +6,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import de.glasparlament.agendaitem.databinding.AgendaFileItemBinding
 import de.glasparlament.agendaItemRepository.File
+import de.glasparlament.agendaitem.R
+import kotlinx.android.synthetic.main.agenda_file_item.view.*
 
-class AgendaFileAdapter : ListAdapter<File, AgendaFileAdapter.ViewHolder>(DiffCallback()) {
+internal class AgendaFileAdapter : ListAdapter<File, AgendaFileViewHolder>(DiffCallback()) {
 
     var listener: OnItemClickListener? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(AgendaFileItemBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false))
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+            AgendaFileViewHolder.create(parent)
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+    override fun onBindViewHolder(holder: AgendaFileViewHolder, position: Int) {
         val file = getItem(position)
         holder.bind(file, createOnClickListener(file))
     }
@@ -32,24 +32,28 @@ class AgendaFileAdapter : ListAdapter<File, AgendaFileAdapter.ViewHolder>(DiffCa
     interface OnItemClickListener {
         fun onItemClick(file: File)
     }
+}
 
+internal class AgendaFileViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    inner class ViewHolder(private val binding: AgendaFileItemBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(file: File, listener: View.OnClickListener) {
-            binding.file = file
-            binding.clickListener = listener
-            binding.executePendingBindings()
-        }
+    fun bind(file: File, listener: View.OnClickListener) {
+        view.filename.text = file.name
+        view.filename.setOnClickListener(listener)
     }
 
-    internal class DiffCallback : DiffUtil.ItemCallback<File>() {
-        override fun areItemsTheSame(oldItem: File, newItem: File): Boolean {
-            return oldItem === newItem
-        }
+    companion object {
+        fun create(parent: ViewGroup) =
+                AgendaFileViewHolder(LayoutInflater.from(parent.context)
+                        .inflate(R.layout.agenda_file_item, parent, false))
+    }
+}
 
-        override fun areContentsTheSame(oldItem: File, newItem: File): Boolean {
-            return oldItem == newItem
-        }
+internal class DiffCallback : DiffUtil.ItemCallback<File>() {
+    override fun areItemsTheSame(oldItem: File, newItem: File): Boolean {
+        return oldItem === newItem
+    }
+
+    override fun areContentsTheSame(oldItem: File, newItem: File): Boolean {
+        return oldItem == newItem
     }
 }
