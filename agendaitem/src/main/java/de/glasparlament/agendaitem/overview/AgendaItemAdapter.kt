@@ -10,9 +10,8 @@ import de.glasparlament.agendaItemRepository.AgendaItem
 import de.glasparlament.agendaitem.R
 import kotlinx.android.synthetic.main.agenda_item.view.*
 
-internal class AgendaItemAdapter : ListAdapter<AgendaItem, AgendaItemViewHolder>(DiffCallback()) {
-
-    var listener: OnItemClickListener? = null
+internal class AgendaItemAdapter(private val listener: OnItemClickListener) :
+        ListAdapter<AgendaItem, AgendaItemViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             AgendaItemViewHolder.create(parent)
@@ -24,7 +23,7 @@ internal class AgendaItemAdapter : ListAdapter<AgendaItem, AgendaItemViewHolder>
 
     private fun createOnClickListener(agendaItem: AgendaItem): View.OnClickListener {
         return View.OnClickListener {
-            listener?.onItemClick(agendaItem)
+            listener.onItemClick(agendaItem)
         }
     }
 
@@ -48,11 +47,9 @@ internal class AgendaItemViewHolder(private val view: View) : RecyclerView.ViewH
 }
 
 internal class DiffCallback : DiffUtil.ItemCallback<AgendaItem>() {
-    override fun areItemsTheSame(oldItem: AgendaItem, newItem: AgendaItem): Boolean {
-        return oldItem === newItem
-    }
+    override fun areItemsTheSame(oldItem: AgendaItem, newItem: AgendaItem) =
+            oldItem === newItem
 
-    override fun areContentsTheSame(oldItem: AgendaItem, newItem: AgendaItem): Boolean {
-        return oldItem == newItem
-    }
+    override fun areContentsTheSame(oldItem: AgendaItem, newItem: AgendaItem) =
+            oldItem == newItem
 }

@@ -19,7 +19,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class AgendaItemSearchFragment : Fragment(), AgendaItemSearchAdapter.OnItemClickListener, TextWatcher {
 
     private val agendaViewModel: AgendaItemSearchViewModel by viewModel()
-    private val adapter = AgendaItemSearchAdapter()
+    private val adapter = AgendaItemSearchAdapter(this)
     private val binder = AgendaItemSearchViewBinder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,6 @@ class AgendaItemSearchFragment : Fragment(), AgendaItemSearchAdapter.OnItemClick
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter.listener = this
         search.addTextChangedListener(this)
         observe(agendaViewModel.state, ::updateUI)
         observeNavigation(agendaViewModel.navigationCommand, findNavController())

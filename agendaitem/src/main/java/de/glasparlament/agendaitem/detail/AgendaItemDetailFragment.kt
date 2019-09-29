@@ -20,7 +20,7 @@ class AgendaItemDetailFragment : Fragment(), AgendaFileAdapter.OnItemClickListen
 
     private val args: AgendaItemDetailFragmentArgs by navArgs()
     private val agendaViewModel: AgendaItemDetailViewModel by viewModel()
-    private val adapter = AgendaFileAdapter()
+    private val adapter = AgendaFileAdapter(this)
     private val binder = AgendaItemDetailViewBinder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +34,6 @@ class AgendaItemDetailFragment : Fragment(), AgendaFileAdapter.OnItemClickListen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter.listener = this
         observe(agendaViewModel.state, ::updateUI)
         observeNavigation(agendaViewModel.navigationCommand, findNavController())
     }
