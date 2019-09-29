@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Organization</string>
+    <string name="name">%1$s · %2$s</string>
 </resources>

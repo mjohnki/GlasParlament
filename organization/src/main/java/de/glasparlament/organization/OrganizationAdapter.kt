@@ -32,7 +32,11 @@ internal class OrganizationAdapter(private val listener: OnItemClickListener) :
 internal class OrganizationViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(bodyOrganization: BodyOrganization, listener: View.OnClickListener) {
-        view.organizationName.text = bodyOrganization.name
+        val name = view.resources.getString(
+                R.string.name,
+                bodyOrganization.bodyName,
+                bodyOrganization.organizationName)
+        view.organizationName.text = name
         view.organizationItem.setOnClickListener(listener)
     }
 

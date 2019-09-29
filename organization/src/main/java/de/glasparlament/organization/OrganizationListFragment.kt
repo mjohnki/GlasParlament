@@ -34,10 +34,14 @@ class OrganizationListFragment : Fragment(), OrganizationAdapter.OnItemClickList
     }
 
     override fun onItemClick(bodyOrganization: BodyOrganization) {
+        val name = resources.getString(
+                R.string.name,
+                bodyOrganization.bodyShortname,
+                bodyOrganization.organizationName)
         val direction =
                 OrganizationListFragmentDirections.actionOrganizationListFragmentToMeetingListFragment(
                         bodyOrganization.meeting,
-                        bodyOrganization.name)
+                        name)
         organizationViewModel.navigate(direction)
     }
 
