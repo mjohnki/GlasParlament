@@ -40,17 +40,15 @@ internal class OrganizationViewHolder(private val view: View) : RecyclerView.Vie
 
     companion object {
         fun create(parent: ViewGroup) =
-                OrganizationViewHolder(LayoutInflater.from(parent.context).
-                        inflate(R.layout.organization_list_item, parent, false))
+                OrganizationViewHolder(LayoutInflater.from(parent.context)
+                        .inflate(R.layout.organization_list_item, parent, false))
     }
 }
 
 internal class DiffCallback : DiffUtil.ItemCallback<BodyOrganization>() {
-    override fun areItemsTheSame(oldItem: BodyOrganization, newItem: BodyOrganization): Boolean {
-        return oldItem === newItem
-    }
+    override fun areItemsTheSame(oldItem: BodyOrganization, newItem: BodyOrganization): Boolean =
+            oldItem === newItem
 
-    override fun areContentsTheSame(oldItem: BodyOrganization, newItem: BodyOrganization): Boolean {
-        return oldItem == newItem
-    }
+    override fun areContentsTheSame(oldItem: BodyOrganization, newItem: BodyOrganization): Boolean =
+            oldItem == newItem
 }
