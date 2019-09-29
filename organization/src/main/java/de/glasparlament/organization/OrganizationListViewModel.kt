@@ -10,42 +10,34 @@ import kotlinx.coroutines.withContext
 
 abstract class OrganizationListViewModel : NavigationViewModel() {
 
-    val uiModel = MutableLiveData<UIModel>()
+    val state = MutableLiveData<State>()
 
     abstract fun loadData()
 
-    companion object {
-        fun loading() = UIModel(progressBarVisibility = true, listVisibility = false)
-        fun error() = UIModel(progressBarVisibility = true, listVisibility = false)
-        fun loaded(organizations: List<BodyOrganization>) = UIModel(
-                progressBarVisibility = false,
-                listVisibility = true,
-                organizations = organizations)
+    sealed class State {
+        object Loading : State()
+        object Error : State()
+        data class Loaded(val meetings: List<BodyOrganization>) : State()
     }
 }
 
 class OrganizationListViewModelImpl(private val useCase: OrganizationListUseCase) : OrganizationListViewModel() {
 
-    override fun loadData(){
+    override fun loadData() {
         viewModelScope.launch {
             getOrganizations()
         }
     }
 
     private suspend fun getOrganizations() = withContext(Dispatchers.Default) {
-        uiModel.postValue(loading())
+        state.postValue(State.Loading)
         when (val result = useCase.execute()) {
             is Transfer.Success -> {
-                uiModel.postValue(loaded(result.data))
+                state.postValue(State.Loaded(result.data))
             }
             is Transfer.Error -> {
-                uiModel.postValue(error())
+                state.postValue(State.Error)
             }
         }
     }
 }
-
-data class UIModel(
-        val progressBarVisibility: Boolean,
-        val listVisibility: Boolean,
-        val organizations: List<BodyOrganization> = emptyList())

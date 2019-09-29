@@ -47,8 +47,7 @@ class OrganizationListViewModelTest {
         Thread.sleep(200)
 
         //then:
-        Assertions.assertFalse(viewModel.uiModel.value!!.listVisibility)
-        Assertions.assertTrue(viewModel.uiModel.value!!.progressBarVisibility)
+        Assertions.assertTrue(viewModel.state.value is OrganizationListViewModel.State.Error)
     }
 
     @Test
@@ -63,9 +62,7 @@ class OrganizationListViewModelTest {
         Thread.sleep(200)
 
         //then:
-        Assertions.assertTrue(viewModel.uiModel.value!!.listVisibility)
-        Assertions.assertFalse(viewModel.uiModel.value!!.progressBarVisibility)
-        Assertions.assertEquals(viewModel.uiModel.value!!.organizations, TestData.bodyOrganizations)
+        Assertions.assertTrue(viewModel.state.value is OrganizationListViewModel.State.Loaded)
     }
 }
 

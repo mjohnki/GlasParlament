@@ -3,20 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="bodyOrganization"
-            type="de.glasparlament.organization.BodyOrganization" />
-        <variable
-            name="clickListener"
-            type="android.view.View.OnClickListener" />
-
-    </data>
-
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/organizationItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{clickListener}"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
@@ -36,7 +26,6 @@
                 android:layout_alignParentTop="true"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:text="@{bodyOrganization.name}"
                 tools:text="Organization name" />
 
             <ImageView
