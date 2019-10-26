@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import de.glasparlament.common.DeepLink
 import de.glasparlament.common.observe
-import de.glasparlament.common.observeNavigation
 import de.glasparlament.meetingRepository.Meeting
 import kotlinx.android.synthetic.main.meeting_list_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -37,7 +37,6 @@ class MeetingListFragment : Fragment(), MeetingAdapter.OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observe(meetingViewModel.state, ::updateUI)
-        observeNavigation(meetingViewModel.navigationCommand, findNavController())
     }
 
     override fun onPause() {
@@ -57,8 +56,11 @@ class MeetingListFragment : Fragment(), MeetingAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(meeting: Meeting) {
-        val direction =
-                MeetingListFragmentDirections.actionMeetingListFragmentToAgendaFragment(meeting.id, meeting.name)
-        meetingViewModel.navigate(direction)
+        findNavController().navigate(
+                DeepLink.agendaOverview(
+                        resources = resources,
+                        title = meeting.name,
+                        meetingId = meeting.id)
+        )
     }
 }

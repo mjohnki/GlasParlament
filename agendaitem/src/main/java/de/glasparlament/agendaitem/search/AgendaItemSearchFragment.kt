@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
 import de.glasparlament.agendaitem.R
 import de.glasparlament.common.observe
-import de.glasparlament.common.observeNavigation
 import kotlinx.android.synthetic.main.agenda_item_search_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -37,7 +36,6 @@ class AgendaItemSearchFragment : Fragment(), AgendaItemSearchAdapter.OnItemClick
         super.onViewCreated(view, savedInstanceState)
         search.addTextChangedListener(this)
         observe(agendaViewModel.state, ::updateUI)
-        observeNavigation(agendaViewModel.navigationCommand, findNavController())
     }
 
     override fun onPause() {
@@ -57,8 +55,8 @@ class AgendaItemSearchFragment : Fragment(), AgendaItemSearchAdapter.OnItemClick
     }
 
     override fun onItemClick(agendaItem: AgendaItemSearchResult) {
-        val direction = AgendaItemSearchFragmentDirections.agendaItemFragment(agendaItem.id)
-        agendaViewModel.navigate(direction)
+       // val direction = AgendaItemSearchFragmentDirections.agendaItemFragment(agendaItem.id)
+        //agendaViewModel.navigate(direction)
     }
 
     override fun afterTextChanged(s: Editable?) {

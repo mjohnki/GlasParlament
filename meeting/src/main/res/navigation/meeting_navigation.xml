@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/meeting_navigation.xml"
+    tools:ignore="InvalidNavigation,UnusedNavigation">
+
+    <fragment
+        android:id="@+id/meeting_list_fragment"
+        android:name="de.glasparlament.meeting.MeetingListFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/meeting_list_fragment">
+        <argument
+            android:name="meetingListId"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <deepLink app:uri="@string/deeplink_meeting_list" />
+    </fragment>
+
+</navigation>

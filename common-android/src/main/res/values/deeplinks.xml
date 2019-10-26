@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="deeplink_meeting_list" translatable="false">glasparlament://meeting_list/{title}/{meetingListId}</string>
+    <string name="deeplink_meeting_list_format" translatable="false">glasparlament://meeting_list/%s/%s</string>
+
+    <string name="deeplink_search" translatable="false">glasparlament://search</string>
+
+    <string name="deeplink_agenda" translatable="false">glasparlament://agenda/{title}/{meetingId}</string>
+    <string name="deeplink_agenda_format" translatable="false">glasparlament://agenda/%s/%s</string>
+</resources>
