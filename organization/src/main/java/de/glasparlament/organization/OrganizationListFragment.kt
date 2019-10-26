@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import de.glasparlament.common.DeepLink
 import de.glasparlament.common.observe
-import de.glasparlament.common.observeNavigation
 import kotlinx.android.synthetic.main.organization_list_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -25,12 +25,11 @@ class OrganizationListFragment : Fragment(), OrganizationAdapter.OnItemClickList
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.organization_list_fragment, container, false)
+            inflater.inflate(R.layout.organization_list_fragment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observe(organizationViewModel.state, ::updateUI)
-        observeNavigation(organizationViewModel.navigationCommand, findNavController())
     }
 
     override fun onItemClick(bodyOrganization: BodyOrganization) {
@@ -38,11 +37,12 @@ class OrganizationListFragment : Fragment(), OrganizationAdapter.OnItemClickList
                 R.string.name,
                 bodyOrganization.bodyShortname,
                 bodyOrganization.organizationName)
-        val direction =
-                OrganizationListFragmentDirections.actionOrganizationListFragmentToMeetingListFragment(
-                        bodyOrganization.meeting,
-                        name)
-        organizationViewModel.navigate(direction)
+        findNavController().navigate(
+                DeepLink.meetingList(
+                        resources = resources,
+                        title = name,
+                        meetingListId = bodyOrganization.meeting)
+        )
     }
 
     override fun onPause() {
@@ -63,8 +63,6 @@ class OrganizationListFragment : Fragment(), OrganizationAdapter.OnItemClickList
     }
 
     override fun onClick(v: View?) {
-        val direction =
-                OrganizationListFragmentDirections.actionAgendaItemSearchFragment()
-        organizationViewModel.navigate(direction)
+        findNavController().navigate(DeepLink.search(resources))
     }
 }

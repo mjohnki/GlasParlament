@@ -10,10 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import de.glasparlament.agendaItemRepository.AgendaItem
 import de.glasparlament.agendaitem.R
-import de.glasparlament.agendaitem.detail.AgendaItemDetailViewBinder
 import de.glasparlament.common.observe
-import de.glasparlament.common.observeNavigation
-import kotlinx.android.synthetic.main.agenda_item_detail_fragment.*
 import kotlinx.android.synthetic.main.agenda_item_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -39,7 +36,6 @@ class AgendaItemFragment : Fragment(), AgendaItemAdapter.OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observe(agendaViewModel.state, ::updateUI)
-        observeNavigation(agendaViewModel.navigationCommand, findNavController())
     }
 
     override fun onPause() {
@@ -60,6 +56,6 @@ class AgendaItemFragment : Fragment(), AgendaItemAdapter.OnItemClickListener {
 
     override fun onItemClick(agendaItem: AgendaItem) {
         val direction = AgendaItemFragmentDirections.actionAgendaFragmentToAgendaItemFragment(agendaItem.id)
-        agendaViewModel.navigate(direction)
+        findNavController().navigate(direction)
     }
 }

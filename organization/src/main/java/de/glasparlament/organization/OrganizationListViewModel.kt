@@ -1,14 +1,14 @@
 package de.glasparlament.organization
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.glasparlament.common.NavigationViewModel
 import de.glasparlament.data.Transfer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-abstract class OrganizationListViewModel : NavigationViewModel() {
+abstract class OrganizationListViewModel : ViewModel() {
 
     val state = MutableLiveData<State>()
 

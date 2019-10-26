@@ -1,15 +1,15 @@
 package de.glasparlament.meeting
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.glasparlament.common.NavigationViewModel
 import de.glasparlament.data.Transfer
 import de.glasparlament.meetingRepository.Meeting
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-abstract class MeetingViewModel : NavigationViewModel() {
+abstract class MeetingViewModel : ViewModel() {
 
     val state = MutableLiveData<State>()
 

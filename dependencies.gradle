@@ -24,8 +24,8 @@
             lifecycleExtensions     : 'androidx.lifecycle:lifecycle-extensions:2.1.0',
 
             //Navigation
-            navigationFragment      : 'androidx.navigation:navigation-fragment-ktx:2.1.0',
-            navigationUi            : 'androidx.navigation:navigation-ui-ktx:2.1.0',
+            navigationFragment      : 'androidx.navigation:navigation-fragment-ktx:2.2.0-rc01',
+            navigationUi            : 'androidx.navigation:navigation-ui-ktx:2.2.0-rc01',
 
             //UI
             constraintlayout        : 'androidx.constraintlayout:constraintlayout:1.1.3',

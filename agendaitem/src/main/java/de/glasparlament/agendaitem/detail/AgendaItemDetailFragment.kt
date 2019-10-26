@@ -7,12 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import de.glasparlament.agendaItemRepository.File
 import de.glasparlament.agendaitem.R
 import de.glasparlament.common.observe
-import de.glasparlament.common.observeNavigation
 import kotlinx.android.synthetic.main.agenda_item_detail_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -35,7 +33,6 @@ class AgendaItemDetailFragment : Fragment(), AgendaFileAdapter.OnItemClickListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observe(agendaViewModel.state, ::updateUI)
-        observeNavigation(agendaViewModel.navigationCommand, findNavController())
     }
 
     override fun onPause() {

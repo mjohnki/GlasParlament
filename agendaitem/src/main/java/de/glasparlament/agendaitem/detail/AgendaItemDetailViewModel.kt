@@ -1,15 +1,15 @@
 package de.glasparlament.agendaitem.detail
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.glasparlament.agendaItemRepository.AgendaItem
-import de.glasparlament.common.NavigationViewModel
 import de.glasparlament.data.Transfer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-abstract class AgendaItemDetailViewModel : NavigationViewModel() {
+abstract class AgendaItemDetailViewModel : ViewModel() {
 
     abstract fun bind(url: String)
 
