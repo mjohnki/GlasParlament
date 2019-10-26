@@ -6,17 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import dagger.android.support.DaggerFragment
 import de.glasparlament.agendaItemRepository.AgendaItem
 import de.glasparlament.agendaitem.R
 import de.glasparlament.common.observe
 import kotlinx.android.synthetic.main.agenda_item_fragment.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
-class AgendaItemFragment : Fragment(), AgendaItemAdapter.OnItemClickListener {
+class AgendaItemFragment : DaggerFragment(), AgendaItemAdapter.OnItemClickListener {
 
-    private val agendaViewModel: AgendaItemViewModel by viewModel()
+    @Inject
+    lateinit var factory: AgendaItemViewModelFactory
+
+    private lateinit var viewModel: AgendaItemViewModel
+
     private val args: AgendaItemFragmentArgs by navArgs()
     private val adapter = AgendaItemAdapter(this)
     private val binder = AgendaItemViewBinder()
@@ -24,7 +30,8 @@ class AgendaItemFragment : Fragment(), AgendaItemAdapter.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        agendaViewModel.bind(args.meetingId)
+        viewModel = ViewModelProviders.of(this, factory).get(AgendaItemViewModel::class.java)
+        viewModel.bind(args.meetingId)
         (activity as AppCompatActivity).supportActionBar!!.title = args.title
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
@@ -35,7 +42,7 @@ class AgendaItemFragment : Fragment(), AgendaItemAdapter.OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observe(agendaViewModel.state, ::updateUI)
+        observe(viewModel.state, ::updateUI)
     }
 
     override fun onPause() {

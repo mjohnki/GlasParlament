@@ -1,16 +1,20 @@
 package de.glasparlament.agendaItemRepository.di
 
+import dagger.Module
+import dagger.Provides
 import de.glasparlament.agendaItemRepository.AgendaItemRepository
 import de.glasparlament.agendaItemRepository.AgendaItemRepositoryImpl
 import de.glasparlament.data.db.AgendaItemDao
 import de.glasparlament.data.db.MeetingDao
-import org.koin.dsl.module
-import retrofit2.Retrofit
+import javax.inject.Singleton
 
-val agendaItemRepositoryModule = module {
-    single<AgendaItemRepository> { provideAgendaItemRepository(get(), get()) }
+
+@Module
+class AgendaItemRepositoryModule {
+
+    @Provides
+    @Singleton
+    fun provideAgendaItemRepository(agendaItemDao: AgendaItemDao,
+                                    meetingDao: MeetingDao) =
+            AgendaItemRepositoryImpl(agendaItemDao, meetingDao) as AgendaItemRepository
 }
-
-fun provideAgendaItemRepository(agendaItemDao: AgendaItemDao,
-                                meetingDao: MeetingDao) =
-        AgendaItemRepositoryImpl(agendaItemDao, meetingDao)

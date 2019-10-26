@@ -44,9 +44,10 @@ dependencies {
     //Android
     implementation libraries.coreExtensions
 
-    //koin
-    implementation libraries.koin
-    implementation libraries.koinViewmodel
+    //dagger
+    kapt libraries.daggerCompiler
+    kapt libraries.daggerAndroidProcessor
+    implementation libraries.daggerAndroidSupport
 
     //Lifecycle
     implementation libraries.lifecycleViewmodel

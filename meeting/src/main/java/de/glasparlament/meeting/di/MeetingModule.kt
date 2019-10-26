@@ -1,19 +1,30 @@
 package de.glasparlament.meeting.di
 
+import dagger.Module
+import dagger.Provides
+import dagger.android.ContributesAndroidInjector
+import de.glasparlament.meeting.MeetingListFragment
 import de.glasparlament.meeting.MeetingListUseCase
-import de.glasparlament.meeting.MeetingViewModel
-import de.glasparlament.meeting.MeetingViewModelImpl
+import de.glasparlament.meeting.MeetingViewModelFactory
 import de.glasparlament.meetingRepository.MeetingRepository
-import org.koin.android.viewmodel.dsl.viewModel
-import org.koin.dsl.module
+import javax.inject.Singleton
 
-val meetingModule = module {
-    factory<MeetingListUseCase> { provideMeetingListUseCase(get()) }
-    viewModel<MeetingViewModel> { provideMeetingListViewModel(get()) }
+@Module(includes = [MeetingModule.Binding::class])
+class MeetingModule {
+
+    @Provides
+    fun provideMeetingListUseCase(repository: MeetingRepository) =
+            MeetingListUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideMeetingViewModelFactory(useCase: MeetingListUseCase) =
+            MeetingViewModelFactory(useCase)
+
+    @Module
+    abstract class Binding {
+
+        @ContributesAndroidInjector
+        abstract fun meetingListFragment(): MeetingListFragment
+    }
 }
-
-fun provideMeetingListUseCase(repository: MeetingRepository) =
-        MeetingListUseCase(repository)
-
-fun provideMeetingListViewModel(useCase: MeetingListUseCase) =
-        MeetingViewModelImpl(useCase)

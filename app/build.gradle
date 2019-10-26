@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply plugin: 'jacoco-android'
@@ -99,8 +100,10 @@ dependencies {
     //Room
     implementation libraries.roomRuntime
 
-    //koin
-    implementation libraries.koin
+    //dagger
+    kapt libraries.daggerCompiler
+    kapt libraries.daggerAndroidProcessor
+    implementation libraries.daggerAndroidSupport
 
     //retrofit
     implementation libraries.retrofit

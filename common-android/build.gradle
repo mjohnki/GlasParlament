@@ -28,10 +28,13 @@ dependencies {
     //General
     implementation libraries.kotlinStd
 
+    //Lifecycle
+    implementation libraries.lifecycleExtensions
+
     //Navigation
-    implementation libraries.navigationFragment
-    implementation libraries.navigationUi
+    //implementation libraries.navigationFragment
+    //implementation libraries.navigationUi
 
     //dagger
-    implementation libraries.daggerAndroidSupport
+    //implementation libraries.daggerAndroidSupport
 }
