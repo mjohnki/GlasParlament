@@ -6,21 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import dagger.android.support.DaggerFragment
 import de.glasparlament.common.DeepLink
 import de.glasparlament.common.observe
 import kotlinx.android.synthetic.main.organization_list_fragment.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
-class OrganizationListFragment : Fragment(), OrganizationAdapter.OnItemClickListener, View.OnClickListener {
+class OrganizationListFragment : DaggerFragment(), OrganizationAdapter.OnItemClickListener, View.OnClickListener {
 
-    private val organizationViewModel: OrganizationListViewModel by viewModel()
+    @Inject
+    lateinit var factory: OrganizationListViewModelFactory
+
+    private lateinit var viewModel: OrganizationListViewModel
     private val adapter = OrganizationAdapter(this)
     private val binder = OrganizationViewStateBinder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        organizationViewModel.loadData()
+        viewModel = ViewModelProviders.of(this, factory).get(OrganizationListViewModel::class.java)
+        viewModel.loadData()
         (activity as AppCompatActivity).supportActionBar!!.setTitle(R.string.app_name)
     }
 
@@ -29,7 +35,7 @@ class OrganizationListFragment : Fragment(), OrganizationAdapter.OnItemClickList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observe(organizationViewModel.state, ::updateUI)
+        observe(viewModel.state, ::updateUI)
     }
 
     override fun onItemClick(bodyOrganization: BodyOrganization) {

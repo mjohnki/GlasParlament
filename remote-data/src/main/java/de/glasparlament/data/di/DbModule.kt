@@ -2,30 +2,34 @@ package de.glasparlament.data.di
 
 import android.app.Application
 import androidx.room.Room
-import de.glasparlament.data.db.AgendaItemDao
-import de.glasparlament.data.db.FileDao
+import dagger.Module
+import dagger.Provides
 import de.glasparlament.data.db.GPDatabase
-import de.glasparlament.data.db.MeetingDao
-import org.koin.dsl.module
+import javax.inject.Singleton
 
-val dbModule = module {
-    single<MeetingDao> { provideMeetingDao(get()) }
-    single<FileDao> { provideFileDao(get()) }
-    single<AgendaItemDao> { provideAgendaItemDao(get()) }
-    single<GPDatabase> { provideGPDatabase(get()) }
+@Module
+class DbModule {
+
+    @Provides
+    @Singleton
+    fun provideMeetingDao(database: GPDatabase) =
+            database.meetingDao()
+
+    @Provides
+    @Singleton
+    fun provideFileDao(database: GPDatabase) =
+            database.fileDao()
+
+    @Provides
+    @Singleton
+    fun provideAgendaItemDao(database: GPDatabase) =
+            database.agendaItemDao()
+
+    @Provides
+    @Singleton
+    fun provideGPDatabase(app : Application) =
+            Room.databaseBuilder(
+                    app.applicationContext,
+                    GPDatabase::class.java,
+                    "Database").build()
 }
-
-fun provideMeetingDao(database: GPDatabase) =
-        database.meetingDao()
-
-fun provideFileDao(database: GPDatabase) =
-        database.fileDao()
-
-fun provideAgendaItemDao(database: GPDatabase) =
-        database.agendaItemDao()
-
-fun provideGPDatabase(app : Application) =
-        Room.databaseBuilder(
-                app.applicationContext,
-                GPDatabase::class.java,
-                "Database").build()

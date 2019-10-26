@@ -1,37 +1,28 @@
 package de.glasparlament.glasparlament
 
 import android.app.Application
-import de.glasparlament.agendaItemRepository.di.agendaItemRepositoryModule
-import de.glasparlament.agendaitem.di.agendaItemModule
-import de.glasparlament.bodyRepository.di.bodyRepositoryModule
-import de.glasparlament.data.di.dbModule
-import de.glasparlament.glasparlament.di.applicationModule
-import de.glasparlament.meeting.di.meetingModule
-import de.glasparlament.meetingRepository.di.meetingRepositoryModule
-import de.glasparlament.organization.di.organizationModule
-import de.glasparlament.organizationRepository.di.organizationRepositoryModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import de.glasparlament.glasparlament.di.ApplicationModule
+import de.glasparlament.glasparlament.di.DaggerApplicationComponent
+import javax.inject.Inject
 
 
-class BaseApplication : Application() {
+class BaseApplication : Application(), HasAndroidInjector {
+
+    @Inject
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
+
 
     override fun onCreate() {
         super.onCreate()
 
-        startKoin {
-            androidContext(this@BaseApplication)
-            modules(listOf(
-                    applicationModule,
-                    agendaItemModule,
-                    agendaItemRepositoryModule,
-                    bodyRepositoryModule,
-                    meetingModule,
-                    meetingRepositoryModule,
-                    organizationModule,
-                    organizationRepositoryModule,
-                    dbModule
-            ))
-        }
+        DaggerApplicationComponent.builder().applicationModule(
+                ApplicationModule(this)).build().inject(this)
     }
+
+    override fun androidInjector(): AndroidInjector<Any> =
+            androidInjector
+
 }

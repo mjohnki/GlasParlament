@@ -28,5 +28,4 @@ object DeepLink {
                             Uri.encode(meetingListId)
                     )
             )
-
 }

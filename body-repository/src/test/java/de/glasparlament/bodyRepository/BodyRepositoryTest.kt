@@ -1,5 +1,6 @@
 package de.glasparlament.bodyRepository
 
+import de.glasparlament.data.BodyList
 import de.glasparlament.data.Transfer
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -30,7 +31,7 @@ class BodyRepositoryTest {
     @Test
     fun testGetBodyListWithSuccess() {
         //given:
-        val response = Transfer.Success(TestData.bodyList)
+        val response = Transfer.Success(BodyList())
         coEvery { api.getBodyList() } returns response
 
         //when:
@@ -38,6 +39,6 @@ class BodyRepositoryTest {
 
         //then:
         Assertions.assertTrue(result is Transfer.Success)
-        Assertions.assertEquals(TestData.bodyList, (result as Transfer.Success).data)
+        Assertions.assertEquals(BodyList(), (result as Transfer.Success).data)
     }
 }

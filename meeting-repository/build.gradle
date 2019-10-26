@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "de.mannodermaus.android-junit5"
-
 apply plugin: 'jacoco-android'
 
 jacoco { toolVersion "0.8.4" }
@@ -32,15 +32,16 @@ dependencies {
     //project
     implementation project(':remote-data')
 
-    //koin
-    implementation libraries.koin
-    testImplementation libraries.koinTest
+    //dagger
+    kapt libraries.daggerCompiler
+    implementation libraries.daggerAndroidSupport
 
     //retrofit
     implementation libraries.retrofit
     implementation libraries.retrofitGson
 
     //Tests
+    kaptTest libraries.daggerCompiler
     testImplementation libraries.junit
     testImplementation libraries.mockk
     testImplementation libraries.coroutinesTest

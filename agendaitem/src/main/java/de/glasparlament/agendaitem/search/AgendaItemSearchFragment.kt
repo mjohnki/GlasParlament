@@ -8,21 +8,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import dagger.android.support.DaggerFragment
 import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
 import de.glasparlament.agendaitem.R
 import de.glasparlament.common.observe
 import kotlinx.android.synthetic.main.agenda_item_search_fragment.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
-class AgendaItemSearchFragment : Fragment(), AgendaItemSearchAdapter.OnItemClickListener, TextWatcher {
+class AgendaItemSearchFragment : DaggerFragment(), AgendaItemSearchAdapter.OnItemClickListener, TextWatcher {
 
-    private val agendaViewModel: AgendaItemSearchViewModel by viewModel()
+    @Inject
+    lateinit var factory: AgendaItemSearchViewModelFactory
+
     private val adapter = AgendaItemSearchAdapter(this)
     private val binder = AgendaItemSearchViewBinder()
+    private lateinit var viewModel: AgendaItemSearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProviders.of(this, factory).get(AgendaItemSearchViewModel::class.java)
 
         (activity as AppCompatActivity).supportActionBar!!.title = "Suche"
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -35,7 +42,7 @@ class AgendaItemSearchFragment : Fragment(), AgendaItemSearchAdapter.OnItemClick
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         search.addTextChangedListener(this)
-        observe(agendaViewModel.state, ::updateUI)
+        observe(viewModel.state, ::updateUI)
     }
 
     override fun onPause() {
@@ -55,8 +62,8 @@ class AgendaItemSearchFragment : Fragment(), AgendaItemSearchAdapter.OnItemClick
     }
 
     override fun onItemClick(agendaItem: AgendaItemSearchResult) {
-       // val direction = AgendaItemSearchFragmentDirections.agendaItemFragment(agendaItem.id)
-        //agendaViewModel.navigate(direction)
+       val direction = AgendaItemSearchFragmentDirections.agendaItemFragment(agendaItem.id)
+        findNavController().navigate(direction)
     }
 
     override fun afterTextChanged(s: Editable?) {
@@ -69,7 +76,7 @@ class AgendaItemSearchFragment : Fragment(), AgendaItemSearchAdapter.OnItemClick
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         s?.let {
-            agendaViewModel.search(it.toString())
+            viewModel.search(it.toString())
         }
     }
 }

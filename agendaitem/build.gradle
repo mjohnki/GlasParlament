@@ -54,9 +54,10 @@ dependencies {
     implementation libraries.lifecycleViewmodel
     implementation libraries.lifecycleExtensions
 
-    //koin
-    implementation libraries.koin
-    implementation libraries.koinViewmodel
+    //dagger
+    kapt libraries.daggerCompiler
+    kapt libraries.daggerAndroidProcessor
+    implementation libraries.daggerAndroidSupport
 
     //Navigation
     implementation libraries.navigationFragment

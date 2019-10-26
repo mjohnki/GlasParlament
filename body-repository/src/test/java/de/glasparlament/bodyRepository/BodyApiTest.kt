@@ -34,7 +34,7 @@ class BodyApiTest {
     @Test
     fun testGetBodyListWithSuccess() {
         //given:
-        val response = Response.success(200,  TestData.bodyList)
+        val response = Response.success(200,  BodyList())
         coEvery { endpoint.getBodyList() } returns response
 
         //when:
@@ -42,6 +42,6 @@ class BodyApiTest {
 
         //then:
         Assertions.assertTrue(result is Transfer.Success)
-        Assertions.assertEquals(TestData.bodyList, (result as Transfer.Success).data)
+        Assertions.assertEquals(BodyList(), (result as Transfer.Success).data)
     }
 }

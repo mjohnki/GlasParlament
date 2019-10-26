@@ -48,8 +48,9 @@ dependencies {
     //retrofit
     implementation libraries.retrofit
 
-    //koin
-    implementation libraries.koin
+    //dagger
+    kapt libraries.daggerCompiler
+    implementation libraries.daggerAndroidSupport
 
     //Room
     implementation libraries.roomRuntime
