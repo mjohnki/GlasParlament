@@ -1,4 +1,4 @@
-ext {
+ ext {
 
     libraries = [
             //General
@@ -10,9 +10,9 @@ ext {
             appcompat               : 'androidx.appcompat:appcompat:1.1.0',
 
             //Dagger
-            daggerCompiler          : 'com.google.dagger:dagger-compiler:2.24',
-            daggerAndroidProcessor  : 'com.google.dagger:dagger-android-processor:2.24',
-            daggerAndroidSupport    : 'com.google.dagger:dagger-android-support:2.24',
+            daggerCompiler          : 'com.google.dagger:dagger-compiler:2.25.2',
+            daggerAndroidProcessor  : 'com.google.dagger:dagger-android-processor:2.25.2',
+            daggerAndroidSupport    : 'com.google.dagger:dagger-android-support:2.25.2',
 
             //koin
             'koin'                  : "org.koin:koin-android:2.0.1",
@@ -29,18 +29,18 @@ ext {
 
             //UI
             constraintlayout        : 'androidx.constraintlayout:constraintlayout:1.1.3',
-            material                : "com.google.android.material:material:1.1.0-alpha10",
+            material                : "com.google.android.material:material:1.1.0-beta01",
 
             //Room
-            roomRuntime             : 'androidx.room:room-runtime:2.1.0',
-            roomKtx                 : 'androidx.room:room-ktx:2.1.0',
-            roomCompiler            : 'androidx.room:room-compiler:2.1.0',
-            roomTesting             : 'androidx.room:room-testing:2.1.0',
+            roomRuntime             : 'androidx.room:room-runtime:2.2.1',
+            roomKtx                 : 'androidx.room:room-ktx:2.2.1',
+            roomCompiler            : 'androidx.room:room-compiler:2.2.1',
+            roomTesting             : 'androidx.room:room-testing:2.2.1',
 
             //retrofit
-            retrofit                : 'com.squareup.retrofit2:retrofit:2.6.1',
-            retrofitGson            : "com.squareup.retrofit2:converter-gson:2.6.1",
-            httpLogging             : 'com.squareup.okhttp3:logging-interceptor:4.2.0',
+            retrofit                : 'com.squareup.retrofit2:retrofit:2.6.2',
+            retrofitGson            : "com.squareup.retrofit2:converter-gson:2.6.2",
+            httpLogging             : 'com.squareup.okhttp3:logging-interceptor:4.2.2',
 
             //leakcanary
             leakcanary              : 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3',
@@ -52,7 +52,7 @@ ext {
             espresso                : 'androidx.test.espresso:espresso-core:3.2.0',
             testRunner              : 'androidx.test:runner:1.2.0',
             mockk                   : 'io.mockk:mockk:1.9.3',
-            coroutinesTest          : 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.1',
+            coroutinesTest          : 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2',
             coreTesting             : 'androidx.arch.core:core-testing:2.1.0',
 
             //Other
