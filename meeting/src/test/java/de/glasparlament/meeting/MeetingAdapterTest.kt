@@ -1,6 +1,7 @@
 package de.glasparlament.meeting
 
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.android.material.card.MaterialCardView
 import de.glasparlament.meetingRepository.Meeting
@@ -16,7 +17,7 @@ class MeetingAdapterTest {
 
     private val diff = DiffCallback()
     private val view = mockk<View>()
-    private val meetingItem = mockk<MaterialCardView>(relaxed = true)
+    private val meetingItem = mockk<LinearLayout>(relaxed = true)
     private val meetingName = mockk<TextView>(relaxed = true)
     private val viewHolder = MeetingViewHolder(view)
     private val listener = mockk<View.OnClickListener>()

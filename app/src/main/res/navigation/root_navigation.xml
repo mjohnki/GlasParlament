@@ -2,17 +2,16 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/organization_list_fragment">
+    app:startDestination="@id/start_fragment">
 
     <fragment
-        android:id="@+id/organization_list_fragment"
-        android:name="de.glasparlament.organization.OrganizationListFragment"
+        android:id="@+id/start_fragment"
+        android:name="de.glasparlament.meeting.MeetingListFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/organization_list_fragment">
+        tools:layout="@layout/meeting_list_fragment">
     </fragment>
 
     <include app:graph="@navigation/meeting_navigation" />
     <include app:graph="@navigation/agenda_navigation" />
-  <!--  <include app:graph="@navigation/organization_navigation" /> -->
 
 </navigation>

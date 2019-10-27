@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import de.glasparlament.meetingRepository.Meeting
 import kotlinx.android.synthetic.main.meeting_list_item.view.*
 
-internal class MeetingAdapter(private val listener: OnItemClickListener) :
+class MeetingAdapter :
         ListAdapter<Meeting, MeetingViewHolder>(DiffCallback()) {
+
+    var listener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             MeetingViewHolder.create(parent)
@@ -22,7 +24,7 @@ internal class MeetingAdapter(private val listener: OnItemClickListener) :
 
     private fun createOnClickListener(meeting: Meeting) =
             View.OnClickListener {
-                listener.onItemClick(meeting)
+                listener?.onItemClick(meeting)
             }
 
     interface OnItemClickListener {
@@ -30,7 +32,7 @@ internal class MeetingAdapter(private val listener: OnItemClickListener) :
     }
 }
 
-internal class MeetingViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class MeetingViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(meeting: Meeting, listener: View.OnClickListener) {
         view.meetingItem.setOnClickListener(listener)

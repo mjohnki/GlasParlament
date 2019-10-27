@@ -2,12 +2,10 @@ package de.glasparlament.glasparlament
 
 import android.os.Bundle
 import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
 import com.microsoft.appcenter.AppCenter
 import com.microsoft.appcenter.analytics.Analytics
 import com.microsoft.appcenter.crashes.Crashes
 import dagger.android.support.DaggerAppCompatActivity
-
 
 class MainActivity : DaggerAppCompatActivity(){
 
@@ -19,9 +17,7 @@ class MainActivity : DaggerAppCompatActivity(){
             AppCenter.start(application, BuildConfig.APP_CENTER_APP_SECRET, Analytics::class.java, Crashes::class.java)
         }
 
-        //Add back navigation in the title bar
-        //supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        NavigationUI.setupActionBarWithNavController(this, Navigation.findNavController(this, R.id.navigationHost))
+        supportActionBar?.hide()
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -27,6 +27,7 @@ android {
 
     lintOptions {
         warningsAsErrors true
+        disable 'IconLocation'
     }
 
     kotlinOptions {
