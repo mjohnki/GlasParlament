@@ -10,20 +10,15 @@ import de.glasparlament.data.di.DbModule
 import de.glasparlament.glasparlament.BaseApplication
 import de.glasparlament.meeting.di.MeetingModule
 import de.glasparlament.meetingRepository.di.MeetingRepositoryModule
-import de.glasparlament.organization.di.OrganizationModule
-import de.glasparlament.organizationRepository.OrganizationRepository
-import de.glasparlament.organizationRepository.di.OrganizationRepositoryModule
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [AndroidInjectionModule::class,
     AndroidSupportInjectionModule::class,
     ApplicationModule::class,
-    OrganizationModule::class,
     MeetingModule::class,
     BodyRepositoryModule::class,
     MeetingRepositoryModule::class,
-    OrganizationRepositoryModule::class,
     AgendaItemRepositoryModule::class,
     DbModule::class,
     AgendaItemModule::class])

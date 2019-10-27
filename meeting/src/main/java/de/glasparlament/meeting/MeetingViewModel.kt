@@ -11,11 +11,12 @@ import kotlinx.coroutines.withContext
 
 abstract class MeetingViewModel : ViewModel() {
 
-    val state = MutableLiveData<State>()
+    val state = MutableLiveData<State>(State.Initial)
 
     abstract fun bind(url: String)
 
     sealed class State {
+        object Initial : State()
         object Loading : State()
         object Error : State()
         data class Loaded(val meetings: List<Meeting>) : State()

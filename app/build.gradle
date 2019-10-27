@@ -80,8 +80,6 @@ dependencies {
 
     //project
     implementation project(':remote-data')
-    implementation project(':organization')
-    implementation project(':organization-repository')
     implementation project(':body-repository')
     implementation project(':agendaitem')
     implementation project(':agendaitem-repository')
