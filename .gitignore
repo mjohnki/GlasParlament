@@ -13,3 +13,4 @@
 android.jks
 app/release
 app/gradle.properties
+keystore.properties
