@@ -14,11 +14,6 @@
             daggerAndroidProcessor  : 'com.google.dagger:dagger-android-processor:2.25.2',
             daggerAndroidSupport    : 'com.google.dagger:dagger-android-support:2.25.2',
 
-            //koin
-            'koin'                  : "org.koin:koin-android:2.0.1",
-            'koinViewmodel'         : "org.koin:koin-android-viewmodel:2.0.1",
-            'koinTest'              : "org.koin:koin-test:2.0.1",
-
             //Lifecycle
             lifecycleViewmodel      : "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0",
             lifecycleExtensions     : 'androidx.lifecycle:lifecycle-extensions:2.1.0',
