@@ -28,18 +28,17 @@ android {
                              "room.expandProjection":"true"]
             }
         }
+
+        signingConfigs {
+            // will be injected by root build.gradle
+            release {
+            }
+        }
     }
 
     buildTypes {
-        def getProperty = { key ->
-            if (System.getenv(key))
-                return "\"${System.env.API_KEY}\""
-            else if (project.hasProperty(key))
-                return project.property(key)
-            else
-                return ""
-        }
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField('String', 'APP_CENTER_APP_SECRET', getProperty("APP_CENTER_APP_SECRET"))
@@ -65,6 +64,17 @@ android {
     }
 
     buildToolsVersion = '28.0.3'
+}
+
+def getProperty = { key ->
+    if (System.getenv(key)) {
+        System.console().print("Read from ENV")
+        return "\"${System.env.API_KEY}\""
+    }else if (project.hasProperty(key)) {
+        System.console().print("Read from app/gradle.properties")
+        return project.property(key)
+    }else
+        return ""
 }
 
 dependencies {

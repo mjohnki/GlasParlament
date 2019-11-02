@@ -32,8 +32,6 @@ class AgendaItemFragment : DaggerFragment(), AgendaItemAdapter.OnItemClickListen
 
         viewModel = ViewModelProviders.of(this, factory).get(AgendaItemViewModel::class.java)
         viewModel.bind(args.meetingId)
-        (activity as AppCompatActivity).supportActionBar!!.title = args.title
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +40,7 @@ class AgendaItemFragment : DaggerFragment(), AgendaItemAdapter.OnItemClickListen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        toolbar.title = args.title
         observe(viewModel.state, ::updateUI)
     }
 
