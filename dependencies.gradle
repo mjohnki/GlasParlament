@@ -52,9 +52,5 @@
 
             //Other
             customtabs              : 'androidx.browser:browser:1.0.0',
-
-            //Appcenter
-            appcenterAnalytics      : "com.microsoft.appcenter:appcenter-analytics:2.3.0",
-            appcenterCrashes        : "com.microsoft.appcenter:appcenter-crashes:2.3.0",
     ]
 }

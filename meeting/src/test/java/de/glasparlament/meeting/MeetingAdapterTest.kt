@@ -17,10 +17,6 @@ class MeetingAdapterTest {
 
     private val diff = DiffCallback()
     private val view = mockk<View>()
-    private val meetingItem = mockk<LinearLayout>(relaxed = true)
-    private val meetingName = mockk<TextView>(relaxed = true)
-    private val viewHolder = MeetingViewHolder(view)
-    private val listener = mockk<View.OnClickListener>()
 
     @Test
     fun test_itemsSame_works_with_same_objects() {
@@ -106,26 +102,5 @@ class MeetingAdapterTest {
 
         //then:
         assertFalse(result)
-    }
-
-    @Test
-    fun test_bind_works() {
-        //given:
-        every { view.meetingItem } returns meetingItem
-        every { view.meetingName } returns meetingName
-        val meeting = Meeting(
-                id = "id",
-                name = "39. Sitzung des Plenums",
-                agendaItem = listOf(),
-                body = "http://test.test"
-        )
-
-        //when:
-        viewHolder.bind(meeting, listener)
-
-        //then:
-        verify { meetingName.text = meeting.name }
-        verify { meetingItem.setOnClickListener(listener) }
-
     }
 }

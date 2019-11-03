@@ -10,6 +10,7 @@ import de.glasparlament.data.di.DbModule
 import de.glasparlament.glasparlament.BaseApplication
 import de.glasparlament.meeting.di.MeetingModule
 import de.glasparlament.meetingRepository.di.MeetingRepositoryModule
+import de.glasparlament.search.di.SearchModule
 import javax.inject.Singleton
 
 @Singleton
@@ -17,6 +18,7 @@ import javax.inject.Singleton
     AndroidSupportInjectionModule::class,
     ApplicationModule::class,
     MeetingModule::class,
+    SearchModule::class,
     BodyRepositoryModule::class,
     MeetingRepositoryModule::class,
     AgendaItemRepositoryModule::class,

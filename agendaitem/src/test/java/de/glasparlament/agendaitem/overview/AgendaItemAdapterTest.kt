@@ -18,11 +18,6 @@ class AgendaItemAdapterTest {
     private val diff = DiffCallback()
     private val view = mockk<View>()
     private val resources = mockk<Resources>(relaxed = true)
-    private val agendaItemContainer = mockk<MaterialCardView>(relaxed = true)
-    private val agendaItemName = mockk<TextView>(relaxed = true)
-    private val agendaItemNumber = mockk<TextView>(relaxed = true)
-    private val viewHolder = AgendaItemViewHolder(view)
-    private val listener = mockk<View.OnClickListener>()
 
     @Test
     fun test_itemsSame_works_with_same_objects() {
@@ -115,31 +110,5 @@ class AgendaItemAdapterTest {
 
         //then:
         assertFalse(result)
-    }
-
-    @Test
-    fun test_bind_works() {
-        //given:
-        val top = "TOP: 123 "
-        every { resources.getString(any(), any()) } returns top
-        every { view.resources } returns resources
-        every { view.agendaItemContainer } returns agendaItemContainer
-        every { view.agendaItemName } returns agendaItemName
-        every { view.agendaItemNumber } returns agendaItemNumber
-        val agendaItem = AgendaItem(
-                id = "id",
-                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
-                number = "17",
-                meeting = "http://test.test",
-                auxiliaryFile = listOf())
-
-        //when:
-        viewHolder.bind(agendaItem, listener)
-
-        //then:
-        verify { resources.getString(any(), agendaItem.number) }
-        verify { agendaItemContainer.setOnClickListener(listener) }
-        verify { agendaItemName.text = agendaItem.name }
-        verify { agendaItemNumber.text = top }
     }
 }

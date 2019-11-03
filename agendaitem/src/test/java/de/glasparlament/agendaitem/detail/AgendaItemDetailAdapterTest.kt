@@ -15,9 +15,6 @@ class AgendaItemDetailAdapterTest {
 
     private val diff = DiffCallback()
     private val view = mockk<View>()
-    private val filename = mockk<MaterialButton>(relaxed = true)
-    private val viewHolder = AgendaFileViewHolder(view)
-    private val listener = mockk<View.OnClickListener>()
 
     @Test
     fun test_itemsSame_works_with_same_objects() {
@@ -89,22 +86,5 @@ class AgendaItemDetailAdapterTest {
 
         //then:
         assertFalse(result)
-    }
-
-    @Test
-    fun test_bind_works() {
-        //given:
-        every { view.filename } returns filename
-        val file = File(
-                id = "id",
-                name = "filename",
-                accessUrl = "url")
-
-        //when:
-        viewHolder.bind(file, listener)
-
-        //then:
-        verify { filename.setOnClickListener(listener) }
-        verify { filename.text = file.name }
     }
 }

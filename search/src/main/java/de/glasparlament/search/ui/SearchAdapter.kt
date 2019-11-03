@@ -1,4 +1,4 @@
-package de.glasparlament.agendaitem.search
+package de.glasparlament.search.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,16 +7,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
-import de.glasparlament.agendaitem.R
-import kotlinx.android.synthetic.main.agenda_item_search.view.*
+import de.glasparlament.search.R
+import kotlinx.android.synthetic.main.search_item.view.*
 
-internal class AgendaItemSearchAdapter(private val listener: OnItemClickListener) :
-        ListAdapter<AgendaItemSearchResult, AgendaItemSearchViewHolder>(DiffCallback()) {
+internal class SearchAdapter(private val listener: OnItemClickListener) :
+        ListAdapter<AgendaItemSearchResult, SearchViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-            AgendaItemSearchViewHolder.create(parent)
+            SearchViewHolder.create(parent)
 
-    override fun onBindViewHolder(holder: AgendaItemSearchViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
         val agendaItem = getItem(position)
         holder.bind(agendaItem, createOnClickListener(agendaItem))
     }
@@ -32,7 +32,7 @@ internal class AgendaItemSearchAdapter(private val listener: OnItemClickListener
     }
 }
 
-internal class AgendaItemSearchViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+internal class SearchViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(agendaItem: AgendaItemSearchResult, listener: View.OnClickListener) {
         view.agendaSearch.setOnClickListener(listener)
@@ -43,8 +43,8 @@ internal class AgendaItemSearchViewHolder(private val view: View) : RecyclerView
 
     companion object {
         fun create(parent: ViewGroup) =
-                AgendaItemSearchViewHolder(LayoutInflater.from(parent.context)
-                        .inflate(R.layout.agenda_item_search, parent, false))
+                SearchViewHolder(LayoutInflater.from(parent.context)
+                        .inflate(R.layout.search_item, parent, false))
     }
 }
 
@@ -52,8 +52,6 @@ internal class DiffCallback : DiffUtil.ItemCallback<AgendaItemSearchResult>() {
     override fun areItemsTheSame(oldItem: AgendaItemSearchResult, newItem: AgendaItemSearchResult) =
             oldItem === newItem
 
-
     override fun areContentsTheSame(oldItem: AgendaItemSearchResult, newItem: AgendaItemSearchResult) =
             oldItem == newItem
-
 }

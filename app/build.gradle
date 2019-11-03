@@ -9,9 +9,6 @@ apply plugin: "de.mannodermaus.android-junit5"
 android {
 
     compileSdkVersion targetSdk
-    dataBinding {
-        enabled = true
-    }
     defaultConfig {
         applicationId "de.glasparlament.glasparlament"
         minSdkVersion minSdk
@@ -41,12 +38,8 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField('String', 'APP_CENTER_APP_SECRET', getProperty("APP_CENTER_APP_SECRET"))
-            buildConfigField('String', 'BASE_URL', getProperty("BASE_URL"))
         }
         debug {
-            buildConfigField("String", "APP_CENTER_APP_SECRET", getProperty("APP_CENTER_APP_SECRET"))
-            buildConfigField('String', 'BASE_URL', getProperty("BASE_URL"))
             debuggable true
         }
     }
@@ -64,17 +57,6 @@ android {
     }
 
     buildToolsVersion = '28.0.3'
-}
-
-def getProperty = { key ->
-    if (System.getenv(key)) {
-        System.console().print("Read from ENV")
-        return "\"${System.env.API_KEY}\""
-    }else if (project.hasProperty(key)) {
-        System.console().print("Read from app/gradle.properties")
-        return project.property(key)
-    }else
-        return ""
 }
 
 dependencies {
@@ -96,14 +78,11 @@ dependencies {
     implementation project(':meeting')
     implementation project(':meeting-repository')
     implementation project(':common-android')
+    implementation project(':search')
 
     //Navigation
     implementation libraries.navigationFragment
     implementation libraries.navigationUi
-
-    //Appcenter
-    implementation libraries.appcenterAnalytics
-    implementation libraries.appcenterCrashes
 
     //Room
     implementation libraries.roomRuntime

@@ -1,0 +1,4 @@
+<resources>
+    <string name="search">Suche....</string>
+    <string name="top">Top: %1$s</string>
+</resources>

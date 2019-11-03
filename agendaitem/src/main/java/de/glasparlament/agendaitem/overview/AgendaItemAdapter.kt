@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import de.glasparlament.agendaItemRepository.AgendaItem
 import de.glasparlament.agendaitem.R
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.agenda_item.*
 import kotlinx.android.synthetic.main.agenda_item.view.*
 
 internal class AgendaItemAdapter(private val listener: OnItemClickListener) :
@@ -32,12 +34,15 @@ internal class AgendaItemAdapter(private val listener: OnItemClickListener) :
     }
 }
 
-internal class AgendaItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+internal class AgendaItemViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
+
+    override val containerView: View =
+            itemView
 
     fun bind(agendaItem: AgendaItem, listener: View.OnClickListener) {
-        view.agendaItemContainer.setOnClickListener(listener)
-        view.agendaItemName.text = agendaItem.name
-        view.agendaItemNumber.text = view.resources.getString(R.string.top, agendaItem.number)
+        agendaItemContainer.setOnClickListener(listener)
+        agendaItemName.text = agendaItem.name
+        agendaItemNumber.text = itemView.resources.getString(R.string.top, agendaItem.number)
     }
 
     companion object {

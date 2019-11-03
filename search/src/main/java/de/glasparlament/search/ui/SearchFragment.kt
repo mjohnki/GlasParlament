@@ -1,4 +1,4 @@
-package de.glasparlament.agendaitem.search
+package de.glasparlament.search.ui
 
 import android.os.Bundle
 import android.text.Editable
@@ -7,29 +7,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import dagger.android.support.DaggerFragment
 import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
-import de.glasparlament.agendaitem.R
 import de.glasparlament.common.observe
-import kotlinx.android.synthetic.main.agenda_item_search_fragment.*
+import de.glasparlament.search.R
+import de.glasparlament.search.vm.SearchViewModel
+import de.glasparlament.search.vm.SearchViewModelFactory
+import kotlinx.android.synthetic.main.search_fragment.*
 import javax.inject.Inject
 
-class AgendaItemSearchFragment : DaggerFragment(), AgendaItemSearchAdapter.OnItemClickListener, TextWatcher {
+class SearchFragment : DaggerFragment(), SearchAdapter.OnItemClickListener, TextWatcher {
 
     @Inject
-    lateinit var factory: AgendaItemSearchViewModelFactory
+    lateinit var factory: SearchViewModelFactory
 
-    private val adapter = AgendaItemSearchAdapter(this)
-    private val binder = AgendaItemSearchViewBinder()
-    private lateinit var viewModel: AgendaItemSearchViewModel
+    private val adapter = SearchAdapter(this)
+    private val binder = SearchViewBinder()
+    private lateinit var viewModel: SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this, factory).get(AgendaItemSearchViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, factory).get(SearchViewModel::class.java)
 
         (activity as AppCompatActivity).supportActionBar!!.title = "Suche"
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -37,7 +38,7 @@ class AgendaItemSearchFragment : DaggerFragment(), AgendaItemSearchAdapter.OnIte
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.agenda_item_search_fragment, container, false)
+            inflater.inflate(R.layout.search_fragment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,15 +56,14 @@ class AgendaItemSearchFragment : DaggerFragment(), AgendaItemSearchAdapter.OnIte
         agenda_list.adapter = adapter
     }
 
-    private fun updateUI(state: AgendaItemSearchViewModel.State) {
-        binder(AgendaItemSearchViewBinder.Params(state, adapter,
-                AgendaItemSearchViewBinder.Views(agenda_list, progressBar)
+    private fun updateUI(state: SearchViewModel.State) {
+        binder(SearchViewBinder.Params(state, adapter,
+                SearchViewBinder.Views(agenda_list, progressBar)
         ))
     }
 
     override fun onItemClick(agendaItem: AgendaItemSearchResult) {
-       val direction = AgendaItemSearchFragmentDirections.agendaItemFragment(agendaItem.id)
-        findNavController().navigate(direction)
+        findNavController().popBackStack()
     }
 
     override fun afterTextChanged(s: Editable?) {

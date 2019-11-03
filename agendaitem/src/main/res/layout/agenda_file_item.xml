@@ -1,27 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <data>
-        <variable
-            name="clickListener"
-            type="android.view.View.OnClickListener"/>
-        <variable
-            name="file"
-            type="de.glasparlament.agendaItemRepository.File" />
-    </data>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/filename"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:onClick="@{clickListener}"
-            android:text='@{file.name}'
-            tools:text= "File name"/>
-        </RelativeLayout>
-</layout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/filename"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="File name" />
+</RelativeLayout>

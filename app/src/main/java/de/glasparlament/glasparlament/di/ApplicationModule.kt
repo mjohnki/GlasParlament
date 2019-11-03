@@ -4,16 +4,15 @@ import android.app.Application
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
-import de.glasparlament.glasparlament.AuthInterceptor
 import de.glasparlament.glasparlament.BaseApplication
-import de.glasparlament.glasparlament.BuildConfig
+import de.glasparlament.glasparlament.AuthInterceptor
 import de.glasparlament.glasparlament.MainActivity
+import de.glasparlament.glasparlament.R
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-
 
 @Module(includes = [ApplicationModule.Binding::class])
 class ApplicationModule(private val application: BaseApplication) {
@@ -26,7 +25,7 @@ class ApplicationModule(private val application: BaseApplication) {
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit {
+    fun provideRetrofit(app: Application): Retrofit {
 
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -39,7 +38,7 @@ class ApplicationModule(private val application: BaseApplication) {
         return Retrofit.Builder()
                 .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(BuildConfig.BASE_URL)
+                .baseUrl(app.resources.getString(R.string.baseUrl))
                 .build()
     }
 

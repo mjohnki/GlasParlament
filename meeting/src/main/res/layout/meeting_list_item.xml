@@ -1,37 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/meetingItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:paddingStart="16dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="8dp">
 
-    <data>
-
-        <variable
-            name="meeting"
-            type="de.glasparlament.meetingRepository.Meeting" />
-
-        <variable
-            name="clickListener"
-            type="android.view.View.OnClickListener" />
-    </data>
-
-
-    <LinearLayout
-        android:id="@+id/meetingItem"
+    <TextView
+        android:id="@+id/meetingName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:background="?attr/selectableItemBackground">
-
-        <TextView
-            android:id="@+id/meetingName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:text="Meeting name" />
-
-    </LinearLayout>
-</layout>
+        android:layout_margin="10dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="Meeting name" />
+</LinearLayout>

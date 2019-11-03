@@ -1,9 +1,10 @@
-package de.glasparlament.agendaitem.search
+package de.glasparlament.search
 
-import de.glasparlament.agendaitem.InstantExecutorExtension
-import de.glasparlament.agendaItemRepository.AgendaItem
 import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
 import de.glasparlament.data.Transfer
+import de.glasparlament.search.useCase.SearchUseCase
+import de.glasparlament.search.vm.SearchViewModel
+import de.glasparlament.search.vm.SearchViewModelImpl
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,7 @@ class AgendaItemSearchViewModelTest {
 
     private val testDispatcher = TestCoroutineDispatcher()
 
-    private val useCase = mockk<AgendaItemSearchUseCase>()
+    private val useCase = mockk<SearchUseCase>()
 
     @BeforeEach
     fun before() {
@@ -43,14 +44,14 @@ class AgendaItemSearchViewModelTest {
         val errorMessage = "Error Loading Data"
         val data = Transfer.Error(errorMessage)
         coEvery { useCase.execute(search) } returns data
-        val viewModel = AgendaItemSearchViewModelImpl(useCase)
+        val viewModel = SearchViewModelImpl(useCase)
 
         //when:
         viewModel.search(search)
         Thread.sleep(200)
 
         //then:
-        Assertions.assertTrue(viewModel.state.value is AgendaItemSearchViewModel.State.Error)
+        Assertions.assertTrue(viewModel.state.value is SearchViewModel.State.Error)
     }
 
     @Test
@@ -64,13 +65,13 @@ class AgendaItemSearchViewModelTest {
         val search = "holz"
         val data = Transfer.Success(listOf(agendaItem))
         coEvery { useCase.execute(search) } returns data
-        val viewModel = AgendaItemSearchViewModelImpl(useCase)
+        val viewModel = SearchViewModelImpl(useCase)
 
         //when:
         viewModel.search(search)
         Thread.sleep(200)
 
         //then:
-        Assertions.assertTrue(viewModel.state.value is AgendaItemSearchViewModel.State.Loaded)
+        Assertions.assertTrue(viewModel.state.value is SearchViewModel.State.Loaded)
     }
 }

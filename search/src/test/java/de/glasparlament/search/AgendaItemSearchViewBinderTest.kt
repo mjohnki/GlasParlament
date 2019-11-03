@@ -1,27 +1,27 @@
-package de.glasparlament.agendaitem.search
+package de.glasparlament.search
 
 import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import de.glasparlament.agendaItemRepository.AgendaItem
-import de.glasparlament.agendaItemRepository.File
+import de.glasparlament.search.ui.SearchAdapter
+import de.glasparlament.search.ui.SearchViewBinder
+import de.glasparlament.search.vm.SearchViewModel
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 
 class AgendaItemSearchViewBinderTest {
 
-    private val binder = AgendaItemSearchViewBinder()
-    private val adapter = mockk<AgendaItemSearchAdapter>(relaxed = true)
+    private val binder = SearchViewBinder()
+    private val adapter = mockk<SearchAdapter>(relaxed = true)
     private val agendaList = mockk<RecyclerView>(relaxed = true)
     private val progressBar = mockk<View>(relaxed = true)
-    private val views = AgendaItemSearchViewBinder.Views(agendaList, progressBar)
+    private val views = SearchViewBinder.Views(agendaList, progressBar)
 
     @Test
     fun testSuccessWithStateLoaded() {
         //given:
-        val model = AgendaItemSearchViewModel.State.Loaded(listOf())
-        val params = AgendaItemSearchViewBinder.Params(model, adapter, views)
+        val model = SearchViewModel.State.Loaded(listOf())
+        val params = SearchViewBinder.Params(model, adapter, views)
 
         //when:
         binder(params)
@@ -35,8 +35,8 @@ class AgendaItemSearchViewBinderTest {
     @Test
     fun testSuccessWithStateLoading() {
         //given:
-        val model = AgendaItemSearchViewModel.State.Loading
-        val params = AgendaItemSearchViewBinder.Params(model, adapter, views)
+        val model = SearchViewModel.State.Loading
+        val params = SearchViewBinder.Params(model, adapter, views)
 
         //when:
         binder(params)
@@ -50,8 +50,8 @@ class AgendaItemSearchViewBinderTest {
     @Test
     fun testSuccessWithStateError() {
         //given:
-        val model = AgendaItemSearchViewModel.State.Error
-        val params = AgendaItemSearchViewBinder.Params(model, adapter, views)
+        val model = SearchViewModel.State.Error
+        val params = SearchViewBinder.Params(model, adapter, views)
 
         //when:
         binder(params)

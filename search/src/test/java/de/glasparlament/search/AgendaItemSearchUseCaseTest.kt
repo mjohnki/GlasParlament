@@ -1,8 +1,9 @@
-package de.glasparlament.agendaitem.search
+package de.glasparlament.search
 
 import de.glasparlament.agendaItemRepository.AgendaItemRepository
 import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
 import de.glasparlament.data.Transfer
+import de.glasparlament.search.useCase.SearchUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -12,7 +13,7 @@ import org.junit.jupiter.api.Test
 class AgendaItemSearchUseCaseTest {
 
     private val repository = mockk<AgendaItemRepository>()
-    private val useCase  = AgendaItemSearchUseCase(repository)
+    private val useCase  = SearchUseCase(repository)
 
     @Test
     fun testUseCaseError() {
