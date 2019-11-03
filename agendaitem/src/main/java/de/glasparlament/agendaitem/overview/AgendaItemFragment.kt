@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
 import dagger.android.support.DaggerFragment
 import de.glasparlament.agendaItemRepository.AgendaItem
 import de.glasparlament.agendaitem.R
@@ -40,6 +41,8 @@ class AgendaItemFragment : DaggerFragment(), AgendaItemAdapter.OnItemClickListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         toolbar.title = args.title
+        val dividerItemDecoration = DividerItemDecoration(agendaList.context, DividerItemDecoration.VERTICAL)
+        agendaList.addItemDecoration(dividerItemDecoration)
         observe(viewModel.state, ::updateUI)
     }
 
