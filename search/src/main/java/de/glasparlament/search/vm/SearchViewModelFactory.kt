@@ -1,13 +1,14 @@
-package de.glasparlament.agendaitem.search
+package de.glasparlament.search.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import de.glasparlament.search.useCase.SearchUseCase
 
-class AgendaItemSearchViewModelFactory(private val useCase: AgendaItemSearchUseCase)
+class SearchViewModelFactory(private val useCase: SearchUseCase)
     : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return AgendaItemSearchViewModelImpl(useCase) as T
+        return SearchViewModelImpl(useCase) as T
     }
 }

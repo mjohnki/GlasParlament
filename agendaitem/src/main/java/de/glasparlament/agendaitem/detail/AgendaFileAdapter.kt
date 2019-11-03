@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import de.glasparlament.agendaItemRepository.File
 import de.glasparlament.agendaitem.R
-import kotlinx.android.synthetic.main.agenda_file_item.view.*
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.agenda_file_item.*
 
 internal class AgendaFileAdapter(private val listener: OnItemClickListener) :
         ListAdapter<File, AgendaFileViewHolder>(DiffCallback()) {
@@ -33,11 +34,21 @@ internal class AgendaFileAdapter(private val listener: OnItemClickListener) :
     }
 }
 
-internal class AgendaFileViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+internal class AgendaFileViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
+
+    override val containerView: View =
+            itemView
+
+    private val binder = AgendaFileViewBinder()
 
     fun bind(file: File, listener: View.OnClickListener) {
-        view.filename.text = file.name
-        view.filename.setOnClickListener(listener)
+        binder(AgendaFileViewBinder.Params(
+                file = file,
+                listener = listener,
+                views = AgendaFileViewBinder.Views(
+                        filename = filename
+                )
+        ))
     }
 
     companion object {

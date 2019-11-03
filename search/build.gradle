@@ -4,10 +4,10 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply plugin: "de.mannodermaus.android-junit5"
-
 apply plugin: 'jacoco-android'
 
 jacoco { toolVersion "0.8.4" }
+
 
 android {
     compileSdkVersion targetSdk
@@ -17,6 +17,7 @@ android {
         targetSdkVersion targetSdk
         versionCode vcode
         versionName vname
+        vectorDrawables.useSupportLibrary = true
     }
 
     compileOptions {
@@ -26,6 +27,7 @@ android {
 
     lintOptions {
         warningsAsErrors true
+        disable 'IconLocation'
     }
 
     kotlinOptions {
@@ -33,12 +35,10 @@ android {
     }
 }
 
-// add LayoutContainer support
-// see: https://kotlinlang.org/docs/tutorials/android-plugin.html#layoutcontainer-support
-androidExtensions.experimental = true
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.1.0'
 
     //General
     implementation libraries.kotlinStd
@@ -75,7 +75,4 @@ dependencies {
     testImplementation libraries.mockk
     testImplementation libraries.coroutinesTest
     testRuntimeOnly libraries.junitEngine
-
-    //Other
-    implementation libraries.customtabs
 }

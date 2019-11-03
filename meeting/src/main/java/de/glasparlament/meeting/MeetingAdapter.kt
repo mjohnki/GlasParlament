@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import de.glasparlament.meetingRepository.Meeting
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.meeting_list_item.*
 import kotlinx.android.synthetic.main.meeting_list_item.view.*
 
 class MeetingAdapter :
@@ -32,11 +34,14 @@ class MeetingAdapter :
     }
 }
 
-class MeetingViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class MeetingViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
+
+    override val containerView: View =
+            itemView
 
     fun bind(meeting: Meeting, listener: View.OnClickListener) {
-        view.meetingItem.setOnClickListener(listener)
-        view.meetingName.text = meeting.name
+        meetingItem.setOnClickListener(listener)
+        meetingName.text = meeting.name
     }
 
     companion object {

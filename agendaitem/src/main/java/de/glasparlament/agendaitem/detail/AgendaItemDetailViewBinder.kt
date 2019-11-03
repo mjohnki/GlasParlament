@@ -33,7 +33,6 @@ internal class AgendaItemDetailViewBinder {
                         params.views
                 )
         }
-
     }
 
     private fun update(agendaItem: AgendaItem,

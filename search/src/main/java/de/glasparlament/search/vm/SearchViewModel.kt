@@ -1,15 +1,16 @@
-package de.glasparlament.agendaitem.search
+package de.glasparlament.search.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
 import de.glasparlament.data.Transfer
+import de.glasparlament.search.useCase.SearchUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-abstract class AgendaItemSearchViewModel : ViewModel() {
+abstract class SearchViewModel : ViewModel() {
 
     val state = MutableLiveData<State>()
 
@@ -22,7 +23,7 @@ abstract class AgendaItemSearchViewModel : ViewModel() {
     }
 }
 
-class AgendaItemSearchViewModelImpl(private val useCase: AgendaItemSearchUseCase) : AgendaItemSearchViewModel() {
+class SearchViewModelImpl(private val useCase: SearchUseCase) : SearchViewModel() {
 
     override fun search(text: String) {
         viewModelScope.launch {
