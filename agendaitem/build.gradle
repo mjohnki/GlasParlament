@@ -17,6 +17,7 @@ android {
         targetSdkVersion targetSdk
         versionCode vcode
         versionName vname
+        vectorDrawables.useSupportLibrary = true
     }
 
     compileOptions {

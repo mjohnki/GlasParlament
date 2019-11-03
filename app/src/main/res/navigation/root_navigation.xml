@@ -13,5 +13,6 @@
 
     <include app:graph="@navigation/meeting_navigation" />
     <include app:graph="@navigation/agenda_navigation" />
+    <include app:graph="@navigation/search_navigation" />
 
 </navigation>

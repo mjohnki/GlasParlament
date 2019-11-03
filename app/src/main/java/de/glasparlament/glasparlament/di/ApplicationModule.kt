@@ -25,7 +25,7 @@ class ApplicationModule(private val application: BaseApplication) {
 
     @Provides
     @Singleton
-    fun provideRetrofit(app: Application): Retrofit {
+    fun provideRetrofit(): Retrofit {
 
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -38,7 +38,7 @@ class ApplicationModule(private val application: BaseApplication) {
         return Retrofit.Builder()
                 .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(app.resources.getString(R.string.baseUrl))
+                .baseUrl("https://aghobserver.de")
                 .build()
     }
 

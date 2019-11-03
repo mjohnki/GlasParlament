@@ -32,5 +32,6 @@
         <argument
             android:name="agendaId"
             app:argType="string" />
+        <deepLink app:uri="@string/deeplink_agenda_item"/>
     </fragment>
 </navigation>

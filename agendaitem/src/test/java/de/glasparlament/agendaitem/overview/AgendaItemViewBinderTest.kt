@@ -1,6 +1,7 @@
 package de.glasparlament.agendaitem.overview
 
 import android.view.View
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import de.glasparlament.agendaItemRepository.AgendaItem
@@ -13,9 +14,11 @@ class AgendaItemViewBinderTest {
 
     private val binder = AgendaItemViewBinder()
     private val adapter = mockk<AgendaItemAdapter>(relaxed = true)
+    private val searchAction = mockk<View.OnClickListener>(relaxed = true)
     private val agendaList = mockk<RecyclerView>(relaxed = true)
     private val progressBar = mockk<View>(relaxed = true)
-    private val views = AgendaItemViewBinder.Views(agendaList, progressBar)
+    private val searchButton = mockk<ImageButton>(relaxed = true)
+    private val views = AgendaItemViewBinder.Views(agendaList, progressBar, searchButton)
 
     @Test
     fun testSuccessWithStateLoaded() {
@@ -28,7 +31,7 @@ class AgendaItemViewBinderTest {
                 auxiliaryFile = listOf()
         )
         val model = AgendaItemViewModel.State.Loaded(listOf(agendaItem))
-        val params = AgendaItemViewBinder.Params(model, adapter, views)
+        val params = AgendaItemViewBinder.Params(model, searchAction, adapter, views)
 
         //when:
         binder(params)
@@ -43,7 +46,7 @@ class AgendaItemViewBinderTest {
     fun testSuccessWithStateLoading() {
         //given:
         val model = AgendaItemViewModel.State.Loading
-        val params = AgendaItemViewBinder.Params(model, adapter, views)
+        val params = AgendaItemViewBinder.Params(model, searchAction, adapter, views)
 
         //when:
         binder(params)
@@ -58,7 +61,7 @@ class AgendaItemViewBinderTest {
     fun testSuccessWithStateError() {
         //given:
         val model = AgendaItemViewModel.State.Error
-        val params = AgendaItemViewBinder.Params(model, adapter, views)
+        val params = AgendaItemViewBinder.Params(model, searchAction, adapter, views)
 
         //when:
         binder(params)

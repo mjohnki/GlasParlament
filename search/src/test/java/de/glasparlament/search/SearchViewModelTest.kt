@@ -20,7 +20,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExperimentalCoroutinesApi
 @ExtendWith(InstantExecutorExtension::class)
-class AgendaItemSearchViewModelTest {
+class SearchViewModelTest {
 
     private val testDispatcher = TestCoroutineDispatcher()
 
