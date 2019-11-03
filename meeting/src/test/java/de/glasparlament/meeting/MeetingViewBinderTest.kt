@@ -1,6 +1,7 @@
 package de.glasparlament.meeting
 
 import android.view.View
+import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import de.glasparlament.meetingRepository.Meeting
 import io.mockk.mockk
@@ -11,9 +12,11 @@ class MeetingViewBinderTest {
 
     private val binder = MeetingViewStateBinder()
     private val adapter = mockk<MeetingAdapter>(relaxed = true)
+    private val searchAction = mockk<View.OnClickListener>(relaxed = true)
     private val agendaList = mockk<RecyclerView>(relaxed = true)
     private val progressBar = mockk<View>(relaxed = true)
-    private val views = MeetingViewStateBinder.Views(agendaList, progressBar)
+    private val searchButton = mockk<ImageButton>(relaxed = true)
+    private val views = MeetingViewStateBinder.Views(agendaList, progressBar, searchButton)
 
     @Test
     fun testSuccessWithStateLoaded() {
@@ -25,7 +28,7 @@ class MeetingViewBinderTest {
                 body = "http://test.test"
         )
         val model = MeetingViewModel.State.Loaded(listOf(meeting))
-        val params = MeetingViewStateBinder.Params(model, adapter, views)
+        val params = MeetingViewStateBinder.Params(model, searchAction, adapter, views)
 
         //when:
         binder(params)
@@ -40,7 +43,7 @@ class MeetingViewBinderTest {
     fun testSuccessWithStateLoading() {
         //given:
         val model = MeetingViewModel.State.Loading
-        val params = MeetingViewStateBinder.Params(model, adapter, views)
+        val params = MeetingViewStateBinder.Params(model, searchAction, adapter, views)
 
         //when:
         binder(params)
@@ -55,7 +58,7 @@ class MeetingViewBinderTest {
     fun testSuccessWithStateError() {
         //given:
         val model = MeetingViewModel.State.Error
-        val params = MeetingViewStateBinder.Params(model, adapter, views)
+        val params = MeetingViewStateBinder.Params(model, searchAction, adapter, views)
 
         //when:
         binder(params)

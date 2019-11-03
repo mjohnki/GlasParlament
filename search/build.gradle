@@ -27,13 +27,16 @@ android {
 
     lintOptions {
         warningsAsErrors true
-        disable 'IconLocation'
     }
 
     kotlinOptions {
         jvmTarget =  "1.8"
     }
 }
+
+// add LayoutContainer support
+// see: https://kotlinlang.org/docs/tutorials/android-plugin.html#layoutcontainer-support
+androidExtensions.experimental = true
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

@@ -1,60 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/agendaSearch"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp">
 
-    <data>
-
-        <variable
-            name="agendaItem"
-            type="de.glasparlament.agendaItemRepository.AgendaItemSearchResult" />
-
-        <variable
-            name="clickListener"
-            type="android.view.View.OnClickListener" />
-    </data>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/agendaSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:cardElevation="5dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/meetingName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:textSize="25sp"
+            android:textStyle="bold"
+            tools:text="38. Sitzung des Plenums" />
 
-            <TextView
-                android:id="@+id/meetingName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                tools:text="38. Sitzung des Plenums" />
+        <TextView
+            android:id="@+id/agendaItemNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            tools:text="TOP 5" />
 
-            <TextView
-                android:id="@+id/agendaItemNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{`TOP: ` + agendaItem.number}"
-                android:layout_below="@+id/meetingName"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                tools:text="TOP 5" />
+        <TextView
+            android:id="@+id/agendaItemName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="AgendaItem" />
 
-            <TextView
-                android:id="@+id/agendaItemName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/agendaItemNumber"
-                tools:text="AgendaItem" />
-        </RelativeLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-</layout>
+</LinearLayout>

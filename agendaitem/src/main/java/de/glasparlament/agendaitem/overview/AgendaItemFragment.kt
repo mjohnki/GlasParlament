@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.android.support.DaggerFragment
 import de.glasparlament.agendaItemRepository.AgendaItem
 import de.glasparlament.agendaitem.R
+import de.glasparlament.common.DeepLink
 import de.glasparlament.common.observe
 import kotlinx.android.synthetic.main.agenda_item_fragment.*
 import javax.inject.Inject
@@ -46,19 +45,33 @@ class AgendaItemFragment : DaggerFragment(), AgendaItemAdapter.OnItemClickListen
 
     override fun onPause() {
         super.onPause()
-        agenda_list.adapter = null
+        agendaList.adapter = null
     }
 
     override fun onResume() {
         super.onResume()
-        agenda_list.adapter = adapter
+        agendaList.adapter = adapter
     }
 
     private fun updateUI(state: AgendaItemViewModel.State) {
-        binder(AgendaItemViewBinder.Params(state, adapter,
-                AgendaItemViewBinder.Views(agenda_list, progressBar)
+        binder(AgendaItemViewBinder.Params(
+                state = state,
+                searchAction = createOnSearchClickListener(),
+                adapter = adapter,
+                views = AgendaItemViewBinder.Views(
+                        agendaList = agendaList,
+                        progressBar = progressBar,
+                        searchButton = search
+                )
         ))
     }
+
+    private fun createOnSearchClickListener(): View.OnClickListener =
+            View.OnClickListener {
+                findNavController().navigate(
+                        DeepLink.search(resources)
+                )
+            }
 
     override fun onItemClick(agendaItem: AgendaItem) {
         val direction = AgendaItemFragmentDirections.actionAgendaFragmentToAgendaItemFragment(agendaItem.id)

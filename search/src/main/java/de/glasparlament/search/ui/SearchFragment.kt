@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import dagger.android.support.DaggerFragment
 import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
+import de.glasparlament.common.DeepLink
 import de.glasparlament.common.observe
 import de.glasparlament.search.R
 import de.glasparlament.search.vm.SearchViewModel
@@ -31,9 +33,6 @@ class SearchFragment : DaggerFragment(), SearchAdapter.OnItemClickListener, Text
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this, factory).get(SearchViewModel::class.java)
-
-        (activity as AppCompatActivity).supportActionBar!!.title = "Suche"
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +42,8 @@ class SearchFragment : DaggerFragment(), SearchAdapter.OnItemClickListener, Text
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         search.addTextChangedListener(this)
+        val dividerItemDecoration = DividerItemDecoration(agenda_list.context, DividerItemDecoration.VERTICAL)
+        agenda_list.addItemDecoration(dividerItemDecoration)
         observe(viewModel.state, ::updateUI)
     }
 
@@ -63,7 +64,9 @@ class SearchFragment : DaggerFragment(), SearchAdapter.OnItemClickListener, Text
     }
 
     override fun onItemClick(agendaItem: AgendaItemSearchResult) {
-        findNavController().popBackStack()
+        findNavController().navigate(
+                DeepLink.agendaItem(resources, agendaItem.id)
+        )
     }
 
     override fun afterTextChanged(s: Editable?) {

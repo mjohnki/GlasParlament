@@ -9,7 +9,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 
-class AgendaItemSearchViewBinderTest {
+class SearchViewBinderTest {
 
     private val binder = SearchViewBinder()
     private val adapter = mockk<SearchAdapter>(relaxed = true)

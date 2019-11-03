@@ -10,7 +10,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-class AgendaItemSearchUseCaseTest {
+class SearchUseCaseTest {
 
     private val repository = mockk<AgendaItemRepository>()
     private val useCase  = SearchUseCase(repository)

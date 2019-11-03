@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
 import de.glasparlament.search.R
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.search_item.*
 import kotlinx.android.synthetic.main.search_item.view.*
 
 internal class SearchAdapter(private val listener: OnItemClickListener) :
@@ -32,13 +34,16 @@ internal class SearchAdapter(private val listener: OnItemClickListener) :
     }
 }
 
-internal class SearchViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+internal class SearchViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
+
+    override val containerView: View =
+            itemView
 
     fun bind(agendaItem: AgendaItemSearchResult, listener: View.OnClickListener) {
-        view.agendaSearch.setOnClickListener(listener)
-        view.meetingName.text = agendaItem.meetingName
-        view.agendaItemName.text = agendaItem.name
-        view.agendaItemNumber.text = view.resources.getString(R.string.top, agendaItem.number)
+        agendaSearch.setOnClickListener(listener)
+        meetingName.text = agendaItem.meetingName
+        agendaItemName.text = agendaItem.name
+        agendaItemNumber.text = itemView.resources.getString(R.string.top, agendaItem.number)
     }
 
     companion object {

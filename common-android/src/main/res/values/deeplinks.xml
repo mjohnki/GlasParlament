@@ -5,6 +5,9 @@
 
     <string name="deeplink_search" translatable="false">glasparlament://search</string>
 
-    <string name="deeplink_agenda" translatable="false">glasparlament://agenda/{title}/{meetingId}</string>
-    <string name="deeplink_agenda_format" translatable="false">glasparlament://agenda/%s/%s</string>
+    <string name="deeplink_agenda" translatable="false">glasparlament://agenda/overview/{title}/{meetingId}</string>
+    <string name="deeplink_agenda_format" translatable="false">glasparlament://agenda/overview/%s/%s</string>
+
+    <string name="deeplink_agenda_item" translatable="false">glasparlament://agenda/item/{agendaId}</string>
+    <string name="deeplink_agenda_item_format" translatable="false">glasparlament://agenda/item/%s</string>
 </resources>

@@ -28,4 +28,12 @@ object DeepLink {
                             Uri.encode(meetingListId)
                     )
             )
+
+    fun agendaItem(resources: Resources, agendaItemId: String): Uri =
+            Uri.parse(
+                    resources.getString(
+                            R.string.deeplink_agenda_item_format,
+                            Uri.encode(agendaItemId)
+                    )
+            )
 }

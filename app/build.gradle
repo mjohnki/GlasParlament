@@ -18,14 +18,6 @@ android {
         versionName vname
         testInstrumentationRunner testRunner
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = ["room.schemaLocation": "$projectDir/schemas".toString(),
-                             "room.incremental":"true",
-                             "room.expandProjection":"true"]
-            }
-        }
-
         signingConfigs {
             // will be injected by root build.gradle
             release {
