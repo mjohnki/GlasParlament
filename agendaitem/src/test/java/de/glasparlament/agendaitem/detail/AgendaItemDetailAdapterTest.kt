@@ -1,12 +1,8 @@
 package de.glasparlament.agendaitem.detail
 
 import android.view.View
-import com.google.android.material.button.MaterialButton
-import de.glasparlament.agendaItemRepository.File
-import io.mockk.every
+import de.glasparlament.repository.agendaItem.File
 import io.mockk.mockk
-import io.mockk.verify
-import kotlinx.android.synthetic.main.agenda_file_item.view.*
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test

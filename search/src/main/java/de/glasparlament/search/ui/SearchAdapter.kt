@@ -6,11 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
+import de.glasparlament.repository.agendaItem.AgendaItemSearchResult
 import de.glasparlament.search.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.search_item.*
-import kotlinx.android.synthetic.main.search_item.view.*
 
 internal class SearchAdapter(private val listener: OnItemClickListener) :
         ListAdapter<AgendaItemSearchResult, SearchViewHolder>(DiffCallback()) {

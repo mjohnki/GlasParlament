@@ -3,13 +3,12 @@ package de.glasparlament.glasparlament.di
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.support.AndroidSupportInjectionModule
-import de.glasparlament.agendaItemRepository.di.AgendaItemRepositoryModule
+import de.glasparlament.repository.agendaItem.di.AgendaItemRepositoryModule
 import de.glasparlament.agendaitem.di.AgendaItemModule
-import de.glasparlament.bodyRepository.di.BodyRepositoryModule
+import de.glasparlament.repository.body.di.BodyRepositoryModule
 import de.glasparlament.data.di.DbModule
 import de.glasparlament.glasparlament.BaseApplication
 import de.glasparlament.meeting.di.MeetingModule
-import de.glasparlament.meetingRepository.di.MeetingRepositoryModule
 import de.glasparlament.search.di.SearchModule
 import javax.inject.Singleton
 
@@ -20,7 +19,7 @@ import javax.inject.Singleton
     MeetingModule::class,
     SearchModule::class,
     BodyRepositoryModule::class,
-    MeetingRepositoryModule::class,
+    de.glasparlament.repository.meeting.di.MeetingRepositoryModule::class,
     AgendaItemRepositoryModule::class,
     DbModule::class,
     AgendaItemModule::class])

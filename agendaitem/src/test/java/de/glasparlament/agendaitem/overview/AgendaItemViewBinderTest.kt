@@ -2,10 +2,8 @@ package de.glasparlament.agendaitem.overview
 
 import android.view.View
 import android.widget.ImageButton
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import de.glasparlament.agendaItemRepository.AgendaItem
-import de.glasparlament.agendaItemRepository.File
+import de.glasparlament.repository.agendaItem.AgendaItem
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test

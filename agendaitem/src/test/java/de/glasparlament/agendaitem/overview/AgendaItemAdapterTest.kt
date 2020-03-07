@@ -2,13 +2,8 @@ package de.glasparlament.agendaitem.overview
 
 import android.content.res.Resources
 import android.view.View
-import android.widget.TextView
-import com.google.android.material.card.MaterialCardView
-import de.glasparlament.agendaItemRepository.AgendaItem
-import io.mockk.every
+import de.glasparlament.repository.agendaItem.AgendaItem
 import io.mockk.mockk
-import io.mockk.verify
-import kotlinx.android.synthetic.main.agenda_item.view.*
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test

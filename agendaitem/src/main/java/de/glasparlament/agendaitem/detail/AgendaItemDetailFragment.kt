@@ -6,11 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import dagger.android.support.DaggerFragment
-import de.glasparlament.agendaItemRepository.File
+import de.glasparlament.repository.agendaItem.File
 import de.glasparlament.agendaitem.R
 import de.glasparlament.common.observe
 import kotlinx.android.synthetic.main.agenda_item_detail_fragment.*
@@ -28,7 +27,7 @@ class AgendaItemDetailFragment : DaggerFragment(), AgendaFileAdapter.OnItemClick
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, factory)[AgendaItemDetailViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[AgendaItemDetailViewModel::class.java]
         viewModel.bind(args.agendaId)
     }
 

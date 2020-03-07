@@ -3,13 +3,13 @@ package de.glasparlament.agendaitem.di
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
-import de.glasparlament.agendaItemRepository.AgendaItemRepository
 import de.glasparlament.agendaitem.detail.AgendaItemDetailFragment
 import de.glasparlament.agendaitem.detail.AgendaItemDetailViewModelFactory
 import de.glasparlament.agendaitem.detail.AgendaItemUseCase
 import de.glasparlament.agendaitem.overview.AgendaItemFragment
 import de.glasparlament.agendaitem.overview.AgendaItemListUseCase
 import de.glasparlament.agendaitem.overview.AgendaItemViewModelFactory
+import de.glasparlament.repository.agendaItem.AgendaItemRepository
 
 @Module(includes = [AgendaItemModule.Binding::class])
 class AgendaItemModule {

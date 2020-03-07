@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import de.glasparlament.meetingRepository.Meeting
+import de.glasparlament.repository.meeting.Meeting
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.meeting_list_item.*
-import kotlinx.android.synthetic.main.meeting_list_item.view.*
 
 class MeetingAdapter :
         ListAdapter<Meeting, MeetingViewHolder>(DiffCallback()) {

@@ -3,14 +3,10 @@ package de.glasparlament.search
 import android.content.res.Resources
 import android.view.View
 import android.widget.TextView
-import com.google.android.material.card.MaterialCardView
-import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
+import de.glasparlament.repository.agendaItem.AgendaItemSearchResult
 import de.glasparlament.search.ui.SearchViewHolder
 import de.glasparlament.search.ui.DiffCallback
-import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
-import kotlinx.android.synthetic.main.search_item.view.*
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test

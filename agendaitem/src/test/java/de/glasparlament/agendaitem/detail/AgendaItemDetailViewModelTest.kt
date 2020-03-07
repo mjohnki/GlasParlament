@@ -1,7 +1,7 @@
 package de.glasparlament.agendaitem.detail
 
 import de.glasparlament.agendaitem.InstantExecutorExtension
-import de.glasparlament.agendaItemRepository.AgendaItem
+import de.glasparlament.repository.agendaItem.AgendaItem
 import de.glasparlament.data.Transfer
 import io.mockk.coEvery
 import io.mockk.mockk

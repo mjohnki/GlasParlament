@@ -1,8 +1,8 @@
 package de.glasparlament.search.useCase
 
-import de.glasparlament.agendaItemRepository.AgendaItemRepository
-import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
+import de.glasparlament.repository.agendaItem.AgendaItemSearchResult
 import de.glasparlament.data.Transfer
+import de.glasparlament.repository.agendaItem.AgendaItemRepository
 
 class SearchUseCase(private val repository: AgendaItemRepository) {
 

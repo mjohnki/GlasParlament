@@ -1,7 +1,7 @@
 package de.glasparlament.search
 
-import de.glasparlament.agendaItemRepository.AgendaItemRepository
-import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
+import de.johnki.demoandroid.repository.agendaItem.AgendaItemRepository
+import de.glasparlament.repository.agendaItem.AgendaItemSearchResult
 import de.glasparlament.data.Transfer
 import de.glasparlament.search.useCase.SearchUseCase
 import io.mockk.coEvery

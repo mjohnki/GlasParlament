@@ -4,7 +4,7 @@ import android.content.res.Resources
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import de.glasparlament.agendaItemRepository.AgendaItem
+import de.glasparlament.repository.agendaItem.AgendaItem
 import de.glasparlament.agendaitem.R
 
 internal class AgendaItemDetailViewBinder {

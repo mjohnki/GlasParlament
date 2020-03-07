@@ -1,7 +1,7 @@
 ext {
     minSdk = 19
-    targetSdk = 28
-    vcode = 14
+    targetSdk = 29
+    vcode = 15
     vname = "1.0.0"
     testRunner = "android.support.test.runner.AndroidJUnitRunner"
 }

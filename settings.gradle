@@ -1,3 +1,4 @@
-include ':app', ':body-repository', ':meeting-repository', ':agendaitem-repository', ':common-android'
+include ':app', ':common-android'
 include ':remote-data', ':meeting', ":agendaitem"
 include ':search'
+include ':repository'

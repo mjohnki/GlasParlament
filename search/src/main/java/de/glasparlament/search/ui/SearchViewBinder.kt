@@ -2,7 +2,7 @@ package de.glasparlament.search.ui
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
+import de.glasparlament.repository.agendaItem.AgendaItemSearchResult
 import de.glasparlament.search.vm.SearchViewModel
 
 internal class SearchViewBinder {

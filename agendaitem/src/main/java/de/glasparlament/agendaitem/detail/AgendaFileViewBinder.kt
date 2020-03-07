@@ -2,7 +2,7 @@ package de.glasparlament.agendaitem.detail
 
 import android.view.View
 import androidx.appcompat.widget.AppCompatButton
-import de.glasparlament.agendaItemRepository.File
+import de.glasparlament.repository.agendaItem.File
 
 class AgendaFileViewBinder {
 

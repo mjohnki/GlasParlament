@@ -1,14 +1,8 @@
 package de.glasparlament.meeting
 
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
-import com.google.android.material.card.MaterialCardView
-import de.glasparlament.meetingRepository.Meeting
-import io.mockk.every
+import de.glasparlament.repository.meeting.Meeting
 import io.mockk.mockk
-import io.mockk.verify
-import kotlinx.android.synthetic.main.meeting_list_item.view.*
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test

@@ -6,12 +6,11 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import dagger.android.support.DaggerFragment
-import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
+import de.glasparlament.repository.agendaItem.AgendaItemSearchResult
 import de.glasparlament.common.DeepLink
 import de.glasparlament.common.observe
 import de.glasparlament.search.R
@@ -32,7 +31,7 @@ class SearchFragment : DaggerFragment(), SearchAdapter.OnItemClickListener, Text
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this, factory).get(SearchViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(SearchViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

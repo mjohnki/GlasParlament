@@ -3,7 +3,7 @@ package de.glasparlament.search.vm
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.glasparlament.agendaItemRepository.AgendaItemSearchResult
+import de.glasparlament.repository.agendaItem.AgendaItemSearchResult
 import de.glasparlament.data.Transfer
 import de.glasparlament.search.useCase.SearchUseCase
 import kotlinx.coroutines.Dispatchers

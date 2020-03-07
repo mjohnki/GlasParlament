@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import dagger.android.support.DaggerFragment
 import de.glasparlament.common.DeepLink
 import de.glasparlament.common.observe
-import de.glasparlament.meetingRepository.Meeting
+import de.glasparlament.repository.meeting.Meeting
 import kotlinx.android.synthetic.main.meeting_list_fragment.*
 import javax.inject.Inject
 
@@ -29,7 +29,7 @@ class MeetingListFragment : DaggerFragment(), MeetingAdapter.OnItemClickListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(activity!!, factory).get(MeetingViewModel::class.java)
+        viewModel = ViewModelProvider(activity!!, factory).get(MeetingViewModel::class.java)
         viewModel.bind(getString(R.string.url))
 
     }

@@ -4,8 +4,8 @@ import android.content.res.Resources
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import de.glasparlament.agendaItemRepository.AgendaItem
-import de.glasparlament.agendaItemRepository.File
+import de.glasparlament.repository.agendaItem.AgendaItem
+import de.glasparlament.repository.agendaItem.File
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test

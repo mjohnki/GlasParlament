@@ -3,7 +3,7 @@ package de.glasparlament.meeting
 import android.view.View
 import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
-import de.glasparlament.meetingRepository.Meeting
+import de.glasparlament.repository.meeting.Meeting
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test

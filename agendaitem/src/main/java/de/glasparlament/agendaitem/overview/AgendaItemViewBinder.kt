@@ -3,7 +3,7 @@ package de.glasparlament.agendaitem.overview
 import android.view.View
 import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
-import de.glasparlament.agendaItemRepository.AgendaItem
+import de.glasparlament.repository.agendaItem.AgendaItem
 import de.glasparlament.agendaitem.overview.AgendaItemViewModel.State
 
 internal class AgendaItemViewBinder {

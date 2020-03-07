@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import dagger.android.support.DaggerFragment
-import de.glasparlament.agendaItemRepository.AgendaItem
+import de.glasparlament.repository.agendaItem.AgendaItem
 import de.glasparlament.agendaitem.R
 import de.glasparlament.common.DeepLink
 import de.glasparlament.common.observe
@@ -30,7 +30,7 @@ class AgendaItemFragment : DaggerFragment(), AgendaItemAdapter.OnItemClickListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this, factory).get(AgendaItemViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(AgendaItemViewModel::class.java)
         viewModel.bind(args.meetingId)
     }
 

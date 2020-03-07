@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import de.glasparlament.agendaItemRepository.File
+import de.glasparlament.repository.agendaItem.File
 import de.glasparlament.agendaitem.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.agenda_file_item.*

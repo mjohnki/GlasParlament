@@ -1,0 +1,44 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion targetSdk
+
+    defaultConfig {
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
+        versionCode vcode
+        versionName vname
+    }
+
+    lintOptions {
+        warningsAsErrors true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //General
+    implementation libraries.kotlinStd
+
+    //project
+    implementation project(':remote-data')
+
+    //dagger
+    kapt libraries.daggerCompiler
+    implementation libraries.daggerAndroidSupport
+
+    //retrofit
+    implementation libraries.retrofit
+    implementation libraries.retrofitGson
+
+    //Tests
+    kaptTest libraries.daggerCompiler
+    testImplementation libraries.junit
+    testImplementation libraries.mockk
+    testImplementation libraries.coroutinesTest
+    testRuntimeOnly libraries.junitEngine
+}

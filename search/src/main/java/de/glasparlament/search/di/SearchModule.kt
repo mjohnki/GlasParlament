@@ -3,7 +3,7 @@ package de.glasparlament.search.di
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
-import de.glasparlament.agendaItemRepository.AgendaItemRepository
+import de.glasparlament.repository.agendaItem.AgendaItemRepository
 import de.glasparlament.search.ui.SearchFragment
 import de.glasparlament.search.useCase.SearchUseCase
 import de.glasparlament.search.vm.SearchViewModelFactory

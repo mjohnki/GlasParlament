@@ -1,8 +1,8 @@
 package de.glasparlament.meeting
 
 import de.glasparlament.data.Transfer
-import de.glasparlament.meetingRepository.Meeting
-import de.glasparlament.meetingRepository.MeetingRepository
+import de.glasparlament.repository.meeting.Meeting
+import de.glasparlament.repository.meeting.MeetingRepository
 
 class MeetingListUseCase(private val repository: MeetingRepository) {
 

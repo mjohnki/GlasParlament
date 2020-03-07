@@ -6,11 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import de.glasparlament.agendaItemRepository.AgendaItem
+import de.glasparlament.repository.agendaItem.AgendaItem
 import de.glasparlament.agendaitem.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.agenda_item.*
-import kotlinx.android.synthetic.main.agenda_item.view.*
 
 internal class AgendaItemAdapter(private val listener: OnItemClickListener) :
         ListAdapter<AgendaItem, AgendaItemViewHolder>(DiffCallback()) {

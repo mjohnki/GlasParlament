@@ -1,8 +1,8 @@
 package de.glasparlament.agendaitem.detail
 
-import de.glasparlament.agendaItemRepository.AgendaItem
-import de.glasparlament.agendaItemRepository.AgendaItemRepository
 import de.glasparlament.data.Transfer
+import de.glasparlament.repository.agendaItem.AgendaItem
+import de.glasparlament.repository.agendaItem.AgendaItemRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking

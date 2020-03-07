@@ -7,7 +7,7 @@ import de.glasparlament.meeting.MeetingAdapter
 import de.glasparlament.meeting.MeetingListFragment
 import de.glasparlament.meeting.MeetingListUseCase
 import de.glasparlament.meeting.MeetingViewModelFactory
-import de.glasparlament.meetingRepository.MeetingRepository
+import de.glasparlament.repository.meeting.MeetingRepository
 import javax.inject.Singleton
 
 @Module(includes = [MeetingModule.Binding::class])

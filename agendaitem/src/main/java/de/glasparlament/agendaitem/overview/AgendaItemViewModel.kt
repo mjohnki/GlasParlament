@@ -3,7 +3,7 @@ package de.glasparlament.agendaitem.overview
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.glasparlament.agendaItemRepository.AgendaItem
+import de.glasparlament.repository.agendaItem.AgendaItem
 import de.glasparlament.data.Transfer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

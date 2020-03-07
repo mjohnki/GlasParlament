@@ -3,8 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
-apply plugin: 'jacoco-android'
-apply plugin: "de.mannodermaus.android-junit5"
+apply plugin: 'com.google.gms.google-services'
 
 android {
 
@@ -48,7 +47,7 @@ android {
         jvmTarget =  "1.8"
     }
 
-    buildToolsVersion = '28.0.3'
+    buildToolsVersion = '29.0.2'
 }
 
 dependencies {
@@ -64,11 +63,9 @@ dependencies {
 
     //project
     implementation project(':remote-data')
-    implementation project(':body-repository')
     implementation project(':agendaitem')
-    implementation project(':agendaitem-repository')
     implementation project(':meeting')
-    implementation project(':meeting-repository')
+    implementation project(':repository')
     implementation project(':common-android')
     implementation project(':search')
 
@@ -83,6 +80,9 @@ dependencies {
     kapt libraries.daggerCompiler
     kapt libraries.daggerAndroidProcessor
     implementation libraries.daggerAndroidSupport
+
+    //firebase
+    implementation 'com.google.firebase:firebase-firestore:21.3.1'
 
     //retrofit
     implementation libraries.retrofit
