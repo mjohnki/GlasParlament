@@ -35,6 +35,10 @@ dependencies {
     implementation libraries.retrofit
     implementation libraries.retrofitGson
 
+    //store
+    implementation libraries.store
+    implementation libraries.coroutines
+
     //Tests
     kaptTest libraries.daggerCompiler
     testImplementation libraries.junit

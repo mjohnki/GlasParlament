@@ -7,5 +7,8 @@ import retrofit2.http.GET
 interface BodyEndpoint {
 
     @GET("oparl/body/")
-    suspend fun getBodyList(): Response<BodyList>
+    suspend fun getBodyListAsResponse(): Response<BodyList>
+
+    @GET("oparl/body/")
+    suspend fun getBodyList(): BodyList
 }

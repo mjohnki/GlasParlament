@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
-apply plugin: 'com.google.gms.google-services'
 
 android {
 
@@ -81,13 +80,13 @@ dependencies {
     kapt libraries.daggerAndroidProcessor
     implementation libraries.daggerAndroidSupport
 
-    //firebase
-    implementation 'com.google.firebase:firebase-firestore:21.3.1'
-
     //retrofit
     implementation libraries.retrofit
     implementation libraries.retrofitGson
     implementation libraries.httpLogging
+
+    //store
+    implementation libraries.store
 
     //leakcanary
     debugImplementation libraries.leakcanary
