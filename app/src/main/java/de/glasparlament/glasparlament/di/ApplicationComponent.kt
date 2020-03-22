@@ -6,9 +6,10 @@ import dagger.android.support.AndroidSupportInjectionModule
 import de.glasparlament.repository.agendaItem.di.AgendaItemRepositoryModule
 import de.glasparlament.agendaitem.di.AgendaItemModule
 import de.glasparlament.repository.body.di.BodyRepositoryModule
-import de.glasparlament.data.di.DbModule
+import de.glasparlament.repository.DbModule
 import de.glasparlament.glasparlament.BaseApplication
 import de.glasparlament.meeting.di.MeetingModule
+import de.glasparlament.repository.meeting.di.MeetingRepositoryModule
 import de.glasparlament.search.di.SearchModule
 import javax.inject.Singleton
 
@@ -19,7 +20,7 @@ import javax.inject.Singleton
     MeetingModule::class,
     SearchModule::class,
     BodyRepositoryModule::class,
-    de.glasparlament.repository.meeting.di.MeetingRepositoryModule::class,
+    MeetingRepositoryModule::class,
     AgendaItemRepositoryModule::class,
     DbModule::class,
     AgendaItemModule::class])

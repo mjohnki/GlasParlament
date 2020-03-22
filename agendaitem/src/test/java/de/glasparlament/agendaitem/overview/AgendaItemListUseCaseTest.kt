@@ -1,10 +1,13 @@
 package de.glasparlament.agendaitem.overview
 
-import de.glasparlament.data.Transfer
+import com.dropbox.android.external.store4.ResponseOrigin
+import com.dropbox.android.external.store4.StoreResponse
 import de.glasparlament.repository.agendaItem.AgendaItem
 import de.glasparlament.repository.agendaItem.AgendaItemRepository
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -15,23 +18,22 @@ class AgendaItemListUseCaseTest {
     private val useCase = AgendaItemListUseCase(repository)
 
     @Test
-    fun testUseCaseError() {
+    fun test_repository_return_error() {
         //given:
         val url = "http://test.test"
-        val errorMessage = "Error Loading Data"
-        val bodyList = Transfer.Error(errorMessage)
-        coEvery { repository.getAgendaItems(url) } returns bodyList
+        coEvery { repository.getAgendaItems(url) } returns flow {
+            emit(StoreResponse.Error<List<AgendaItem>>(IllegalArgumentException(), ResponseOrigin.Fetcher))
+        }
 
         //when:
-        val result = runBlocking { useCase.execute(url) }
+        val result = runBlocking { useCase.execute(url).first() }
 
         //then:
-        Assertions.assertTrue(result is Transfer.Error)
-        Assertions.assertEquals(errorMessage, (result as Transfer.Error).exception)
+        Assertions.assertTrue(result is StoreResponse.Error)
     }
 
     @Test
-    fun testUseCaseSuccessSingle() {
+    fun test_repository_return_agendaItem() {
         //given:
         val url = "http://test.test"
         val agendaItem = AgendaItem(
@@ -41,17 +43,18 @@ class AgendaItemListUseCaseTest {
                 meeting = "http://test.test",
                 auxiliaryFile = listOf()
         )
-        val data = Transfer.Success(listOf(agendaItem))
-        coEvery { repository.getAgendaItems(url) } returns data
+        coEvery { repository.getAgendaItems(url) } returns flow {
+            emit(StoreResponse.Data(listOf(agendaItem), ResponseOrigin.Fetcher))
+        }
 
         //when:
-        val result = runBlocking { useCase.execute(url) }
+        val result = runBlocking { useCase.execute(url).first() }
 
         //then:
-        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertTrue(result is StoreResponse.Data)
         Assertions.assertEquals(
                 listOf(agendaItem),
-                (result as Transfer.Success).data
+                (result as StoreResponse.Data).value
         )
     }
 
@@ -73,17 +76,18 @@ class AgendaItemListUseCaseTest {
                 meeting = "http://test.test",
                 auxiliaryFile = listOf()
         )
-        val data = Transfer.Success(listOf(agendaItem16, agendaItem17))
-        coEvery { repository.getAgendaItems(url) } returns data
+        coEvery { repository.getAgendaItems(url) } returns flow {
+            emit(StoreResponse.Data(listOf(agendaItem16, agendaItem17), ResponseOrigin.Fetcher))
+        }
 
         //when:
-        val result = runBlocking { useCase.execute(url) }
+        val result = runBlocking { useCase.execute(url).first() }
 
         //then:
-        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertTrue(result is StoreResponse.Data)
         Assertions.assertEquals(
                 listOf(agendaItem16, agendaItem17),
-                (result as Transfer.Success).data
+                (result as StoreResponse.Data).value
         )
     }
 
@@ -105,17 +109,18 @@ class AgendaItemListUseCaseTest {
                 meeting = "http://test.test",
                 auxiliaryFile = listOf()
         )
-        val data = Transfer.Success(listOf(agendaItem17, agendaItem16))
-        coEvery { repository.getAgendaItems(url) } returns data
+        coEvery { repository.getAgendaItems(url) } returns flow {
+            emit(StoreResponse.Data(listOf(agendaItem17, agendaItem16), ResponseOrigin.Fetcher))
+        }
 
         //when:
-        val result = runBlocking { useCase.execute(url) }
+        val result = runBlocking { useCase.execute(url).first() }
 
         //then:
-        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertTrue(result is StoreResponse.Data)
         Assertions.assertEquals(
                 listOf(agendaItem16, agendaItem17),
-                (result as Transfer.Success).data
+                (result as StoreResponse.Data).value
         )
     }
 
@@ -137,17 +142,18 @@ class AgendaItemListUseCaseTest {
                 meeting = "http://test.test",
                 auxiliaryFile = listOf()
         )
-        val data = Transfer.Success(listOf(agendaItem17a, agendaItem17b))
-        coEvery { repository.getAgendaItems(url) } returns data
+        coEvery { repository.getAgendaItems(url) } returns flow {
+            emit(StoreResponse.Data(listOf(agendaItem17a, agendaItem17b), ResponseOrigin.Fetcher))
+        }
 
         //when:
-        val result = runBlocking { useCase.execute(url) }
+        val result = runBlocking { useCase.execute(url).first() }
 
         //then:
-        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertTrue(result is StoreResponse.Data)
         Assertions.assertEquals(
                 listOf(agendaItem17a, agendaItem17b),
-                (result as Transfer.Success).data
+                (result as StoreResponse.Data).value
         )
     }
 
@@ -183,19 +189,21 @@ class AgendaItemListUseCaseTest {
                 meeting = "http://test.test",
                 auxiliaryFile = listOf()
         )
-        val data = Transfer.Success(listOf(agendaItem17a, agendaItem17b, agendaItem16, agendaItem18))
-        coEvery { repository.getAgendaItems(url) } returns data
+        coEvery { repository.getAgendaItems(url) } returns flow {
+            emit(StoreResponse.Data(listOf(agendaItem17a, agendaItem17b, agendaItem16, agendaItem18), ResponseOrigin.Fetcher))
+        }
 
         //when:
-        val result = runBlocking { useCase.execute(url) }
+        val result = runBlocking { useCase.execute(url).first() }
 
         //then:
-        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertTrue(result is StoreResponse.Data)
         Assertions.assertEquals(
                 listOf(agendaItem16, agendaItem17a, agendaItem17b, agendaItem18),
-                (result as Transfer.Success).data
+                (result as StoreResponse.Data).value
         )
     }
+
     @Test
     fun testUseCaseSuccess_7_4_6_5() {
         //given:
@@ -228,17 +236,18 @@ class AgendaItemListUseCaseTest {
                 meeting = "http://test.test",
                 auxiliaryFile = listOf()
         )
-        val data = Transfer.Success(listOf(agendaItem7, agendaItem4, agendaItem6, agendaItem5))
-        coEvery { repository.getAgendaItems(url) } returns data
+        coEvery { repository.getAgendaItems(url) } returns flow {
+            emit(StoreResponse.Data(listOf(agendaItem7, agendaItem4, agendaItem6, agendaItem5), ResponseOrigin.Fetcher))
+        }
 
         //when:
-        val result = runBlocking { useCase.execute(url) }
+        val result = runBlocking { useCase.execute(url).first() }
 
         //then:
-        Assertions.assertTrue(result is Transfer.Success)
+        Assertions.assertTrue(result is StoreResponse.Data)
         Assertions.assertEquals(
                 listOf(agendaItem4, agendaItem5, agendaItem6, agendaItem7),
-                (result as Transfer.Success).data
+                (result as StoreResponse.Data).value
         )
     }
 }

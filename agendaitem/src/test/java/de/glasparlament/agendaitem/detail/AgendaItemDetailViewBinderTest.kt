@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import de.glasparlament.repository.agendaItem.AgendaItem
-import de.glasparlament.repository.agendaItem.File
+import de.glasparlament.repository.meeting.local.file.File
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test

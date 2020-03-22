@@ -2,6 +2,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: "de.mannodermaus.android-junit5"
+apply plugin: 'com.hiya.jacoco-android'
+
+jacoco { toolVersion "0.8.4" }
 
 android {
     compileSdkVersion targetSdk
@@ -11,10 +15,25 @@ android {
         targetSdkVersion targetSdk
         versionCode vcode
         versionName vname
+
+        // used by Room, to test migrations
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString(),
+                             "room.incremental":"true",
+                             "room.expandProjection":"true"]
+            }
+        }
     }
 
     lintOptions {
         warningsAsErrors true
+    }
+
+    // used by Room, to test migrations
+    sourceSets {
+        androidTest.assets.srcDirs +=
+                files("$projectDir/schemas".toString())
     }
 }
 
@@ -23,9 +42,6 @@ dependencies {
 
     //General
     implementation libraries.kotlinStd
-
-    //project
-    implementation project(':remote-data')
 
     //dagger
     kapt libraries.daggerCompiler
@@ -38,6 +54,12 @@ dependencies {
     //store
     implementation libraries.store
     implementation libraries.coroutines
+
+    //Room
+    implementation libraries.roomRuntime
+    implementation libraries.roomKtx
+    kapt libraries.roomCompiler
+    implementation libraries.roomTesting
 
     //Tests
     kaptTest libraries.daggerCompiler

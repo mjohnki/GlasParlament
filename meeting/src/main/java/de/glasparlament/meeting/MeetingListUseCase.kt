@@ -1,18 +1,13 @@
 package de.glasparlament.meeting
 
-import de.glasparlament.data.Transfer
+import com.dropbox.android.external.store4.StoreResponse
 import de.glasparlament.repository.meeting.Meeting
 import de.glasparlament.repository.meeting.MeetingRepository
+import kotlinx.coroutines.flow.Flow
 
 class MeetingListUseCase(private val repository: MeetingRepository) {
 
-    suspend fun execute(url: String): Transfer<List<Meeting>> {
-        return when(val transfer = repository.getMeetingList(url)){
-            is Transfer.Success -> Transfer.Success(map(transfer.data))
-            is Transfer.Error -> transfer
-        }
-    }
+    suspend fun execute(url: String): Flow<StoreResponse<List<Meeting>>> =
+        repository.getMeetingList(url)
 
-    private fun map(meetings: List<Meeting>) : List<Meeting> =
-        meetings.sortedBy { meeting -> meeting.name }
 }

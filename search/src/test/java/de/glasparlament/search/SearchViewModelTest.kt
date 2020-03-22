@@ -1,7 +1,8 @@
 package de.glasparlament.search
 
+import com.dropbox.android.external.store4.ResponseOrigin
+import com.dropbox.android.external.store4.StoreResponse
 import de.glasparlament.repository.agendaItem.AgendaItemSearchResult
-import de.glasparlament.data.Transfer
 import de.glasparlament.search.useCase.SearchUseCase
 import de.glasparlament.search.vm.SearchViewModel
 import de.glasparlament.search.vm.SearchViewModelImpl
@@ -9,8 +10,10 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
@@ -25,6 +28,7 @@ class SearchViewModelTest {
     private val testDispatcher = TestCoroutineDispatcher()
 
     private val useCase = mockk<SearchUseCase>()
+    private val viewModel = SearchViewModelImpl(useCase)
 
     @BeforeEach
     fun before() {
@@ -38,40 +42,58 @@ class SearchViewModelTest {
     }
 
     @Test
-    fun testUseCaseError() {
-        //given:
-        val search = "holz"
-        val errorMessage = "Error Loading Data"
-        val data = Transfer.Error(errorMessage)
-        coEvery { useCase.execute(search) } returns data
-        val viewModel = SearchViewModelImpl(useCase)
+    fun test_UseCase_should_set_state_to_Loaded() {
+        testDispatcher.runBlockingTest {
+            //given:
+            val agendaItem = AgendaItemSearchResult(
+                    id = "id",
+                    name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
+                    number = "16",
+                    meetingName = "meeting")
+            val search = "holz"
+            coEvery { useCase.execute(search) } returns flow<StoreResponse<List<AgendaItemSearchResult>>> {
+                emit(StoreResponse.Data(listOf(agendaItem), ResponseOrigin.Fetcher))
+            }
 
-        //when:
-        viewModel.search(search)
-        Thread.sleep(200)
+            //when:
+            viewModel.search(search)
 
-        //then:
-        Assertions.assertTrue(viewModel.state.value is SearchViewModel.State.Error)
+            //then:
+            Assertions.assertTrue(viewModel.state.getTestValue() is SearchViewModel.State.Loaded)
+        }
     }
 
     @Test
-    fun testUseCaseSuccess() {
-        //given:
-        val agendaItem = AgendaItemSearchResult(
-                id = "id",
-                name = "Nachhaltigkeit auf den Bau: Berlin baut mit Holz",
-                number = "16",
-                meetingName = "meeting")
-        val search = "holz"
-        val data = Transfer.Success(listOf(agendaItem))
-        coEvery { useCase.execute(search) } returns data
-        val viewModel = SearchViewModelImpl(useCase)
+    fun test_UseCase_should_set_state_to_Loading() {
+        testDispatcher.runBlockingTest {
+            //given:
+            val search = "holz"
+            coEvery { useCase.execute(search) } returns flow<StoreResponse<List<AgendaItemSearchResult>>> {
+                emit(StoreResponse.Loading(ResponseOrigin.Fetcher))
+            }
 
-        //when:
-        viewModel.search(search)
-        Thread.sleep(200)
+            //when:
+            viewModel.search(search)
 
-        //then:
-        Assertions.assertTrue(viewModel.state.value is SearchViewModel.State.Loaded)
+            //then:
+            Assertions.assertTrue(viewModel.state.getTestValue() is SearchViewModel.State.Loading)
+        }
+    }
+
+    @Test
+    fun test_UseCase_should_set_state_to_Error() {
+        testDispatcher.runBlockingTest {
+            //given:
+            val search = "holz"
+            coEvery { useCase.execute(search) } returns flow<StoreResponse<List<AgendaItemSearchResult>>> {
+                emit(StoreResponse.Error(origin = ResponseOrigin.Fetcher, error = IllegalArgumentException()))
+            }
+
+            //when:
+            viewModel.search(search)
+
+            //then:
+            Assertions.assertTrue(viewModel.state.getTestValue() is SearchViewModel.State.Error)
+        }
     }
 }

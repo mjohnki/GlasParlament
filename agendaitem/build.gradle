@@ -3,6 +3,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: "de.mannodermaus.android-junit5"
+apply plugin: 'com.hiya.jacoco-android'
+
+jacoco { toolVersion "0.8.4" }
 
 android {
     compileSdkVersion targetSdk
@@ -46,7 +50,6 @@ dependencies {
 
     //project
     implementation project(':common-android')
-    implementation project(':remote-data')
     implementation project(':repository')
 
     //Lifecycle
@@ -60,6 +63,9 @@ dependencies {
 
     //Navigation
     implementation libraries.navigationFragment
+
+    //store
+    implementation libraries.store
 
     //UI
     implementation libraries.constraintlayout
