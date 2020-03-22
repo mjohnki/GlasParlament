@@ -2,6 +2,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs'
+apply plugin: "de.mannodermaus.android-junit5"
+apply plugin: 'com.hiya.jacoco-android'
+
+jacoco { toolVersion "0.8.4" }
 
 android {
     compileSdkVersion targetSdk
@@ -26,11 +30,4 @@ dependencies {
 
     //Lifecycle
     implementation libraries.lifecycleExtensions
-
-    //Navigation
-    //implementation libraries.navigationFragment
-    //implementation libraries.navigationUi
-
-    //dagger
-    //implementation libraries.daggerAndroidSupport
 }

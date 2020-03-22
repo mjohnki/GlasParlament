@@ -3,6 +3,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: "de.mannodermaus.android-junit5"
+apply plugin: 'com.hiya.jacoco-android'
+
+jacoco { toolVersion "0.8.4" }
 
 android {
 
@@ -61,7 +65,6 @@ dependencies {
     implementation libraries.lifecycleExtensions
 
     //project
-    implementation project(':remote-data')
     implementation project(':agendaitem')
     implementation project(':meeting')
     implementation project(':repository')

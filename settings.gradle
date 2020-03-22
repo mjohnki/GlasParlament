@@ -1,4 +1,4 @@
 include ':app', ':common-android'
-include ':remote-data', ':meeting', ":agendaitem"
+include ':meeting', ":agendaitem"
 include ':search'
 include ':repository'

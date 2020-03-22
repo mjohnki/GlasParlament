@@ -1,11 +1,13 @@
 package de.glasparlament.meeting
 
-import de.glasparlament.data.Transfer
+import com.dropbox.android.external.store4.ResponseOrigin
+import com.dropbox.android.external.store4.StoreResponse
 import de.glasparlament.repository.meeting.Meeting
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -14,6 +16,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import java.lang.IllegalArgumentException
 
 @ExperimentalCoroutinesApi
 @ExtendWith(InstantExecutorExtension::class)
@@ -36,25 +39,7 @@ class MeetingViewModelTest {
     }
 
     @Test
-    fun testUseCaseError() {
-        //given:
-        val url = "http://test.test"
-        val errorMessage = "Error Loading Data"
-        val data = Transfer.Error(errorMessage)
-        coEvery { useCase.execute(url) } returns data
-        viewModel = MeetingViewModelImpl(useCase)
-
-        //when:
-        viewModel.bind(url)
-        Thread.sleep(200)
-
-
-        //then:
-        Assertions.assertTrue(viewModel.state.value is MeetingViewModel.State.Error)
-    }
-
-    @Test
-    fun testUseCaseSuccess() {
+    fun test_UseCase_returns_data_state() {
         //given:
         val url = "http://test.test"
         val meeting = Meeting(
@@ -63,15 +48,47 @@ class MeetingViewModelTest {
                 agendaItem = listOf(),
                 body = "http://test.test"
         )
-        val data = Transfer.Success(listOf(meeting))
-        coEvery { useCase.execute(url) } returns data
+        coEvery { useCase.execute(url) } returns flow {
+            emit(StoreResponse.Data(listOf(meeting), ResponseOrigin.Fetcher))
+        }
         viewModel = MeetingViewModelImpl(useCase)
 
         //when:
         viewModel.bind(url)
-        Thread.sleep(200)
 
         //then:
-        Assertions.assertTrue(viewModel.state.value is MeetingViewModel.State.Loaded)
+        Assertions.assertTrue(viewModel.state.getTestValue() is MeetingViewModel.State.Loaded)
+    }
+
+    @Test
+    fun test_UseCase_returns_Loading_state() {
+        //given:
+        val url = "http://test.test"
+        coEvery { useCase.execute(url) } returns flow {
+            emit(StoreResponse.Loading<List<Meeting>>(ResponseOrigin.Fetcher))
+        }
+        viewModel = MeetingViewModelImpl(useCase)
+
+        //when:
+        viewModel.bind(url)
+
+        //then:
+        Assertions.assertTrue(viewModel.state.getTestValue() is MeetingViewModel.State.Loading)
+    }
+
+    @Test
+    fun test_UseCase_returns_error_state() {
+        //given:
+        val url = "http://test.test"
+        coEvery { useCase.execute(url) } returns flow {
+            emit(StoreResponse.Error<List<Meeting>>(IllegalArgumentException(), ResponseOrigin.Fetcher))
+        }
+        viewModel = MeetingViewModelImpl(useCase)
+
+        //when:
+        viewModel.bind(url)
+
+        //then:
+        Assertions.assertTrue(viewModel.state.getTestValue() is MeetingViewModel.State.Error)
     }
 }

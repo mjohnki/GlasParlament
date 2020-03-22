@@ -3,9 +3,10 @@ package de.glasparlament.agendaitem.overview
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dropbox.android.external.store4.StoreResponse
 import de.glasparlament.repository.agendaItem.AgendaItem
-import de.glasparlament.data.Transfer
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -31,11 +32,15 @@ class AgendaItemViewModelImpl(private val useCase: AgendaItemListUseCase) : Agen
     }
 
     private suspend fun getAgendaItems(url: String) =
-            withContext(Dispatchers.Default) {
+            withContext(Dispatchers.IO) {
                 state.postValue(State.Loading)
-                when (val result = useCase.execute(url)) {
-                    is Transfer.Success -> state.postValue(State.Loaded(result.data))
-                    is Transfer.Error -> state.postValue(State.Error)
+                useCase.execute(url).collect {
+                    when (it) {
+                        is StoreResponse.Loading -> state.postValue(State.Loading)
+                        is StoreResponse.Data -> state.postValue(State.Loaded(it.value))
+                        is StoreResponse.Error -> state.postValue(State.Error)
+                    }
                 }
+
             }
 }

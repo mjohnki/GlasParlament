@@ -3,10 +3,11 @@ package de.glasparlament.search.vm
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dropbox.android.external.store4.StoreResponse
 import de.glasparlament.repository.agendaItem.AgendaItemSearchResult
-import de.glasparlament.data.Transfer
 import de.glasparlament.search.useCase.SearchUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -32,11 +33,13 @@ class SearchViewModelImpl(private val useCase: SearchUseCase) : SearchViewModel(
     }
 
     private suspend fun searchAgendaItems(text: String) =
-            withContext(Dispatchers.Default) {
-                state.postValue(State.Loading)
-                when (val result = useCase.execute(text)) {
-                    is Transfer.Success -> state.postValue(State.Loaded(result.data))
-                    is Transfer.Error -> state.postValue(State.Error)
+            withContext(Dispatchers.IO) {
+                useCase.execute(text).collect {
+                    when (it) {
+                        is StoreResponse.Loading -> state.postValue(State.Loading)
+                        is StoreResponse.Data -> state.postValue(State.Loaded(it.value))
+                        is StoreResponse.Error -> state.postValue(State.Error)
+                    }
                 }
             }
 }

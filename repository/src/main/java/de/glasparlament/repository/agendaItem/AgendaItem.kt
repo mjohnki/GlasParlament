@@ -1,6 +1,6 @@
 package de.glasparlament.repository.agendaItem
 
-import de.glasparlament.repository.agendaItem.File
+import de.glasparlament.repository.meeting.local.file.File
 
 data class AgendaItem(
         var id: String,

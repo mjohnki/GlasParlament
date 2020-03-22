@@ -1,12 +1,15 @@
 package de.glasparlament.agendaitem.overview
 
+import com.dropbox.android.external.store4.ResponseOrigin
+import com.dropbox.android.external.store4.StoreResponse
 import de.glasparlament.agendaitem.InstantExecutorExtension
+import de.glasparlament.agendaitem.getTestValue
 import de.glasparlament.repository.agendaItem.AgendaItem
-import de.glasparlament.data.Transfer
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -15,6 +18,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import java.lang.IllegalArgumentException
 
 @ExperimentalCoroutinesApi
 @ExtendWith(InstantExecutorExtension::class)
@@ -23,6 +27,7 @@ class AgendaItemViewModelTest {
     private val testDispatcher = TestCoroutineDispatcher()
 
     private val useCase = mockk<AgendaItemListUseCase>()
+    private val viewModel = AgendaItemViewModelImpl(useCase)
 
     @BeforeEach
     fun before() {
@@ -36,24 +41,7 @@ class AgendaItemViewModelTest {
     }
 
     @Test
-    fun testUseCaseError() {
-        //given:
-        val url = "http://test.test"
-        val errorMessage = "Error Loading Data"
-        val data = Transfer.Error(errorMessage)
-        coEvery { useCase.execute(url) } returns data
-        val viewModel = AgendaItemViewModelImpl(useCase)
-
-        //when:
-        viewModel.bind(url)
-        Thread.sleep(200)
-
-        //then:
-        Assertions.assertTrue(viewModel.state.value is AgendaItemViewModel.State.Error)
-    }
-
-    @Test
-    fun testUseCaseSuccess() {
+    fun test_UseCase_returns_data_state() {
         //given:
         val url = "http://test.test"
         val agendaItem16 = AgendaItem(
@@ -63,15 +51,44 @@ class AgendaItemViewModelTest {
                 meeting = "http://test.test",
                 auxiliaryFile = listOf()
         )
-        val data = Transfer.Success(listOf(agendaItem16))
-        coEvery { useCase.execute(url) } returns data
-        val viewModel = AgendaItemViewModelImpl(useCase)
+        coEvery { useCase.execute(url) } returns flow {
+            emit(StoreResponse.Data(listOf(agendaItem16), ResponseOrigin.Fetcher))
+        }
 
         //when:
         viewModel.bind(url)
-        Thread.sleep(200)
 
         //then:
-        Assertions.assertTrue(viewModel.state.value is AgendaItemViewModel.State.Loaded)
+        Assertions.assertTrue(viewModel.state.getTestValue() is AgendaItemViewModel.State.Loaded)
+    }
+
+    @Test
+    fun test_UseCase_returns_loading_state() {
+        //given:
+        val url = "http://test.test"
+        coEvery { useCase.execute(url) } returns flow {
+            emit(StoreResponse.Loading<List<AgendaItem>>(ResponseOrigin.Fetcher))
+        }
+
+        //when:
+        viewModel.bind(url)
+
+        //then:
+        Assertions.assertTrue(viewModel.state.getTestValue() is AgendaItemViewModel.State.Loading)
+    }
+
+    @Test
+    fun test_UseCase_returns_error_state() {
+        //given:
+        val url = "http://test.test"
+        coEvery { useCase.execute(url) } returns flow {
+            emit(StoreResponse.Error<List<AgendaItem>>(IllegalArgumentException(), ResponseOrigin.Fetcher))
+        }
+
+        //when:
+        viewModel.bind(url)
+
+        //then:
+        Assertions.assertTrue(viewModel.state.getTestValue() is AgendaItemViewModel.State.Error)
     }
 }

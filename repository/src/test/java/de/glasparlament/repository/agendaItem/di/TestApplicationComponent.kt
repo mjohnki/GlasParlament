@@ -2,14 +2,16 @@ package de.glasparlament.repository.agendaItem.di
 
 import dagger.Component
 import de.glasparlament.repository.agendaItem.ComponentTest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Singleton
 
+@ExperimentalCoroutinesApi
 @Singleton
 @Component(modules = [
-    de.johnki.demoandroid.repository.agendaItem.di.AgendaItemRepositoryModule::class,
-    de.glasparlament.repository.agendaItem.di.TestApplicationModule::class
+    AgendaItemRepositoryModule::class,
+    TestApplicationModule::class
 ])
 interface TestApplicationComponent {
 
-    fun inject(test: de.glasparlament.repository.agendaItem.ComponentTest)
+    fun inject(test: ComponentTest)
 }

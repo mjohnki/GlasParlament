@@ -9,7 +9,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import dagger.android.support.DaggerFragment
-import de.glasparlament.repository.agendaItem.File
+import de.glasparlament.repository.meeting.local.file.File
 import de.glasparlament.agendaitem.R
 import de.glasparlament.common.observe
 import kotlinx.android.synthetic.main.agenda_item_detail_fragment.*

@@ -2,7 +2,7 @@ package de.glasparlament.repository.body.di
 
 import dagger.Module
 import dagger.Provides
-import de.glasparlament.repository.body.BodyEndpoint
+import de.glasparlament.repository.body.remote.BodyEndpoint
 import io.mockk.every
 import io.mockk.mockk
 import retrofit2.Retrofit

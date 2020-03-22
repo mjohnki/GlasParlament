@@ -2,10 +2,10 @@ package de.glasparlament.repository.meeting.di
 
 import dagger.Module
 import dagger.Provides
-import de.glasparlament.data.db.AgendaItemDao
-import de.glasparlament.data.db.FileDao
-import de.glasparlament.data.db.MeetingDao
-import de.glasparlament.repository.meeting.MeetingEndpoint
+import de.glasparlament.repository.agendaItem.local.AgendaItemDao
+import de.glasparlament.repository.meeting.local.file.FileDao
+import de.glasparlament.repository.meeting.local.meeting.MeetingDao
+import de.glasparlament.repository.meeting.remote.MeetingEndpoint
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

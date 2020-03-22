@@ -1,21 +1,25 @@
 package de.glasparlament.repository.meeting
 
-import de.glasparlament.data.MeetingList
-import de.glasparlament.data.Transfer
-import de.glasparlament.meetingRepository.di.DaggerTestApplicationComponent
-import de.glasparlament.repository.meeting.Meeting
-import de.glasparlament.repository.meeting.MeetingEndpoint
-import de.glasparlament.repository.meeting.MeetingRepository
+import com.dropbox.android.external.store4.StoreResponse
+import de.glasparlament.repository.meeting.di.DaggerTestApplicationComponent
+import de.glasparlament.repository.meeting.remote.MeetingEndpoint
+import de.glasparlament.repository.meeting.remote.MeetingList
 import io.mockk.coEvery
-import kotlinx.coroutines.runBlocking
-import okhttp3.MediaType
-import okhttp3.ResponseBody
-import org.junit.jupiter.api.Assertions
+import io.mockk.coVerify
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.setMain
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import retrofit2.Response
+import java.util.concurrent.CountDownLatch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class ComponentTest {
 
     @Inject
@@ -24,41 +28,46 @@ class ComponentTest {
     @Inject
     lateinit var endpoint: MeetingEndpoint
 
+    private val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
+
     @BeforeEach
     fun setUp() {
+        Dispatchers.setMain(testDispatcher)
         DaggerTestApplicationComponent.builder()
                 .build().inject(this)
     }
 
-    @Test
-    fun testGetOrganizationListWithError() {
-        //given:
-        val url = "http://test.test"
-        val errorBody = ResponseBody.create(MediaType.get("text/plain"), "Error")
-        val response = Response.error<MeetingList>(400, errorBody)
-        coEvery { endpoint.getMeetingList(any()) } returns response
-
-        //when:
-        val result = runBlocking { repository.getMeetingList(url) }
-
-        //then:
-        Assertions.assertTrue(result is Transfer.Error)
-        Assertions.assertEquals(MeetingApi.errorMessageMeetingList, (result as Transfer.Error).exception)
+    @AfterEach
+    fun cleanup(){
+        Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
     }
 
     @Test
-    fun testGetMeetingListWithSuccess() {
+    fun test_GetMeetingList() {
         //given:
         val url = "http://test.test"
-        val response = Response.success(200, MeetingList())
-        coEvery { endpoint.getMeetingList(any()) } returns response
+        coEvery { endpoint.getMeetingList(url) } returns MeetingList()
+        var receivedDataResponse = false
+        var receivedLoadingResponse = false
 
         //when:
-        val result = runBlocking { repository.getMeetingList(url) }
+        runBlocking {
+            repository.getMeetingList(url).take(2).collect {
+                when(it){
+                    is StoreResponse.Data -> receivedDataResponse = true
+                    is StoreResponse.Loading -> receivedLoadingResponse = true
+                }
+            }
+        }
 
         //then:
-        val expected: List<Meeting> = listOf()
-        Assertions.assertTrue(result is Transfer.Success)
-        Assertions.assertEquals(expected, (result as Transfer.Success).data)
+        coVerify { endpoint.getMeetingList(url) }
+        assert(receivedDataResponse)
+        assert(receivedLoadingResponse)
     }
+
 }
+
+
+
